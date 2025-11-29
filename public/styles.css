@@ -238,6 +238,14 @@ body {
 }
 
 /* Output result styling for dynamically generated content */
+#output h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent-color);
+}
+
 #output h3 {
   font-size: 1.125rem;
   font-weight: 600;

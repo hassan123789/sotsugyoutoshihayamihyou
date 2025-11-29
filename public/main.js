@@ -1,62 +1,179 @@
 "use strict";
-function toYearJp(year) {
-    const eras = [
-        { name: '令和', start: 2019 },
-        { name: '平成', start: 1989 },
-        { name: '昭和', start: 1926 },
-        { name: '大正', start: 1912 },
-        { name: '明治', start: 1868 },
-    ];
-    for (const era of eras) {
-        if (year >= era.start) {
-            const eraYear = year - era.start + 1;
-            // 元年表示：1年目は「元年」と表示する
-            const yearStr = eraYear === 1 ? '元' : String(eraYear);
-            return `${era.name}${yearStr}`;
+/**
+ * 和暦変換クラス
+ * 改元日を正確に判定する和暦変換ロジック
+ */
+class JapaneseEraConverter {
+    /**
+     * 指定された日付を和暦に変換する
+     * @param date 変換対象の日付
+     * @returns 和暦文字列（例: "令和元", "平成31"）
+     */
+    static toWareki(date) {
+        for (const era of this.ERA_BOUNDARIES) {
+            if (date >= era.startDate) {
+                // 元号開始年からの経過年数を計算
+                const eraStartYear = era.startDate.getFullYear();
+                const targetYear = date.getFullYear();
+                const eraYear = targetYear - eraStartYear + 1;
+                // 元年表示：1年目は「元」と表示する
+                const yearStr = eraYear === 1 ? '元' : String(eraYear);
+                return `${era.name}${yearStr}`;
+            }
         }
+        return '';
     }
-    return '';
+    /**
+     * 西暦年と月から和暦を取得する（入学・卒業月用）
+     * @param year 西暦年
+     * @param month 月（1-12）
+     * @returns 和暦文字列
+     */
+    static toWarekiFromYearMonth(year, month) {
+        // 月の1日で判定（入学は4月1日、卒業は3月1日を想定）
+        const date = new Date(year, month - 1, 1);
+        return this.toWareki(date);
+    }
 }
-function calculateSchoolHistory(year, month, universityDuration, delayYears) {
-    const schoolYears = [
-        { name: '小学校', duration: 6 },
-        { name: '中学校', duration: 3 },
-        { name: '高等学校', duration: 3 },
-    ];
-    // 大学/専門学校の修業年数を追加
-    if (universityDuration === '6-master') {
-        // 大学院修士まで（学部4年+修士2年）
-        schoolYears.push({ name: '大学（学部）', duration: 4 });
-        schoolYears.push({ name: '大学院（修士）', duration: 2 });
-    }
-    else {
-        const duration = parseInt(universityDuration, 10);
-        if (duration === 6) {
-            schoolYears.push({ name: '大学（医学部・薬学部等）', duration: 6 });
-        }
-        else if (duration === 2) {
-            schoolYears.push({ name: '短大・専門学校', duration: 2 });
-        }
-        else if (duration === 3) {
-            schoolYears.push({ name: '専門学校', duration: 3 });
+/**
+ * 元号の境界日付を定義
+ * 各元号の開始日を厳密に定義
+ */
+JapaneseEraConverter.ERA_BOUNDARIES = [
+    { name: '令和', startDate: new Date(2019, 4, 1) }, // 2019年5月1日〜
+    { name: '平成', startDate: new Date(1989, 0, 8) }, // 1989年1月8日〜2019年4月30日
+    { name: '昭和', startDate: new Date(1926, 11, 25) }, // 1926年12月25日〜1989年1月7日
+    { name: '大正', startDate: new Date(1912, 6, 30) }, // 1912年7月30日〜1926年12月24日
+    { name: '明治', startDate: new Date(1868, 8, 8) }, // 1868年9月8日〜1912年7月29日
+];
+/**
+ * 学年度計算クラス
+ * 早生まれ判定を含む基準年度算出
+ */
+class AcademicYearCalculator {
+    /**
+     * 早生まれ判定を含む基準学年年度を算出
+     * 日本の学校教育法に基づき:
+     * - 4月1日生まれ: 前の学年（早生まれ）
+     * - 4月2日以降生まれ: 次の学年
+     *
+     * @param birthDate 生年月日
+     * @returns 小学校入学年度（西暦）
+     */
+    static getBaseSchoolYear(birthDate) {
+        const birthYear = birthDate.getFullYear();
+        const birthMonth = birthDate.getMonth() + 1; // 0-indexed to 1-indexed
+        const birthDay = birthDate.getDate();
+        // 早生まれ判定: 1月1日〜4月1日は早生まれ（前の学年）
+        // 4月2日以降は次の学年
+        if (birthMonth < 4 || (birthMonth === 4 && birthDay === 1)) {
+            // 早生まれ: 前の暦年(4月2日〜12月31日)生まれと同じ学年に所属（小学校入学は誕生年+6年後）
+            return birthYear + 6;
         }
         else {
-            schoolYears.push({ name: '大学／専門学校', duration: 4 });
+            // 通常: 当年度の学年に所属（小学校入学は誕生年+7年後）
+            return birthYear + 7;
         }
     }
-    let result = '';
-    let entranceYearOffset = month >= 4 ? 1 : 0;
-    let currentYear = year + entranceYearOffset + 6 + delayYears;
-    for (const school of schoolYears) {
-        const graduationYear = currentYear + school.duration;
-        result += `<h3>${school.name}入学</h3>`;
-        result += `<p>${currentYear}年 ${toYearJp(currentYear)}年 4月</p>`;
-        result += `<h3>${school.name}卒業</h3>`;
-        result += `<p>${graduationYear}年 ${toYearJp(graduationYear)}年 3月</p>`;
-        result += `<p>${school.duration}年間修業</p>`;
-        currentYear = graduationYear;
+    /**
+     * 学校情報リストを生成
+     * @param universityDuration 大学/専門学校の修業年数
+     * @returns 学校情報の配列
+     */
+    static getSchoolList(universityDuration) {
+        const schoolYears = [
+            { name: '小学校', duration: 6 },
+            { name: '中学校', duration: 3 },
+            { name: '高等学校', duration: 3 },
+        ];
+        // 大学/専門学校の修業年数を追加
+        if (universityDuration === '6-master') {
+            // 大学院修士まで（学部4年+修士2年）
+            schoolYears.push({ name: '大学（学部）', duration: 4 });
+            schoolYears.push({ name: '大学院（修士）', duration: 2 });
+        }
+        else {
+            const duration = parseInt(universityDuration, 10);
+            if (duration === 6) {
+                schoolYears.push({ name: '大学（医学部・薬学部等）', duration: 6 });
+            }
+            else if (duration === 2) {
+                schoolYears.push({ name: '短大・専門学校', duration: 2 });
+            }
+            else if (duration === 3) {
+                schoolYears.push({ name: '専門学校', duration: 3 });
+            }
+            else {
+                schoolYears.push({ name: '大学／専門学校', duration: 4 });
+            }
+        }
+        return schoolYears;
     }
-    return result;
+    /**
+     * 学歴を計算する
+     * @param birthDate 生年月日
+     * @param universityDuration 大学/専門学校の修業年数
+     * @param delayYears 入学遅延年数（浪人等）- 高校卒業後の遅延
+     * @returns 学歴情報の配列
+     */
+    static calculateHistory(birthDate, universityDuration, delayYears) {
+        const history = [];
+        const schoolList = this.getSchoolList(universityDuration);
+        // 小学校入学年度を算出（浪人年数は高校卒業後に適用）
+        let currentYear = this.getBaseSchoolYear(birthDate);
+        let isAfterHighSchool = false;
+        for (const school of schoolList) {
+            // 高校卒業後（大学・専門学校入学時）に浪人年数を加算
+            if (isAfterHighSchool === false && school.name !== '小学校' && school.name !== '中学校' && school.name !== '高等学校') {
+                currentYear += delayYears;
+                isAfterHighSchool = true;
+            }
+            const entranceYear = currentYear;
+            const graduationYear = currentYear + school.duration;
+            const academicHistory = {
+                schoolName: school.name,
+                entranceYear: entranceYear,
+                entranceMonth: 4,
+                graduationYear: graduationYear,
+                graduationMonth: 3,
+                duration: school.duration,
+                entranceWareki: JapaneseEraConverter.toWarekiFromYearMonth(entranceYear, 4),
+                graduationWareki: JapaneseEraConverter.toWarekiFromYearMonth(graduationYear, 3),
+            };
+            history.push(academicHistory);
+            currentYear = graduationYear;
+        }
+        return history;
+    }
+}
+/**
+ * 学歴HTMLレンダラークラス
+ * AcademicHistory[] からHTMLを生成
+ */
+class AcademicHistoryRenderer {
+    /**
+     * 学歴情報をHTMLに変換する
+     * @param history 学歴情報の配列
+     * @returns HTML文字列
+     */
+    static render(history) {
+        let result = '';
+        for (const item of history) {
+            result += `<h3>${item.schoolName}入学</h3>`;
+            result += `<p>${item.entranceYear}年（${item.entranceWareki}年）${item.entranceMonth}月</p>`;
+            result += `<h3>${item.schoolName}卒業</h3>`;
+            result += `<p>${item.graduationYear}年（${item.graduationWareki}年）${item.graduationMonth}月</p>`;
+        }
+        return result;
+    }
+}
+/**
+ * 学歴計算の統合関数（既存APIとの互換性のため）
+ */
+function calculateSchoolHistory(year, month, day, universityDuration, delayYears) {
+    const birthDate = new Date(year, month - 1, day);
+    const history = AcademicYearCalculator.calculateHistory(birthDate, universityDuration, delayYears);
+    return AcademicHistoryRenderer.render(history);
 }
 function validateInput(year, month, day) {
     const currentYear = new Date().getFullYear();
@@ -93,6 +210,9 @@ function validateInput(year, month, day) {
 }
 const form = document.getElementById("form");
 const output = document.getElementById("output");
+// 年入力フィールドのmax属性を現在の年に動的設定
+const yearInput = form.elements.namedItem("year");
+yearInput.max = String(new Date().getFullYear());
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     const year = parseInt(form.elements.namedItem("year").value);
@@ -107,7 +227,7 @@ form.addEventListener("submit", (event) => {
         return;
     }
     // 学歴の入学・卒業年度を計算する
-    const result = calculateSchoolHistory(year, month, universityDuration, delayYears);
+    const result = calculateSchoolHistory(year, month, day, universityDuration, delayYears);
     // 結果を表示する
     output.innerHTML = "<h2>あなたの学歴</h2>" + result;
 });
