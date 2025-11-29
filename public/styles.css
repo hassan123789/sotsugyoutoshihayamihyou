@@ -51,10 +51,10 @@
     background-color: #d0d0d0;
   }
   button:active {
-    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0,0, 0, 0.1);
+    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
 }
 #output {
-margin-top: 30px;
+  margin-top: 30px;
 }
 #dark-mode-toggle {
   position: fixed;
