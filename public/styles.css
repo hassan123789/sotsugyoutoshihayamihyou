@@ -318,8 +318,8 @@ body.dark .dark-mode-btn::after {
 
 /* 
  * Number input styling
- * Spinners are kept for accessibility - users can type directly 
- * or use the spinner controls for numeric input
+ * Browser default spinner controls are preserved and unstyled for usability—
+ * users can type directly or use the native spinner controls for numeric input.
  */
 
 /* Responsive adjustments */
