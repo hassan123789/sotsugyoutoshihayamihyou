@@ -1,7 +1,7 @@
 {
-  "name": "htmlcssts",
+  "name": "sotsugyoutoshihayamihyou",
   "version": "1.0.0",
-  "description": "",
+  "description": "入学・卒業年度自動計算表",
   "main": "public/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
