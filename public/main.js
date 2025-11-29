@@ -12,13 +12,10 @@ class JapaneseEraConverter {
     static toWareki(date) {
         for (const era of this.ERA_BOUNDARIES) {
             if (date >= era.startDate) {
-                let eraYear = date.getFullYear() - era.startDate.getFullYear() + 1;
-                if (
-                    date.getMonth() < era.startDate.getMonth() ||
-                    (date.getMonth() === era.startDate.getMonth() && date.getDate() < era.startDate.getDate())
-                ) {
-                    eraYear--;
-                }
+                // 元号開始年からの経過年数を計算
+                const eraStartYear = era.startDate.getFullYear();
+                const targetYear = date.getFullYear();
+                const eraYear = targetYear - eraStartYear + 1;
                 // 元年表示：1年目は「元」と表示する
                 const yearStr = eraYear === 1 ? '元' : String(eraYear);
                 return `${era.name}${yearStr}`;
@@ -116,15 +113,21 @@ class AcademicYearCalculator {
      * 学歴を計算する
      * @param birthDate 生年月日
      * @param universityDuration 大学/専門学校の修業年数
-     * @param delayYears 入学遅延年数（浪人等）
+     * @param delayYears 入学遅延年数（浪人等）- 高校卒業後の遅延
      * @returns 学歴情報の配列
      */
     static calculateHistory(birthDate, universityDuration, delayYears) {
         const history = [];
         const schoolList = this.getSchoolList(universityDuration);
-        // 小学校入学年度を算出
-        let currentYear = this.getBaseSchoolYear(birthDate) + delayYears;
+        // 小学校入学年度を算出（浪人年数は高校卒業後に適用）
+        let currentYear = this.getBaseSchoolYear(birthDate);
+        let isAfterHighSchool = false;
         for (const school of schoolList) {
+            // 高校卒業後（大学・専門学校入学時）に浪人年数を加算
+            if (isAfterHighSchool === false && school.name !== '小学校' && school.name !== '中学校' && school.name !== '高等学校') {
+                currentYear += delayYears;
+                isAfterHighSchool = true;
+            }
             const entranceYear = currentYear;
             const graduationYear = currentYear + school.duration;
             const academicHistory = {
@@ -157,10 +160,9 @@ class AcademicHistoryRenderer {
         let result = '';
         for (const item of history) {
             result += `<h3>${item.schoolName}入学</h3>`;
-            result += `<p>${item.entranceYear}年 ${item.entranceWareki}年 ${item.entranceMonth}月</p>`;
+            result += `<p>${item.entranceYear}年（${item.entranceWareki}年）${item.entranceMonth}月</p>`;
             result += `<h3>${item.schoolName}卒業</h3>`;
-            result += `<p>${item.graduationYear}年 ${item.graduationWareki}年 ${item.graduationMonth}月</p>`;
-            result += `<p>${item.duration}年間修業</p>`;
+            result += `<p>${item.graduationYear}年（${item.graduationWareki}年）${item.graduationMonth}月</p>`;
         }
         return result;
     }
@@ -208,6 +210,9 @@ function validateInput(year, month, day) {
 }
 const form = document.getElementById("form");
 const output = document.getElementById("output");
+// 年入力フィールドのmax属性を現在の年に動的設定
+const yearInput = form.elements.namedItem("year");
+yearInput.max = String(new Date().getFullYear());
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     const year = parseInt(form.elements.namedItem("year").value);
