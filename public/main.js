@@ -30,7 +30,7 @@ function calculateSchoolHistory(year, month, universityDuration, delayYears) {
         schoolYears.push({ name: '大学院（修士）', duration: 2 });
     }
     else {
-        const duration = parseInt(universityDuration);
+        const duration = parseInt(universityDuration, 10);
         if (duration === 6) {
             schoolYears.push({ name: '大学（医学部・薬学部等）', duration: 6 });
         }
