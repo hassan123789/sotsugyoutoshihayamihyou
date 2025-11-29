@@ -120,7 +120,7 @@ form.addEventListener("submit", (event: Event) => {
   // 入力値のバリデーション
   const validationError = validateInput(year, month, day);
   if (validationError) {
-    output.innerHTML = `<p style='color: red;'>${validationError}</p>`;
+    output.innerHTML = `<p class="error-message">${validationError}</p>`;
     return;
   }
 
