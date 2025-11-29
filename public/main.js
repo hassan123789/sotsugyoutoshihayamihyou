@@ -99,7 +99,7 @@ form.addEventListener("submit", (event) => {
     const month = parseInt(form.elements.namedItem("month").value);
     const day = parseInt(form.elements.namedItem("day").value);
     const universityDuration = form.elements.namedItem("universityDuration").value;
-    const delayYears = parseInt(form.elements.namedItem("delayYears").value);
+    const delayYears = parseInt(form.elements.namedItem("delayYears").value, 10);
     // 入力値のバリデーション
     const validationError = validateInput(year, month, day);
     if (validationError) {
