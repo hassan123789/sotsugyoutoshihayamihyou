@@ -41,15 +41,17 @@ form.addEventListener("submit", (event) => {
     event.preventDefault();
     const year = parseInt(form.elements.namedItem("year").value);
     const month = parseInt(form.elements.namedItem("month").value);
+    const day = parseInt(form.elements.namedItem("day").value);
     // 入力値のバリデーション
-    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
-        output.innerHTML = "<p style='color:red;'>年・月・日には有効な数字を入力してください。</p>";
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        output.innerHTML = "<p style='color: red;'>年・月・日には有効な数字を入力してください。</p>";
         return;
     }
     // 学歴の入学・卒業年度を計算する
     const result = calculateSchoolHistory(year, month);
     // 結果を表示する
     output.innerHTML = "<h2>あなたの学歴</h2>" + result;
+});
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
