@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,42 +7,61 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>入学・卒業年度自動計算表【西暦・和暦】（年号早見表）</h1>
-  <form id="form">
-    <div class="form-group">
-      <label>あなたの生年月日を入力してください：</label>
-      <div class="input-row">
-        <input type="number" name="year" placeholder="年" required min="1900" max="2025">
-        <input type="number" name="month" placeholder="月" required min="1" max="12">
-        <input type="number" name="day" placeholder="日" required min="1" max="31">
+  <div class="container">
+    <h1 class="main-title">
+      入学・卒業年度自動計算表【西暦・和暦】（年号早見表）
+    </h1>
+    
+    <form id="form" class="glass-card form-card">
+      <div class="form-group">
+        <label class="form-label">あなたの生年月日を入力してください：</label>
+        <div class="input-row">
+          <input type="number" name="year" placeholder="年" required min="1900" max="2025" class="input-field input-small">
+          <input type="number" name="month" placeholder="月" required min="1" max="12" class="input-field input-small">
+          <input type="number" name="day" placeholder="日" required min="1" max="31" class="input-field input-small">
+        </div>
       </div>
+      
+      <div class="form-group">
+        <label for="universityDuration" class="form-label">大学・専門学校の修業年数：</label>
+        <div class="select-wrapper">
+          <select name="universityDuration" id="universityDuration" class="select-field">
+            <option value="2">短大・専門学校（2年制）</option>
+            <option value="3">専門学校（3年制）</option>
+            <option value="4" selected>大学・専門学校（4年制）</option>
+            <option value="6-master">大学院修士まで（6年：学部4年+修士2年）</option>
+            <option value="6">医学部・薬学部等（6年制）</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="delayYears" class="form-label">入学遅延年数（浪人等）：</label>
+        <div class="select-wrapper">
+          <select name="delayYears" id="delayYears" class="select-field">
+            <option value="0" selected>なし（0年）</option>
+            <option value="1">1年</option>
+            <option value="2">2年</option>
+            <option value="3">3年</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="button-wrapper">
+        <button type="submit" class="submit-btn">計算する</button>
+      </div>
+    </form>
+    
+    <div id="output" class="glass-card output-card">
+      <h2 class="output-title">あなたの学歴</h2>
+      <p class="output-placeholder">ここに結果が表示されます。</p>
     </div>
-    <div class="form-group">
-      <label for="universityDuration">大学・専門学校の修業年数：</label>
-      <select name="universityDuration" id="universityDuration">
-        <option value="2">短大・専門学校（2年制）</option>
-        <option value="3">専門学校（3年制）</option>
-        <option value="4" selected>大学・専門学校（4年制）</option>
-        <option value="6-master">大学院修士まで（6年：学部4年+修士2年）</option>
-        <option value="6">医学部・薬学部等（6年制）</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="delayYears">入学遅延年数（浪人等）：</label>
-      <select name="delayYears" id="delayYears">
-        <option value="0" selected>なし（0年）</option>
-        <option value="1">1年</option>
-        <option value="2">2年</option>
-        <option value="3">3年</option>
-      </select>
-    </div>
-    <button type="submit">計算する</button>
-  </form>
-  <div id="output">
-    <h2>あなたの学歴</h2>
-    <p>ここに結果が表示されます。</p>
   </div>
-  <button id="dark-mode-toggle"><span>ダークモード切り替え</span></button>
+  
+  <button id="dark-mode-toggle" class="dark-mode-btn">
+    <span class="sr-only">ダークモード切り替え</span>
+  </button>
+  
   <script src="main.js"></script>
 </body>
 </html>
