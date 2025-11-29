@@ -115,7 +115,7 @@ form.addEventListener("submit", (event: Event) => {
   const month = parseInt((form.elements.namedItem("month") as HTMLInputElement).value);
   const day = parseInt((form.elements.namedItem("day") as HTMLInputElement).value);
   const universityDuration = (form.elements.namedItem("universityDuration") as HTMLSelectElement).value;
-  const delayYears = parseInt((form.elements.namedItem("delayYears") as HTMLSelectElement).value);
+  const delayYears = parseInt((form.elements.namedItem("delayYears") as HTMLSelectElement).value, 10);
 
   // 入力値のバリデーション
   const validationError = validateInput(year, month, day);
