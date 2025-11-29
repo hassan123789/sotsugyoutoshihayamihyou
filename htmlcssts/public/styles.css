@@ -57,8 +57,23 @@
 margin-top: 30px;
 }
 #dark-mode-toggle {
-position: fixed;
-top: 20px;
-right: 20px;
-background-color: inherit;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: inherit;
+  font-size: 1.5em;
+  border: none;
+  cursor: pointer;
+}
+
+#dark-mode-toggle span {
+  display: none;
+}
+
+body:not(.dark) #dark-mode-toggle::after {
+  content: '☀️';
+}
+
+body.dark #dark-mode-toggle::after {
+  content: '🌙';
 }
