@@ -41,7 +41,6 @@ form.addEventListener("submit", (event) => {
     event.preventDefault();
     const year = parseInt(form.elements.namedItem("year").value);
     const month = parseInt(form.elements.namedItem("month").value);
-    const day = parseInt(form.elements.namedItem("day").value);
     // 学歴の入学・卒業年度を計算する
     const result = calculateSchoolHistory(year, month);
     // 結果を表示する
