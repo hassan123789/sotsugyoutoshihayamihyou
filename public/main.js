@@ -12,12 +12,12 @@ class JapaneseEraConverter {
     static toWareki(date) {
         for (const era of this.ERA_BOUNDARIES) {
             if (date >= era.startDate) {
-                let eraYear = date.getFullYear() - era.startDate.getFullYear();
+                let eraYear = date.getFullYear() - era.startDate.getFullYear() + 1;
                 if (
-                    date.getMonth() > era.startDate.getMonth() ||
-                    (date.getMonth() === era.startDate.getMonth() && date.getDate() >= era.startDate.getDate())
+                    date.getMonth() < era.startDate.getMonth() ||
+                    (date.getMonth() === era.startDate.getMonth() && date.getDate() < era.startDate.getDate())
                 ) {
-                    eraYear++;
+                    eraYear--;
                 }
                 // 元年表示：1年目は「元」と表示する
                 const yearStr = eraYear === 1 ? '元' : String(eraYear);
