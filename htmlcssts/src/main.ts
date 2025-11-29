@@ -49,8 +49,6 @@ form.addEventListener("submit", (event: Event) => {
 
   const year = parseInt((form.elements.namedItem("year") as HTMLInputElement).value);
   const month = parseInt((form.elements.namedItem("month") as HTMLInputElement).value);
-  const day = parseInt((form.elements.namedItem("day") as HTMLInputElement).value);
-
   // 入力値のバリデーション
   if (isNaN(year) || isNaN(month) || isNaN(day)) {
     output.innerHTML = "<p style='color: red;'>年・月・日には有効な数字を入力してください。</p>";
