@@ -51,6 +51,11 @@ form.addEventListener("submit", (event: Event) => {
   const month = parseInt((form.elements.namedItem("month") as HTMLInputElement).value);
   const day = parseInt((form.elements.namedItem("day") as HTMLInputElement).value);
 
+  // 入力値のバリデーション
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    output.innerHTML = "<p style='color: red;'>年・月・日には有効な数字を入力してください。</p>";
+    return;
+  }
   // 学歴の入学・卒業年度を計算する
   const result = calculateSchoolHistory(year, month);
 
