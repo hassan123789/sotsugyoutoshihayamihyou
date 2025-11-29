@@ -12,6 +12,7 @@
     margin: 0 auto;
     background-color: var(--background-color);
     color: var(--text-color);
+    padding: 10px;
   }
   h1 {
     font-size: 2em;
@@ -21,6 +22,24 @@
   }
   form {
     display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 500px;
+    align-items: center;
+  }
+  .form-group label {
+    font-weight: bold;
+    text-align: center;
+  }
+  .input-row {
+    display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
@@ -28,14 +47,20 @@
   label {
     align-self: center;
   }
-  input {
+  input, select {
     padding: 10px;
     font-size: 16px;
     background-color: var(--background-color);
+    color: var(--text-color);
     border: none;
     box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
     outline: none;
     margin: 5px;
+    border-radius: 5px;
+  }
+  select {
+    cursor: pointer;
+    min-width: 200px;
   }
   button {
     padding: 10px 20px;
@@ -46,9 +71,13 @@
     cursor: pointer;
     box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.5), 5px 5px 10px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
+    border-radius: 5px;
   }
   button:hover {
     background-color: #d0d0d0;
+  }
+  body.dark button:hover {
+    background-color: #444;
   }
   button:active {
     box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -76,4 +105,18 @@ body:not(.dark) #dark-mode-toggle::after {
 
 body.dark #dark-mode-toggle::after {
   content: '🌙';
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5em;
+    padding: 10px;
+  }
+  .form-group {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+    max-width: 280px;
+  }
 }
