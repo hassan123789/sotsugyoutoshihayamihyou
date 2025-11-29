@@ -1,122 +1,367 @@
+/* ==========================================================================
+   Modern Glassmorphism UI Design
+   Based on 2025 design trends with Tailwind-inspired utility classes
+   ========================================================================== */
+
+/* CSS Variables for theming */
 :root {
-    --background-color: #e0e0e0;
-    --text-color: #333;
-  }
-  body.dark {
-    --background-color: #333;
-    --text-color: #e0e0e0;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    padding: 10px;
-  }
-  h1 {
-    font-size: 2em;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    max-width: 500px;
-    align-items: center;
-  }
-  .form-group label {
-    font-weight: bold;
-    text-align: center;
-  }
-  .input-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
-  label {
-    align-self: center;
-  }
-  input, select {
-    padding: 10px;
-    font-size: 16px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    border: none;
-    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
-    outline: none;
-    margin: 5px;
-    border-radius: 5px;
-  }
-  select {
-    cursor: pointer;
-    min-width: 200px;
-  }
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    border: none;
-    cursor: pointer;
-    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.5), 5px 5px 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-    border-radius: 5px;
-  }
-  button:hover {
-    background-color: #d0d0d0;
-  }
-  body.dark button:hover {
-    background-color: #444;
-  }
-  button:active {
-    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
+  --accent-color: #3B82F6;
+  --accent-hover: #2563EB;
+  --bg-gradient-start: #f3f4f6;
+  --bg-gradient-end: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --input-bg: rgba(255, 255, 255, 0.7);
+  --input-border: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
 }
-#output {
-  margin-top: 30px;
+
+body.dark {
+  --bg-gradient-start: #1f2937;
+  --bg-gradient-end: #111827;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --glass-bg: rgba(31, 41, 55, 0.6);
+  --glass-border: rgba(55, 65, 81, 0.3);
+  --input-bg: rgba(55, 65, 81, 0.7);
+  --input-border: #4b5563;
+  --shadow-color: rgba(0, 0, 0, 0.3);
 }
-#dark-mode-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: inherit;
-  font-size: 1.5em;
-  border: none;
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/* Glassmorphism card style */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px var(--shadow-color);
+}
+
+/* Main title */
+.main-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px var(--shadow-color);
+}
+
+@media (min-width: 768px) {
+  .main-title {
+    font-size: 2.25rem;
+  }
+}
+
+/* Form card */
+.form-card {
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .form-card {
+    padding: 3rem;
+  }
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Input row for date inputs */
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Input fields */
+.input-field {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: var(--input-bg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--input-border);
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.input-field::placeholder {
+  color: var(--text-secondary);
+}
+
+.input-small {
+  width: 5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .input-small {
+    width: 6rem;
+  }
+}
+
+/* Select wrapper and fields */
+.select-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.select-field {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  background: var(--input-bg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--input-border);
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  outline: none;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-#dark-mode-toggle span {
-  display: none;
+.select-field:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-body:not(.dark) #dark-mode-toggle::after {
+/* Button wrapper */
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+/* Submit button */
+.submit-btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Output card */
+.output-card {
+  margin-top: 3rem;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .output-card {
+    padding: 3rem;
+  }
+}
+
+.output-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent-color);
+}
+
+.output-placeholder {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* Output result styling for dynamically generated content */
+#output h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#output h3:first-of-type {
+  margin-top: 0;
+}
+
+#output p {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Error message styling */
+.error-message {
+  color: #ef4444;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+  background: rgba(254, 226, 226, 0.5);
+  border-radius: 0.5rem;
+}
+
+body.dark .error-message {
+  background: rgba(127, 29, 29, 0.2);
+}
+
+/* Dark mode toggle button */
+.dark-mode-btn {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  box-shadow: 0 4px 15px var(--shadow-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.dark-mode-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Dark mode toggle emoji icons */
+body:not(.dark) .dark-mode-btn::after {
   content: '☀️';
 }
 
-body.dark #dark-mode-toggle::after {
+body.dark .dark-mode-btn::after {
   content: '🌙';
 }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.5em;
-    padding: 10px;
+/* 
+ * Number input styling
+ * Browser default spinner controls are preserved and unstyled for usability—
+ * users can type directly or use the native spinner controls for numeric input.
+ */
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding: 2rem 1rem;
   }
-  .form-group {
-    width: 100%;
+  
+  .main-title {
+    font-size: 1.25rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
   }
-  select {
-    width: 100%;
-    max-width: 280px;
+  
+  .form-card,
+  .output-card {
+    padding: 1.5rem;
+  }
+  
+  .form-label {
+    font-size: 1rem;
+  }
+  
+  .select-field {
+    max-width: 100%;
+  }
+}
+
+/* Accessibility: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  /* Reduce blur intensity for better performance */
+  .glass-card,
+  .main-title,
+  .dark-mode-btn,
+  .input-field,
+  .select-field {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 }
