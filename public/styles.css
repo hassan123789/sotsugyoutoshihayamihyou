@@ -316,16 +316,11 @@ body.dark .dark-mode-btn::after {
   content: '🌙';
 }
 
-/* Remove default number input spinners for cleaner look */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-}
+/* 
+ * Number input styling
+ * Spinners are kept for accessibility - users can type directly 
+ * or use the spinner controls for numeric input
+ */
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
@@ -350,5 +345,23 @@ input[type="number"] {
   
   .select-field {
     max-width: 100%;
+  }
+}
+
+/* Accessibility: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  /* Reduce blur intensity for better performance */
+  .glass-card,
+  .main-title,
+  .dark-mode-btn,
+  .input-field,
+  .select-field {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 }
