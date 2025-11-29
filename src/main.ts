@@ -42,7 +42,13 @@ class JapaneseEraConverter {
   static toWareki(date: Date): string {
     for (const era of this.ERA_BOUNDARIES) {
       if (date >= era.startDate) {
-        const eraYear = date.getFullYear() - era.startDate.getFullYear() + 1;
+        let eraYear = date.getFullYear() - era.startDate.getFullYear();
+        if (
+          date.getMonth() > era.startDate.getMonth() ||
+          (date.getMonth() === era.startDate.getMonth() && date.getDate() >= era.startDate.getDate())
+        ) {
+          eraYear++;
+        }
         // 元年表示：1年目は「元」と表示する
         const yearStr = eraYear === 1 ? '元' : String(eraYear);
         return `${era.name}${yearStr}`;
