@@ -64,11 +64,11 @@ class AcademicYearCalculator {
         // 早生まれ判定: 1月1日〜4月1日は早生まれ（前の学年）
         // 4月2日以降は次の学年
         if (birthMonth < 4 || (birthMonth === 4 && birthDay === 1)) {
-            // 早生まれ: 前の学年（入学年度は誕生年と同じ）
+            // 早生まれ: 前年度の学年に所属（小学校入学は誕生年+6年後）
             return birthYear + 6;
         }
         else {
-            // 通常: 翌年度入学（入学年度は誕生年+1）
+            // 通常: 当年度の学年に所属（小学校入学は誕生年+7年後）
             return birthYear + 7;
         }
     }
