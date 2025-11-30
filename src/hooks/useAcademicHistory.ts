@@ -210,9 +210,32 @@ export function useAcademicHistory() {
     }
   }, [formState]);
 
-  // LocalStorageから復元
+  // LocalStorageから復元（URLパラメータ優先）
   const restoreFromStorage = useCallback(() => {
     if (typeof window === 'undefined') return;
+    
+    // URLパラメータから復元を試みる
+    const params = new URLSearchParams(window.location.search);
+    const birthParam = params.get('birth');
+    
+    if (birthParam) {
+      // birth=YYYY-MM-DD 形式
+      const match = birthParam.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (match) {
+        const [, year, month, day] = match;
+        setFormState((prev: FormState) => ({
+          ...prev,
+          calcMode: 'forward',
+          birthYear: year,
+          birthMonth: month,
+          birthDay: day,
+        }));
+        setIsInitialized(true);
+        return;
+      }
+    }
+    
+    // URLパラメータがない場合はLocalStorageから復元
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
@@ -224,6 +247,33 @@ export function useAcademicHistory() {
     }
     setIsInitialized(true);
   }, []);
+
+  // シェア用URL生成
+  const getShareUrl = useCallback(() => {
+    if (typeof window === 'undefined') return null;
+    if (formState.calcMode !== 'forward') return null;
+    if (!formState.birthYear || !formState.birthMonth || !formState.birthDay) return null;
+    
+    const baseUrl = window.location.origin + window.location.pathname;
+    const month = formState.birthMonth.padStart(2, '0');
+    const day = formState.birthDay.padStart(2, '0');
+    return `${baseUrl}?birth=${formState.birthYear}-${month}-${day}`;
+  }, [formState.calcMode, formState.birthYear, formState.birthMonth, formState.birthDay]);
+
+  // シェアデータ生成
+  const getShareData = useCallback(() => {
+    const url = getShareUrl();
+    if (!url) return null;
+    
+    const year = formState.birthYear;
+    const month = formState.birthMonth;
+    const day = formState.birthDay;
+    
+    return {
+      url,
+      text: `${year}年${month}月${day}日生まれの学歴早見表を作成しました！`,
+    };
+  }, [getShareUrl, formState.birthYear, formState.birthMonth, formState.birthDay]);
 
   // UI表示制御用のフラグ
   const showUniversityFields = useMemo(() => {
@@ -271,6 +321,7 @@ export function useAcademicHistory() {
     // ユーティリティ
     getResumeText,
     getReverseResultText,
+    getShareData,
     saveToStorage,
     restoreFromStorage,
 

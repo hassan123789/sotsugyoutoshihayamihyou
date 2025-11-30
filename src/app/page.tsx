@@ -5,6 +5,8 @@ import { useAcademicHistory } from '@/hooks/useAcademicHistory';
 import { InputForm } from '@/components/InputForm';
 import { HistoryTimeline, ReverseResult } from '@/components/HistoryTimeline';
 import { CopyButton } from '@/components/CopyButton';
+import { ShareButton } from '@/components/ShareButton';
+import { FAQ, faqJsonLd } from '@/components/FAQ';
 
 export default function HomePage() {
   const {
@@ -16,6 +18,7 @@ export default function HomePage() {
     autoCalculate,
     getResumeText,
     getReverseResultText,
+    getShareData,
     saveToStorage,
     restoreFromStorage,
     showUniversityFields,
@@ -80,12 +83,13 @@ export default function HomePage() {
 
           {/* コピーボタン（順方向で結果があるとき） */}
           {result?.type === 'forward' && result.data && (
-            <div className="mt-5">
+            <div className="mt-5 space-y-3">
               <CopyButton
                 getText={getResumeText}
                 label="履歴書形式でコピー"
                 className="w-full justify-center"
               />
+              <ShareButton getShareData={getShareData} />
             </div>
           )}
         </div>
@@ -123,6 +127,15 @@ export default function HomePage() {
           )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <FAQ />
+
+      {/* FAQ用JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
 
       {/* フッター */}
       <footer className="mt-14 pt-8 text-center text-sm border-t"

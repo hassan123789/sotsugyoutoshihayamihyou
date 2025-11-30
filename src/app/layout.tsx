@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
+import { PWAProvider } from '@/components/PWAProvider';
 import './globals.css';
 
 // SEO メタデータ
@@ -122,8 +123,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen transition-colors duration-300">
         <ThemeProvider>
-          <DarkModeToggle />
-          {children}
+          <PWAProvider>
+            <DarkModeToggle />
+            {children}
+          </PWAProvider>
         </ThemeProvider>
       </body>
     </html>
