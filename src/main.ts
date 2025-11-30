@@ -1,282 +1,379 @@
-/**
- * 学歴情報のインターフェース
- */
+/** 学歴情報 */
 interface AcademicHistory {
   schoolName: string;
   entranceYear: number;
-  entranceMonth: number;
   graduationYear: number;
-  graduationMonth: number;
-  duration: number;
   entranceWareki: string;
   graduationWareki: string;
 }
 
+/** 学校情報 */
 interface SchoolInfo {
   name: string;
   duration: number;
+  category: 'elementary' | 'junior' | 'highschool' | 'university' | 'graduate';
 }
 
-/**
- * 和暦変換クラス
- * 改元日を正確に判定する和暦変換ロジック
- */
-class JapaneseEraConverter {
-  /**
-   * 元号の境界日付を定義
-   * 各元号の開始日を厳密に定義
-   */
-  private static readonly ERA_BOUNDARIES = [
-    { name: '令和', startDate: new Date(2019, 4, 1) },    // 2019年5月1日〜
-    { name: '平成', startDate: new Date(1989, 0, 8) },    // 1989年1月8日〜2019年4月30日
-    { name: '昭和', startDate: new Date(1926, 11, 25) },  // 1926年12月25日〜1989年1月7日
-    { name: '大正', startDate: new Date(1912, 6, 30) },   // 1912年7月30日〜1926年12月24日
-    { name: '明治', startDate: new Date(1868, 8, 8) },    // 1868年9月8日〜1912年7月29日
-  ];
-
-  /**
-   * 指定された日付を和暦に変換する
-   * @param date 変換対象の日付
-   * @returns 和暦文字列（例: "令和元", "平成31"）
-   */
-  static toWareki(date: Date): string {
-    for (const era of this.ERA_BOUNDARIES) {
-      if (date >= era.startDate) {
-        // 元号開始年からの経過年数を計算
-        const eraStartYear = era.startDate.getFullYear();
-        const targetYear = date.getFullYear();
-        const eraYear = targetYear - eraStartYear + 1;
-        // 元年表示：1年目は「元」と表示する
-        const yearStr = eraYear === 1 ? '元' : String(eraYear);
-        return `${era.name}${yearStr}`;
-      }
-    }
-    return '';
-  }
-
-  /**
-   * 西暦年と月から和暦を取得する（入学・卒業月用）
-   * @param year 西暦年
-   * @param month 月（1-12）
-   * @returns 和暦文字列
-   */
-  static toWarekiFromYearMonth(year: number, month: number): string {
-    // 月の1日で判定（入学は4月1日、卒業は3月1日を想定）
-    const date = new Date(year, month - 1, 1);
-    return this.toWareki(date);
-  }
+/** 計算パラメータ（共通） */
+interface ExtraYears {
+  delay: number;
+  highschool: number;
+  university: number;
+  graduate: number;
 }
 
-/**
- * 学年度計算クラス
- * 早生まれ判定を含む基準年度算出
- */
-class AcademicYearCalculator {
-  /**
-   * 早生まれ判定を含む基準学年年度を算出
-   * 日本の学校教育法に基づき:
-   * - 4月1日生まれ: 前の学年（早生まれ）
-   * - 4月2日以降生まれ: 次の学年
-   * 
-   * @param birthDate 生年月日
-   * @returns 小学校入学年度（西暦）
-   */
-  static getBaseSchoolYear(birthDate: Date): number {
-    const birthYear = birthDate.getFullYear();
-    const birthMonth = birthDate.getMonth() + 1; // 0-indexed to 1-indexed
-    const birthDay = birthDate.getDate();
+/** 元号定義 */
+const ERA_BOUNDARIES = [
+  { name: '令和', start: new Date(2019, 4, 1) },
+  { name: '平成', start: new Date(1989, 0, 8) },
+  { name: '昭和', start: new Date(1926, 11, 25) },
+  { name: '大正', start: new Date(1912, 6, 30) },
+  { name: '明治', start: new Date(1868, 8, 8) },
+];
 
-    // 早生まれ判定: 1月1日〜4月1日は早生まれ（前の学年）
-    // 4月2日以降は次の学年
-    if (birthMonth < 4 || (birthMonth === 4 && birthDay === 1)) {
-      // 早生まれ: 前の暦年(4月2日〜12月31日)生まれと同じ学年に所属（小学校入学は誕生年+6年後）
-      return birthYear + 6;
-    } else {
-      // 通常: 当年度の学年に所属（小学校入学は誕生年+7年後）
-      return birthYear + 7;
+/** 大学種別マッピング */
+const UNIVERSITY_MAP: Record<string, SchoolInfo[]> = {
+  '0': [],
+  '2': [{ name: '短大・専門学校', duration: 2, category: 'university' }],
+  '3': [{ name: '専門学校', duration: 3, category: 'university' }],
+  '4': [{ name: '大学／専門学校', duration: 4, category: 'university' }],
+  '6': [{ name: '大学（医学部・薬学部等）', duration: 6, category: 'university' }],
+  '6-master': [
+    { name: '大学（学部）', duration: 4, category: 'university' },
+    { name: '大学院（修士）', duration: 2, category: 'graduate' },
+  ],
+  '9-doctor': [
+    { name: '大学（学部）', duration: 4, category: 'university' },
+    { name: '大学院（博士）', duration: 5, category: 'graduate' },
+  ],
+};
+
+/** 基礎学校リスト */
+const BASE_SCHOOLS: SchoolInfo[] = [
+  { name: '小学校', duration: 6, category: 'elementary' },
+  { name: '中学校', duration: 3, category: 'junior' },
+  { name: '高等学校', duration: 3, category: 'highschool' },
+];
+
+// ========== ユーティリティ関数 ==========
+
+/** 和暦変換 */
+function toWareki(year: number, month: number): string {
+  const date = new Date(year, month - 1, 1);
+  for (const era of ERA_BOUNDARIES) {
+    if (date >= era.start) {
+      const eraYear = year - era.start.getFullYear() + 1;
+      return `${era.name}${eraYear === 1 ? '元' : eraYear}`;
     }
   }
-
-  /**
-   * 学校情報リストを生成
-   * @param universityDuration 大学/専門学校の修業年数
-   * @returns 学校情報の配列
-   */
-  private static getSchoolList(universityDuration: string): SchoolInfo[] {
-    const schoolYears: SchoolInfo[] = [
-      { name: '小学校', duration: 6 },
-      { name: '中学校', duration: 3 },
-      { name: '高等学校', duration: 3 },
-    ];
-
-    // 大学/専門学校の修業年数を追加
-    if (universityDuration === '6-master') {
-      // 大学院修士まで（学部4年+修士2年）
-      schoolYears.push({ name: '大学（学部）', duration: 4 });
-      schoolYears.push({ name: '大学院（修士）', duration: 2 });
-    } else {
-      const duration = parseInt(universityDuration, 10);
-      if (duration === 6) {
-        schoolYears.push({ name: '大学（医学部・薬学部等）', duration: 6 });
-      } else if (duration === 2) {
-        schoolYears.push({ name: '短大・専門学校', duration: 2 });
-      } else if (duration === 3) {
-        schoolYears.push({ name: '専門学校', duration: 3 });
-      } else {
-        schoolYears.push({ name: '大学／専門学校', duration: 4 });
-      }
-    }
-
-    return schoolYears;
-  }
-
-  /**
-   * 学歴を計算する
-   * @param birthDate 生年月日
-   * @param universityDuration 大学/専門学校の修業年数
-   * @param delayYears 入学遅延年数（浪人等）- 高校卒業後の遅延
-   * @returns 学歴情報の配列
-   */
-  static calculateHistory(birthDate: Date, universityDuration: string, delayYears: number): AcademicHistory[] {
-    const history: AcademicHistory[] = [];
-    const schoolList = this.getSchoolList(universityDuration);
-    
-    // 小学校入学年度を算出（浪人年数は高校卒業後に適用）
-    let currentYear = this.getBaseSchoolYear(birthDate);
-    let isAfterHighSchool = false;
-
-    for (const school of schoolList) {
-      // 高校卒業後（大学・専門学校入学時）に浪人年数を加算
-      if (isAfterHighSchool === false && school.name !== '小学校' && school.name !== '中学校' && school.name !== '高等学校') {
-        currentYear += delayYears;
-        isAfterHighSchool = true;
-      }
-      const entranceYear = currentYear;
-      const graduationYear = currentYear + school.duration;
-      
-      const academicHistory: AcademicHistory = {
-        schoolName: school.name,
-        entranceYear: entranceYear,
-        entranceMonth: 4,
-        graduationYear: graduationYear,
-        graduationMonth: 3,
-        duration: school.duration,
-        entranceWareki: JapaneseEraConverter.toWarekiFromYearMonth(entranceYear, 4),
-        graduationWareki: JapaneseEraConverter.toWarekiFromYearMonth(graduationYear, 3),
-      };
-      
-      history.push(academicHistory);
-      currentYear = graduationYear;
-    }
-
-    return history;
-  }
+  return '';
 }
 
-/**
- * 学歴HTMLレンダラークラス
- * AcademicHistory[] からHTMLを生成
- */
-class AcademicHistoryRenderer {
-  /**
-   * 学歴情報をHTMLに変換する
-   * @param history 学歴情報の配列
-   * @returns HTML文字列
-   */
-  static render(history: AcademicHistory[]): string {
-    let result = '';
+/** 早生まれ判定を含む小学校入学年度算出 */
+function getElementaryEntranceYear(birthYear: number, birthMonth: number, birthDay: number): number {
+  const isEarlyBorn = birthMonth < 4 || (birthMonth === 4 && birthDay === 1);
+  return birthYear + (isEarlyBorn ? 6 : 7);
+}
 
-    for (const item of history) {
-      result += `<h3>${item.schoolName}入学</h3>`;
-      result += `<p>${item.entranceYear}年（${item.entranceWareki}年）${item.entranceMonth}月</p>`;
-      result += `<h3>${item.schoolName}卒業</h3>`;
-      result += `<p>${item.graduationYear}年（${item.graduationWareki}年）${item.graduationMonth}月</p>`;
+/** 学校リスト取得 */
+function getSchoolList(universityDuration: string): SchoolInfo[] {
+  return [...BASE_SCHOOLS, ...(UNIVERSITY_MAP[universityDuration] || UNIVERSITY_MAP['4'])];
+}
+
+/** カテゴリ別の追加年数取得 */
+function getExtraYears(category: SchoolInfo['category'], extra: ExtraYears): number {
+  const map: Record<string, number> = {
+    highschool: extra.highschool,
+    university: extra.university,
+    graduate: extra.graduate,
+  };
+  return map[category] || 0;
+}
+
+// ========== 計算ロジック ==========
+
+/** 学歴計算（順方向） */
+function calculateHistory(
+  birthYear: number, birthMonth: number, birthDay: number,
+  universityDuration: string, extra: ExtraYears
+): AcademicHistory[] {
+  const schools = getSchoolList(universityDuration);
+  let currentYear = getElementaryEntranceYear(birthYear, birthMonth, birthDay);
+  let delayApplied = false;
+
+  return schools.map(school => {
+    // 大学入学時に浪人年数を加算
+    if (!delayApplied && (school.category === 'university' || school.category === 'graduate')) {
+      currentYear += extra.delay;
+      delayApplied = true;
     }
 
-    return result;
+    const entranceYear = currentYear;
+    const extraYears = getExtraYears(school.category, extra);
+    const graduationYear = currentYear + school.duration + extraYears;
+    currentYear = graduationYear;
+
+    return {
+      schoolName: school.name,
+      entranceYear,
+      graduationYear,
+      entranceWareki: toWareki(entranceYear, 4),
+      graduationWareki: toWareki(graduationYear, 3),
+    };
+  });
+}
+
+/** 逆算（卒業年から生年を推定） */
+function estimateBirthYear(
+  graduationYear: number,
+  schoolType: 'university' | 'highschool' | 'junior',
+  universityDuration: string,
+  extra: ExtraYears
+): { earliest: number; latest: number } {
+  let years = 9; // 小学校6年 + 中学校3年
+
+  if (schoolType === 'highschool') {
+    years += 3 + extra.highschool;
+  } else if (schoolType === 'university') {
+    years += 3 + extra.highschool + extra.delay;
+    for (const school of getSchoolList(universityDuration)) {
+      if (school.category === 'university') years += school.duration + extra.university;
+      if (school.category === 'graduate') years += school.duration + extra.graduate;
+    }
   }
+
+  const entranceYear = graduationYear - years;
+  return { earliest: entranceYear - 7, latest: entranceYear - 6 };
 }
 
-/**
- * 学歴計算の統合関数（既存APIとの互換性のため）
- */
-function calculateSchoolHistory(year: number, month: number, day: number, universityDuration: string, delayYears: number): string {
-  const birthDate = new Date(year, month - 1, day);
-  const history = AcademicYearCalculator.calculateHistory(birthDate, universityDuration, delayYears);
-  return AcademicHistoryRenderer.render(history);
+// ========== HTML生成 ==========
+
+function renderHistory(history: AcademicHistory[]): string {
+  return history.map(h => `
+    <h3>${h.schoolName}入学</h3>
+    <p>${h.entranceYear}年（${h.entranceWareki}年）4月</p>
+    <h3>${h.schoolName}卒業</h3>
+    <p>${h.graduationYear}年（${h.graduationWareki}年）3月</p>
+  `).join('');
 }
 
-function validateInput(year: number, month: number, day: number): string | null {
+function renderReverseResult(
+  graduationYear: number,
+  schoolType: 'university' | 'highschool' | 'junior',
+  extra: ExtraYears,
+  universityDuration: string
+): string {
+  const { earliest, latest } = estimateBirthYear(graduationYear, schoolType, universityDuration, extra);
+  const label = { junior: '中学校', highschool: '高等学校', university: '大学等' }[schoolType];
+  
+  let result = `
+    <h2>逆算結果</h2>
+    <p><strong>${graduationYear}年3月に${label}を卒業した場合：</strong></p>
+    <p>推定生年月日の範囲：</p>
+    <p>${earliest}年4月2日 〜 ${latest}年4月1日</p>
+    <p class="note">（${toWareki(earliest, 4)}年 〜 ${toWareki(latest, 4)}年生まれ）</p>
+  `;
+  
+  if (extra.delay > 0) result += `<p class="note">※ 浪人${extra.delay}年を考慮</p>`;
+  if (extra.highschool + extra.university + extra.graduate > 0) {
+    result += `<p class="note">※ 留年・休学年数を考慮</p>`;
+  }
+  return result;
+}
+
+// ========== バリデーション ==========
+
+function validateDate(year: number, month: number, day: number): string | null {
   const currentYear = new Date().getFullYear();
-
-  // 年のバリデーション
-  if (isNaN(year)) {
-    return '年を入力してください。';
-  }
-  if (year < 1900) {
-    return '年は1900年以降を入力してください。';
-  }
-  if (year > currentYear) {
-    return `年は${currentYear}年以前を入力してください。`;
-  }
-
-  // 月のバリデーション
-  if (isNaN(month)) {
-    return '月を入力してください。';
-  }
-  if (month < 1 || month > 12) {
-    return '月は1〜12の範囲で入力してください。';
-  }
-
-  // 日のバリデーション
-  if (isNaN(day)) {
-    return '日を入力してください。';
-  }
-  if (day < 1 || day > 31) {
-    return '日は1〜31の範囲で入力してください。';
-  }
-
-  // 月ごとの日数チェック
+  if (isNaN(year)) return '年を入力してください。';
+  if (year < 1900 || year > currentYear) return `年は1900〜${currentYear}年の範囲で入力してください。`;
+  if (isNaN(month) || month < 1 || month > 12) return '月は1〜12の範囲で入力してください。';
+  if (isNaN(day) || day < 1 || day > 31) return '日は1〜31の範囲で入力してください。';
+  
   const daysInMonth = new Date(year, month, 0).getDate();
-  if (day > daysInMonth) {
-    return `${month}月は${daysInMonth}日までです。`;
-  }
-
+  if (day > daysInMonth) return `${month}月は${daysInMonth}日までです。`;
   return null;
 }
 
-const form = document.getElementById("form") as HTMLFormElement;
-const output = document.getElementById("output") as HTMLDivElement;
+// ========== フォームコントローラー ==========
 
-// 年入力フィールドのmax属性を現在の年に動的設定
-const yearInput = form.elements.namedItem("year") as HTMLInputElement;
-yearInput.max = String(new Date().getFullYear());
+class FormController {
+  private form = document.getElementById("form") as HTMLFormElement;
+  private output = document.getElementById("output") as HTMLDivElement;
+  private forwardInput = document.getElementById("forward-input") as HTMLElement;
+  private reverseInput = document.getElementById("reverse-input") as HTMLElement;
+  private debounceTimeout: number | null = null;
 
-form.addEventListener("submit", (event: Event) => {
-  event.preventDefault();
-
-  const year = parseInt((form.elements.namedItem("year") as HTMLInputElement).value);
-  const month = parseInt((form.elements.namedItem("month") as HTMLInputElement).value);
-  const day = parseInt((form.elements.namedItem("day") as HTMLInputElement).value);
-  const universityDuration = (form.elements.namedItem("universityDuration") as HTMLSelectElement).value;
-  const delayYears = parseInt((form.elements.namedItem("delayYears") as HTMLSelectElement).value, 10);
-
-  // 入力値のバリデーション
-  const validationError = validateInput(year, month, day);
-  if (validationError) {
-    output.innerHTML = `<p class="error-message">${validationError}</p>`;
-    return;
+  constructor() {
+    this.init();
   }
 
-  // 学歴の入学・卒業年度を計算する
-  const result = calculateSchoolHistory(year, month, day, universityDuration, delayYears);
+  private init(): void {
+    const currentYear = new Date().getFullYear();
+    this.getInput("year").max = String(currentYear);
+    this.getInput("reverseYear").max = String(currentYear + 30);
 
-  // 結果を表示する
-  output.innerHTML = "<h2>あなたの学歴</h2>" + result;
-});
+    // イベント設定
+    this.form.querySelectorAll('input[name="calcMode"]').forEach(r => 
+      r.addEventListener("change", () => this.toggleMode())
+    );
+    this.form.addEventListener("submit", e => { e.preventDefault(); this.calculate(); });
+    this.form.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener("change", () => this.autoCalculate());
+      if ((el as HTMLInputElement).type === 'number') {
+        el.addEventListener("input", () => this.debounce(() => this.autoCalculate(), 300));
+      }
+    });
 
-const darkModeToggle = document.getElementById("dark-mode-toggle") as HTMLButtonElement;
+    // 大学修業年数変更時にUI連動
+    this.getSelect("universityDuration").addEventListener("change", () => this.updateExtraFieldsVisibility());
+    // 逆算の学校種別変更時にUI連動
+    this.getSelect("reverseSchoolType").addEventListener("change", () => this.updateExtraFieldsVisibility());
 
-darkModeToggle.addEventListener("click", () => {
+    // 初期表示を更新
+    this.updateExtraFieldsVisibility();
+  }
+
+  /** 大学種別や計算モードに応じて留年・休学フィールドの表示を切り替え */
+  private updateExtraFieldsVisibility(): void {
+    const universityDuration = this.getSelect("universityDuration").value;
+    const calcMode = this.getCalcMode();
+    const schoolType = this.getSelect("reverseSchoolType").value;
+
+    const universityItem = document.getElementById("universityExtra")?.closest(".adjustment-item") as HTMLElement;
+    const graduateItem = document.getElementById("graduateExtra")?.closest(".adjustment-item") as HTMLElement;
+    const highschoolItem = document.getElementById("highschoolExtra")?.closest(".adjustment-item") as HTMLElement;
+    const delayGroup = this.getSelect("delayYears").closest(".form-group") as HTMLElement;
+    const universityGroup = this.getSelect("universityDuration").closest(".form-group") as HTMLElement;
+
+    // デフォルト表示
+    if (highschoolItem) highschoolItem.style.display = 'flex';
+    if (universityItem) universityItem.style.display = 'flex';
+    if (graduateItem) graduateItem.style.display = 'flex';
+    if (delayGroup) delayGroup.style.display = 'block';
+    if (universityGroup) universityGroup.style.display = 'block';
+
+    // 逆算モードで学校種別に応じて調整
+    if (calcMode === 'reverse') {
+      if (schoolType === 'junior') {
+        // 中卒：大学、大学院、高校関連すべて非表示
+        if (highschoolItem) highschoolItem.style.display = 'none';
+        if (universityItem) universityItem.style.display = 'none';
+        if (graduateItem) graduateItem.style.display = 'none';
+        if (delayGroup) delayGroup.style.display = 'none';
+        if (universityGroup) universityGroup.style.display = 'none';
+      } else if (schoolType === 'highschool') {
+        // 高卒：大学関連非表示
+        if (universityItem) universityItem.style.display = 'none';
+        if (graduateItem) graduateItem.style.display = 'none';
+        if (delayGroup) delayGroup.style.display = 'none';
+        if (universityGroup) universityGroup.style.display = 'none';
+      }
+    }
+
+    // 順方向で進学しない場合
+    if (calcMode === 'forward' && universityDuration === '0') {
+      if (universityItem) universityItem.style.display = 'none';
+      if (graduateItem) graduateItem.style.display = 'none';
+      if (delayGroup) delayGroup.style.display = 'none';
+    }
+
+    // 大学院がない場合
+    if (!universityDuration.includes('master') && !universityDuration.includes('doctor')) {
+      if (graduateItem) graduateItem.style.display = 'none';
+    }
+  }
+
+  private getInput(name: string): HTMLInputElement {
+    return this.form.elements.namedItem(name) as HTMLInputElement;
+  }
+
+  private getSelect(name: string): HTMLSelectElement {
+    return this.form.elements.namedItem(name) as HTMLSelectElement;
+  }
+
+  private getExtra(): ExtraYears {
+    return {
+      delay: parseInt(this.getSelect("delayYears").value) || 0,
+      highschool: parseInt(this.getSelect("highschoolExtra").value) || 0,
+      university: parseInt(this.getSelect("universityExtra").value) || 0,
+      graduate: parseInt(this.getSelect("graduateExtra").value) || 0,
+    };
+  }
+
+  private getCalcMode(): string {
+    return (this.form.querySelector('input[name="calcMode"]:checked') as HTMLInputElement)?.value || 'forward';
+  }
+
+  private debounce(fn: () => void, ms: number): void {
+    if (this.debounceTimeout) clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = window.setTimeout(fn, ms);
+  }
+
+  private toggleMode(): void {
+    const isForward = this.getCalcMode() === 'forward';
+    this.forwardInput.style.display = isForward ? 'block' : 'none';
+    this.reverseInput.style.display = isForward ? 'none' : 'block';
+    this.output.innerHTML = '<p class="output-placeholder">ここに結果が表示されます。</p>';
+    this.updateExtraFieldsVisibility();
+  }
+
+  private autoCalculate(): void {
+    if (this.getCalcMode() === 'forward') {
+      const { year, month, day } = this.getBirthDate();
+      if (year && month && day) this.calculate();
+    } else {
+      if (this.getInput("reverseYear").value) this.calculate();
+    }
+  }
+
+  private getBirthDate() {
+    return {
+      year: this.getInput("year").value,
+      month: this.getInput("month").value,
+      day: this.getInput("day").value,
+    };
+  }
+
+  private calculate(): void {
+    if (this.getCalcMode() === 'forward') {
+      this.calculateForward();
+    } else {
+      this.calculateReverse();
+    }
+  }
+
+  private calculateForward(): void {
+    const year = parseInt(this.getInput("year").value);
+    const month = parseInt(this.getInput("month").value);
+    const day = parseInt(this.getInput("day").value);
+
+    const error = validateDate(year, month, day);
+    if (error) {
+      this.output.innerHTML = `<p class="error-message">${error}</p>`;
+      return;
+    }
+
+    const history = calculateHistory(year, month, day, this.getSelect("universityDuration").value, this.getExtra());
+    this.output.innerHTML = "<h2>あなたの学歴</h2>" + renderHistory(history);
+  }
+
+  private calculateReverse(): void {
+    const year = parseInt(this.getInput("reverseYear").value);
+    if (isNaN(year) || year < 1950 || year > 2100) {
+      this.output.innerHTML = `<p class="error-message">有効な卒業年を入力してください。</p>`;
+      return;
+    }
+
+    const schoolType = this.getSelect("reverseSchoolType").value as 'university' | 'highschool' | 'junior';
+    this.output.innerHTML = renderReverseResult(year, schoolType, this.getExtra(), this.getSelect("universityDuration").value);
+  }
+}
+
+// ========== 初期化 ==========
+
+document.getElementById("dark-mode-toggle")?.addEventListener("click", () => {
   document.body.classList.toggle("dark");
 });
+
+new FormController();

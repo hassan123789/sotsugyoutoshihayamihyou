@@ -188,6 +188,63 @@ body {
   padding-top: 1rem;
 }
 
+/* Radio button styles */
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.radio-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+/* Adjustment grid for extra years */
+.adjustment-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.adjustment-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adjustment-item label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.select-small {
+  width: 5rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Input suffix (年3月 など) */
+.input-suffix {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
 /* Submit button */
 .submit-btn {
   padding: 1rem 2rem;
@@ -261,6 +318,13 @@ body {
 #output p {
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
+}
+
+#output .note {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  margin-top: 0.25rem;
 }
 
 /* Error message styling */
