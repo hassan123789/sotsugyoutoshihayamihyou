@@ -1,17 +1,14 @@
 // Components - バレルエクスポート
 // 使用例: import { InputForm, CopyButton, ThemeProvider } from '@/components';
 
-// UI Components
-export * from './ui';
-
-// Providers
-export * from './providers';
+// Ads
+export * from './ads';
+// Analytics
+export * from './analytics';
 
 // Features
 export * from './features';
-
-// Ads
-export * from './ads';
-
-// Analytics
-export * from './analytics';
+// Providers
+export * from './providers';
+// UI Components
+export * from './ui';

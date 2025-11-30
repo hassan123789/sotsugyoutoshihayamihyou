@@ -1,37 +1,42 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import type { AcademicEvent } from '@/lib/types';
+import { useRef, useState } from 'react';
 import { toWareki } from '@/lib/academic';
 import { useLocale } from '@/lib/i18n';
+import type { AcademicEvent } from '@/lib/types';
 
 interface PDFButtonProps {
-  events: AcademicEvent[];
-  birthYear: number;
-  birthMonth: number;
-  birthDay: number;
+	events: AcademicEvent[];
+	birthYear: number;
+	birthMonth: number;
+	birthDay: number;
 }
 
-export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButtonProps) {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { t } = useLocale();
+export function PDFButton({
+	events,
+	birthYear,
+	birthMonth,
+	birthDay,
+}: PDFButtonProps) {
+	const [isGenerating, setIsGenerating] = useState(false);
+	const _containerRef = useRef<HTMLDivElement>(null);
+	const { t } = useLocale();
 
-  const generatePDF = async () => {
-    setIsGenerating(true);
-    
-    try {
-      // 動的インポート
-      const [jsPDFModule, html2canvasModule] = await Promise.all([
-        import('jspdf'),
-        import('html2canvas')
-      ]);
-      const jsPDF = jsPDFModule.default;
-      const html2canvas = html2canvasModule.default;
+	const generatePDF = async () => {
+		setIsGenerating(true);
 
-      // 一時的なHTML要素を作成
-      const tempDiv = document.createElement('div');
-      tempDiv.style.cssText = `
+		try {
+			// 動的インポート
+			const [jsPDFModule, html2canvasModule] = await Promise.all([
+				import('jspdf'),
+				import('html2canvas'),
+			]);
+			const jsPDF = jsPDFModule.default;
+			const html2canvas = html2canvasModule.default;
+
+			// 一時的なHTML要素を作成
+			const tempDiv = document.createElement('div');
+			tempDiv.style.cssText = `
         position: absolute;
         left: -9999px;
         top: 0;
@@ -42,8 +47,8 @@ export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButton
         color: #1a1a1a;
       `;
 
-      // HTMLコンテンツを構築
-      tempDiv.innerHTML = `
+			// HTMLコンテンツを構築
+			tempDiv.innerHTML = `
         <div style="text-align: center; margin-bottom: 24px;">
           <h1 style="font-size: 28px; font-weight: bold; color: #2C5282; margin: 0 0 12px 0;">
             📚 学歴早見表
@@ -62,7 +67,9 @@ export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButton
             </tr>
           </thead>
           <tbody>
-            ${events.map((event, i) => `
+            ${events
+							.map(
+								(event, i) => `
               <tr style="background: ${i % 2 === 0 ? '#ffffff' : '#f9fafb'};">
                 <td style="padding: 8px; border-bottom: 1px solid #e2e8f0; white-space: nowrap;">
                   ${event.year}年${event.month}月<br/>
@@ -77,7 +84,9 @@ export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButton
                   ${event.age}歳
                 </td>
               </tr>
-            `).join('')}
+            `,
+							)
+							.join('')}
           </tbody>
         </table>
         <hr style="border: none; border-top: 2px solid #e2e8f0; margin: 20px 0;" />
@@ -86,81 +95,106 @@ export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButton
         </p>
       `;
 
-      document.body.appendChild(tempDiv);
+			document.body.appendChild(tempDiv);
 
-      // html2canvasでキャプチャ
-      const canvas = await html2canvas(tempDiv, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff',
-      });
+			// html2canvasでキャプチャ
+			const canvas = await html2canvas(tempDiv, {
+				scale: 2,
+				useCORS: true,
+				backgroundColor: '#ffffff',
+			});
 
-      document.body.removeChild(tempDiv);
+			document.body.removeChild(tempDiv);
 
-      // PDFを作成
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 210; // A4幅 (mm)
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      const doc = new jsPDF({
-        orientation: imgHeight > 297 ? 'portrait' : 'portrait',
-        unit: 'mm',
-        format: 'a4',
-      });
+			// PDFを作成
+			const imgData = canvas.toDataURL('image/png');
+			const imgWidth = 210; // A4幅 (mm)
+			const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      // ページ分割処理
-      const pageHeight = 297; // A4高さ (mm)
-      let heightLeft = imgHeight;
-      let position = 0;
-      
-      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        doc.addPage();
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+			const doc = new jsPDF({
+				orientation: imgHeight > 297 ? 'portrait' : 'portrait',
+				unit: 'mm',
+				format: 'a4',
+			});
 
-      // ダウンロード
-      doc.save(`学歴早見表_${birthYear}年${birthMonth}月${birthDay}日生まれ.pdf`);
-    } catch (error) {
-      console.error('PDF generation failed:', error);
-      alert(t.pdfFailed);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
+			// ページ分割処理
+			const pageHeight = 297; // A4高さ (mm)
+			let heightLeft = imgHeight;
+			let position = 0;
 
-  return (
-    <button
-      onClick={generatePDF}
-      disabled={isGenerating}
-      className="w-full px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2"
-      style={{
-        background: isGenerating ? 'var(--color-border)' : 'var(--color-card)',
-        color: isGenerating ? 'var(--color-text-muted)' : 'var(--color-primary)',
-        border: '1px solid var(--color-border)',
-        cursor: isGenerating ? 'not-allowed' : 'pointer',
-      }}
-    >
-      {isGenerating ? (
-        <>
-          <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-          </svg>
-          {t.pdfGenerating}
-        </>
-      ) : (
-        <>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          {t.downloadPDF}
-        </>
-      )}
-    </button>
-  );
+			doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+			heightLeft -= pageHeight;
+
+			while (heightLeft > 0) {
+				position = heightLeft - imgHeight;
+				doc.addPage();
+				doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+				heightLeft -= pageHeight;
+			}
+
+			// ダウンロード
+			doc.save(
+				`学歴早見表_${birthYear}年${birthMonth}月${birthDay}日生まれ.pdf`,
+			);
+		} catch (error) {
+			console.error('PDF generation failed:', error);
+			alert(t.pdfFailed);
+		} finally {
+			setIsGenerating(false);
+		}
+	};
+
+	return (
+		<button
+			onClick={generatePDF}
+			disabled={isGenerating}
+			className="w-full px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2"
+			style={{
+				background: isGenerating ? 'var(--color-border)' : 'var(--color-card)',
+				color: isGenerating
+					? 'var(--color-text-muted)'
+					: 'var(--color-primary)',
+				border: '1px solid var(--color-border)',
+				cursor: isGenerating ? 'not-allowed' : 'pointer',
+			}}
+		>
+			{isGenerating ? (
+				<>
+					<svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+						<circle
+							className="opacity-25"
+							cx="12"
+							cy="12"
+							r="10"
+							stroke="currentColor"
+							strokeWidth="4"
+						/>
+						<path
+							className="opacity-75"
+							fill="currentColor"
+							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+						/>
+					</svg>
+					{t.pdfGenerating}
+				</>
+			) : (
+				<>
+					<svg
+						className="w-5 h-5"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+						/>
+					</svg>
+					{t.downloadPDF}
+				</>
+			)}
+		</button>
+	);
 }

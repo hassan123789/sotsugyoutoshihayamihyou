@@ -1,9 +1,8 @@
 // OGP画像をPNG形式で生成するスクリプト
 // npx ts-node scripts/generate-ogp-png.ts
 
-import sharp from 'sharp';
-import * as fs from 'fs';
 import * as path from 'path';
+import sharp from 'sharp';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -12,10 +11,10 @@ const publicDir = path.join(__dirname, '..', 'public');
 
 // メインOGP画像（1200x630）
 async function generateMainOGP(): Promise<void> {
-  const width = 1200;
-  const height = 630;
+	const width = 1200;
+	const height = 630;
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FAFBFC"/>
@@ -81,19 +80,19 @@ async function generateMainOGP(): Promise<void> {
   <text x="600" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#718096">sotsugyoutoshihayamihyou.vercel.app</text>
 </svg>`;
 
-  await sharp(Buffer.from(svg))
-    .png()
-    .toFile(path.join(publicDir, 'og-image.png'));
+	await sharp(Buffer.from(svg))
+		.png()
+		.toFile(path.join(publicDir, 'og-image.png'));
 
-  console.log('✅ Generated: og-image.png (1200x630)');
+	console.log('✅ Generated: og-image.png (1200x630)');
 }
 
 // Twitter用OGP画像（より正方形に近い比率）
 async function generateTwitterOGP(): Promise<void> {
-  const width = 1200;
-  const height = 600;
+	const width = 1200;
+	const height = 600;
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FAFBFC"/>
@@ -129,19 +128,19 @@ async function generateTwitterOGP(): Promise<void> {
   <text x="400" y="520" font-family="Arial, sans-serif" font-size="24" fill="#A0AEC0">sotsugyoutoshihayamihyou.vercel.app</text>
 </svg>`;
 
-  await sharp(Buffer.from(svg))
-    .png()
-    .toFile(path.join(publicDir, 'twitter-image.png'));
+	await sharp(Buffer.from(svg))
+		.png()
+		.toFile(path.join(publicDir, 'twitter-image.png'));
 
-  console.log('✅ Generated: twitter-image.png (1200x600)');
+	console.log('✅ Generated: twitter-image.png (1200x600)');
 }
 
 // LINEシェア用画像
 async function generateLineOGP(): Promise<void> {
-  const width = 520;
-  const height = 520;
+	const width = 520;
+	const height = 520;
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#2C5282"/>
@@ -166,21 +165,21 @@ async function generateLineOGP(): Promise<void> {
   <text x="260" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.7)">西暦・和暦対応 ｜ 完全無料</text>
 </svg>`;
 
-  await sharp(Buffer.from(svg))
-    .png()
-    .toFile(path.join(publicDir, 'line-image.png'));
+	await sharp(Buffer.from(svg))
+		.png()
+		.toFile(path.join(publicDir, 'line-image.png'));
 
-  console.log('✅ Generated: line-image.png (520x520)');
+	console.log('✅ Generated: line-image.png (520x520)');
 }
 
 async function main() {
-  console.log('🎨 Generating OGP images (PNG)...\n');
+	console.log('🎨 Generating OGP images (PNG)...\n');
 
-  await generateMainOGP();
-  await generateTwitterOGP();
-  await generateLineOGP();
+	await generateMainOGP();
+	await generateTwitterOGP();
+	await generateLineOGP();
 
-  console.log('\n✅ All OGP images generated successfully!');
+	console.log('\n✅ All OGP images generated successfully!');
 }
 
 main().catch(console.error);

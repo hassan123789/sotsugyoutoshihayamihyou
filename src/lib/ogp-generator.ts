@@ -2,38 +2,38 @@
 // 静的エクスポート向けに、SVGベースのOGP画像を生成します
 
 interface OGPImageData {
-  year: number;
-  academicYear: string;
-  description: string;
+	year: number;
+	academicYear: string;
+	description: string;
 }
 
 // 学年度を計算
 function calculateAcademicYear(year: number): string {
-  // 4月2日生まれの場合の学年
-  const entryYear = year + 6;
-  const graduationYear = year + 18;
-  return `${entryYear}年入学〜${graduationYear}年卒業`;
+	// 4月2日生まれの場合の学年
+	const entryYear = year + 6;
+	const graduationYear = year + 18;
+	return `${entryYear}年入学〜${graduationYear}年卒業`;
 }
 
 // 和暦変換
 function toWareki(year: number): string {
-  if (year >= 2019) {
-    return `令和${year - 2018}年`;
-  } else if (year >= 1989) {
-    return `平成${year - 1988}年`;
-  } else if (year >= 1926) {
-    return `昭和${year - 1925}年`;
-  } else {
-    return `${year}年`;
-  }
+	if (year >= 2019) {
+		return `令和${year - 2018}年`;
+	} else if (year >= 1989) {
+		return `平成${year - 1988}年`;
+	} else if (year >= 1926) {
+		return `昭和${year - 1925}年`;
+	} else {
+		return `${year}年`;
+	}
 }
 
 // OGP用SVG生成
 export function generateOGPSVG(year: number): string {
-  const academicInfo = calculateAcademicYear(year);
-  const wareki = toWareki(year);
-  
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+	const _academicInfo = calculateAcademicYear(year);
+	const wareki = toWareki(year);
+
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FAFBFC"/>
@@ -95,9 +95,9 @@ export function generateOGPSVG(year: number): string {
 
 // 使用例: 静的サイト生成時にビルドスクリプトで各年度のOGP画像を生成
 export function generateAllOGPImages(): Map<number, string> {
-  const images = new Map<number, string>();
-  for (let year = 1950; year <= 2020; year++) {
-    images.set(year, generateOGPSVG(year));
-  }
-  return images;
+	const images = new Map<number, string>();
+	for (let year = 1950; year <= 2020; year++) {
+		images.set(year, generateOGPSVG(year));
+	}
+	return images;
 }

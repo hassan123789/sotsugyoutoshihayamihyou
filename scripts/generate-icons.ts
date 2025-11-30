@@ -7,10 +7,10 @@ const outputDir = path.join(process.cwd(), 'public', 'icons');
 
 // アイコンのSVG（学歴をイメージした卒業帽デザイン）
 function generateIconSVG(size: number, maskable: boolean = false): string {
-  const padding = maskable ? size * 0.1 : 0;
-  const iconSize = size - padding * 2;
-  
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+	const padding = maskable ? size * 0.1 : 0;
+	const _iconSize = size - padding * 2;
+
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#2C5282"/>
@@ -35,7 +35,7 @@ function generateIconSVG(size: number, maskable: boolean = false): string {
   </g>
   
   <!-- テキスト「学」-->
-  <text x="${size/2}" y="${size * 0.78}" 
+  <text x="${size / 2}" y="${size * 0.78}" 
         font-family="Arial, sans-serif" 
         font-size="${size * 0.28}" 
         font-weight="bold" 
@@ -45,31 +45,30 @@ function generateIconSVG(size: number, maskable: boolean = false): string {
 }
 
 async function generateIcons() {
-  // ディレクトリ確認
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
+	// ディレクトリ確認
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+	}
 
-  for (const size of sizes) {
-    // 通常アイコン
-    const normalSvg = generateIconSVG(size, false);
-    const normalPngPath = path.join(outputDir, `icon-${size}x${size}.png`);
-    await sharp(Buffer.from(normalSvg))
-      .png()
-      .toFile(normalPngPath);
-    console.log(`Generated: icon-${size}x${size}.png`);
-    
-    // Maskableアイコン
-    const maskableSvg = generateIconSVG(size, true);
-    const maskablePngPath = path.join(outputDir, `icon-maskable-${size}x${size}.png`);
-    await sharp(Buffer.from(maskableSvg))
-      .png()
-      .toFile(maskablePngPath);
-    console.log(`Generated: icon-maskable-${size}x${size}.png`);
-  }
+	for (const size of sizes) {
+		// 通常アイコン
+		const normalSvg = generateIconSVG(size, false);
+		const normalPngPath = path.join(outputDir, `icon-${size}x${size}.png`);
+		await sharp(Buffer.from(normalSvg)).png().toFile(normalPngPath);
+		console.log(`Generated: icon-${size}x${size}.png`);
 
-  console.log('\n✅ PNGアイコンを生成しました！');
-  console.log(`📁 出力先: ${outputDir}`);
+		// Maskableアイコン
+		const maskableSvg = generateIconSVG(size, true);
+		const maskablePngPath = path.join(
+			outputDir,
+			`icon-maskable-${size}x${size}.png`,
+		);
+		await sharp(Buffer.from(maskableSvg)).png().toFile(maskablePngPath);
+		console.log(`Generated: icon-maskable-${size}x${size}.png`);
+	}
+
+	console.log('\n✅ PNGアイコンを生成しました！');
+	console.log(`📁 出力先: ${outputDir}`);
 }
 
 generateIcons().catch(console.error);

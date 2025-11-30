@@ -6,7 +6,7 @@ const outputDir = path.join(process.cwd(), 'public', 'store-assets');
 
 // フィーチャーグラフィック（1024x500）
 function generateFeatureGraphicSVG(): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
   <defs>
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#1a365d"/>
@@ -64,11 +64,11 @@ function generateFeatureGraphicSVG(): string {
 
 // スクリーンショット（1080x1920 - 9:16）
 function generatePhoneScreenshotSVG(variant: number): string {
-  const variants = [
-    {
-      title: '生年月日を入力',
-      subtitle: '簡単3ステップ',
-      content: `
+	const variants = [
+		{
+			title: '生年月日を入力',
+			subtitle: '簡単3ステップ',
+			content: `
         <rect x="90" y="450" width="900" height="120" rx="16" fill="white"/>
         <text x="150" y="520" font-size="36" fill="#666">生年月日</text>
         <text x="550" y="520" font-size="40" fill="#333" font-weight="bold">2000年 4月 15日</text>
@@ -77,12 +77,12 @@ function generatePhoneScreenshotSVG(variant: number): string {
         <text x="150" y="670" font-size="36" fill="#666">誕生月</text>
         <text x="550" y="670" font-size="40" fill="#333" font-weight="bold">4月〜翌3月生まれ</text>
       `,
-      highlight: '🎓',
-    },
-    {
-      title: '学歴を自動計算',
-      subtitle: '小学校から大学院まで',
-      content: `
+			highlight: '🎓',
+		},
+		{
+			title: '学歴を自動計算',
+			subtitle: '小学校から大学院まで',
+			content: `
         <g transform="translate(90, 420)">
           <rect width="900" height="100" rx="12" fill="white"/>
           <circle cx="50" cy="50" r="30" fill="#4299E1"/>
@@ -112,12 +112,12 @@ function generatePhoneScreenshotSVG(variant: number): string {
           <text x="120" y="75" font-size="24" fill="#666">2019年4月入学 → 2023年3月卒業</text>
         </g>
       `,
-      highlight: '📚',
-    },
-    {
-      title: '和暦・西暦対応',
-      subtitle: '令和・平成・昭和',
-      content: `
+			highlight: '📚',
+		},
+		{
+			title: '和暦・西暦対応',
+			subtitle: '令和・平成・昭和',
+			content: `
         <rect x="90" y="420" width="900" height="200" rx="16" fill="white"/>
         <text x="150" y="480" font-size="32" fill="#666">西暦</text>
         <text x="550" y="480" font-size="42" fill="#2C5282" font-weight="bold">2019年4月</text>
@@ -132,12 +132,12 @@ function generatePhoneScreenshotSVG(variant: number): string {
         <text x="150" y="820" font-size="32" fill="#666">和暦</text>
         <text x="550" y="820" font-size="42" fill="#D53F8C" font-weight="bold">平成7年3月</text>
       `,
-      highlight: '📅',
-    },
-    {
-      title: 'コピー＆共有',
-      subtitle: '履歴書にそのまま貼り付け',
-      content: `
+			highlight: '📅',
+		},
+		{
+			title: 'コピー＆共有',
+			subtitle: '履歴書にそのまま貼り付け',
+			content: `
         <rect x="90" y="420" width="900" height="300" rx="16" fill="white"/>
         <text x="150" y="490" font-size="28" fill="#333">学歴</text>
         <text x="150" y="550" font-size="24" fill="#666">2013年3月　○○市立○○小学校　卒業</text>
@@ -154,13 +154,13 @@ function generatePhoneScreenshotSVG(variant: number): string {
           <text x="125" y="48" font-size="28" fill="white" text-anchor="middle" font-weight="bold">📤 共有</text>
         </g>
       `,
-      highlight: '📋',
-    },
-  ];
+			highlight: '📋',
+		},
+	];
 
-  const v = variants[variant];
+	const v = variants[variant];
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#EBF8FF"/>
@@ -206,10 +206,10 @@ function generatePhoneScreenshotSVG(variant: number): string {
 
 // タブレット用スクリーンショット（1920x1200 - 16:10に近い）
 function generateTabletScreenshotSVG(size: '7inch' | '10inch'): string {
-  const width = size === '7inch' ? 1920 : 2560;
-  const height = size === '7inch' ? 1200 : 1600;
+	const width = size === '7inch' ? 1920 : 2560;
+	const height = size === '7inch' ? 1200 : 1600;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#EBF8FF"/>
@@ -250,7 +250,7 @@ function generateTabletScreenshotSVG(size: '7inch' | '10inch'): string {
     <text x="${width * 0.02}" y="${height * 0.07}" font-size="${height * 0.018}" fill="#666">2007年4月入学 → 2013年3月卒業</text>
   </g>
   
-  <g transform="translate(${width * 0.54}, ${height * 0.40})">
+  <g transform="translate(${width * 0.54}, ${height * 0.4})">
     <rect width="${width * 0.4}" height="${height * 0.1}" rx="10" fill="#F0FFF4"/>
     <text x="${width * 0.02}" y="${height * 0.04}" font-size="${height * 0.022}" fill="#276749" font-weight="bold">中学校</text>
     <text x="${width * 0.02}" y="${height * 0.07}" font-size="${height * 0.018}" fill="#666">2013年4月入学 → 2016年3月卒業</text>
@@ -271,57 +271,69 @@ function generateTabletScreenshotSVG(size: '7inch' | '10inch'): string {
 }
 
 async function generateAssets() {
-  // ディレクトリ作成
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
+	// ディレクトリ作成
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+	}
 
-  console.log('🎨 Generating store assets...\n');
+	console.log('🎨 Generating store assets...\n');
 
-  // 1. フィーチャーグラフィック（1024x500）
-  console.log('📸 Generating feature graphic (1024x500)...');
-  const featureSvg = generateFeatureGraphicSVG();
-  await sharp(Buffer.from(featureSvg))
-    .png()
-    .toFile(path.join(outputDir, 'feature-graphic.png'));
-  console.log('   ✅ feature-graphic.png');
+	// 1. フィーチャーグラフィック（1024x500）
+	console.log('📸 Generating feature graphic (1024x500)...');
+	const featureSvg = generateFeatureGraphicSVG();
+	await sharp(Buffer.from(featureSvg))
+		.png()
+		.toFile(path.join(outputDir, 'feature-graphic.png'));
+	console.log('   ✅ feature-graphic.png');
 
-  // 2. 電話スクリーンショット（1080x1920）
-  console.log('\n📱 Generating phone screenshots (1080x1920)...');
-  for (let i = 0; i < 4; i++) {
-    const phoneSvg = generatePhoneScreenshotSVG(i);
-    await sharp(Buffer.from(phoneSvg))
-      .png()
-      .toFile(path.join(outputDir, `phone-screenshot-${i + 1}.png`));
-    console.log(`   ✅ phone-screenshot-${i + 1}.png`);
-  }
+	// 2. 電話スクリーンショット（1080x1920）
+	console.log('\n📱 Generating phone screenshots (1080x1920)...');
+	for (let i = 0; i < 4; i++) {
+		const phoneSvg = generatePhoneScreenshotSVG(i);
+		await sharp(Buffer.from(phoneSvg))
+			.png()
+			.toFile(path.join(outputDir, `phone-screenshot-${i + 1}.png`));
+		console.log(`   ✅ phone-screenshot-${i + 1}.png`);
+	}
 
-  // 3. 7インチタブレットスクリーンショット
-  console.log('\n📱 Generating 7-inch tablet screenshot (1920x1200)...');
-  const tablet7Svg = generateTabletScreenshotSVG('7inch');
-  await sharp(Buffer.from(tablet7Svg))
-    .png()
-    .toFile(path.join(outputDir, 'tablet-7inch-screenshot.png'));
-  console.log('   ✅ tablet-7inch-screenshot.png');
+	// 3. 7インチタブレットスクリーンショット
+	console.log('\n📱 Generating 7-inch tablet screenshot (1920x1200)...');
+	const tablet7Svg = generateTabletScreenshotSVG('7inch');
+	await sharp(Buffer.from(tablet7Svg))
+		.png()
+		.toFile(path.join(outputDir, 'tablet-7inch-screenshot.png'));
+	console.log('   ✅ tablet-7inch-screenshot.png');
 
-  // 4. 10インチタブレットスクリーンショット
-  console.log('\n📱 Generating 10-inch tablet screenshot (2560x1600)...');
-  const tablet10Svg = generateTabletScreenshotSVG('10inch');
-  await sharp(Buffer.from(tablet10Svg))
-    .png()
-    .toFile(path.join(outputDir, 'tablet-10inch-screenshot.png'));
-  console.log('   ✅ tablet-10inch-screenshot.png');
+	// 4. 10インチタブレットスクリーンショット
+	console.log('\n📱 Generating 10-inch tablet screenshot (2560x1600)...');
+	const tablet10Svg = generateTabletScreenshotSVG('10inch');
+	await sharp(Buffer.from(tablet10Svg))
+		.png()
+		.toFile(path.join(outputDir, 'tablet-10inch-screenshot.png'));
+	console.log('   ✅ tablet-10inch-screenshot.png');
 
-  console.log('\n✨ All store assets generated successfully!');
-  console.log(`\n📂 Output directory: ${outputDir}`);
-  console.log('\n📋 Generated files:');
-  console.log('   • feature-graphic.png (1024x500) - フィーチャーグラフィック');
-  console.log('   • phone-screenshot-1.png (1080x1920) - 電話スクリーンショット1');
-  console.log('   • phone-screenshot-2.png (1080x1920) - 電話スクリーンショット2');
-  console.log('   • phone-screenshot-3.png (1080x1920) - 電話スクリーンショット3');
-  console.log('   • phone-screenshot-4.png (1080x1920) - 電話スクリーンショット4');
-  console.log('   • tablet-7inch-screenshot.png (1920x1200) - 7インチタブレット');
-  console.log('   • tablet-10inch-screenshot.png (2560x1600) - 10インチタブレット');
+	console.log('\n✨ All store assets generated successfully!');
+	console.log(`\n📂 Output directory: ${outputDir}`);
+	console.log('\n📋 Generated files:');
+	console.log('   • feature-graphic.png (1024x500) - フィーチャーグラフィック');
+	console.log(
+		'   • phone-screenshot-1.png (1080x1920) - 電話スクリーンショット1',
+	);
+	console.log(
+		'   • phone-screenshot-2.png (1080x1920) - 電話スクリーンショット2',
+	);
+	console.log(
+		'   • phone-screenshot-3.png (1080x1920) - 電話スクリーンショット3',
+	);
+	console.log(
+		'   • phone-screenshot-4.png (1080x1920) - 電話スクリーンショット4',
+	);
+	console.log(
+		'   • tablet-7inch-screenshot.png (1920x1200) - 7インチタブレット',
+	);
+	console.log(
+		'   • tablet-10inch-screenshot.png (2560x1600) - 10インチタブレット',
+	);
 }
 
 generateAssets().catch(console.error);

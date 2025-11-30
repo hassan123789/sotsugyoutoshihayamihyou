@@ -1,1 +1,5 @@
-export { useAcademicHistory, type FormState, type CalculationResult } from './useAcademicHistory';
+export {
+	type CalculationResult,
+	type FormState,
+	useAcademicHistory,
+} from './useAcademicHistory';

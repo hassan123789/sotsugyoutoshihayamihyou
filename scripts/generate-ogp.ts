@@ -6,22 +6,22 @@ import * as path from 'path';
 
 // 和暦変換
 function toWareki(year: number): string {
-  if (year >= 2019) {
-    return `令和${year - 2018}年`;
-  } else if (year >= 1989) {
-    return `平成${year - 1988}年`;
-  } else if (year >= 1926) {
-    return `昭和${year - 1925}年`;
-  } else {
-    return `${year}年`;
-  }
+	if (year >= 2019) {
+		return `令和${year - 2018}年`;
+	} else if (year >= 1989) {
+		return `平成${year - 1988}年`;
+	} else if (year >= 1926) {
+		return `昭和${year - 1925}年`;
+	} else {
+		return `${year}年`;
+	}
 }
 
 // OGP用SVG生成
 function generateOGPSVG(year: number): string {
-  const wareki = toWareki(year);
-  
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+	const wareki = toWareki(year);
+
+	return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FAFBFC"/>
@@ -83,22 +83,24 @@ function generateOGPSVG(year: number): string {
 
 // メイン処理
 function main() {
-  const outputDir = path.join(process.cwd(), 'public', 'ogp');
-  
-  // ディレクトリ作成
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-  
-  // 1950〜2020年のOGP画像を生成
-  for (let year = 1950; year <= 2020; year++) {
-    const svg = generateOGPSVG(year);
-    const filename = path.join(outputDir, `${year}.svg`);
-    fs.writeFileSync(filename, svg, 'utf-8');
-    console.log(`Generated: ${filename}`);
-  }
-  
-  console.log(`\nTotal: ${2020 - 1950 + 1} OGP images generated in ${outputDir}`);
+	const outputDir = path.join(process.cwd(), 'public', 'ogp');
+
+	// ディレクトリ作成
+	if (!fs.existsSync(outputDir)) {
+		fs.mkdirSync(outputDir, { recursive: true });
+	}
+
+	// 1950〜2020年のOGP画像を生成
+	for (let year = 1950; year <= 2020; year++) {
+		const svg = generateOGPSVG(year);
+		const filename = path.join(outputDir, `${year}.svg`);
+		fs.writeFileSync(filename, svg, 'utf-8');
+		console.log(`Generated: ${filename}`);
+	}
+
+	console.log(
+		`\nTotal: ${2020 - 1950 + 1} OGP images generated in ${outputDir}`,
+	);
 }
 
 main();

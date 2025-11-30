@@ -1,4 +1,8 @@
 // Ads - 広告関連
-export { AdBanner, InArticleAd, SidebarAd, FooterAd } from './AdBanner';
+export { AdBanner, FooterAd, InArticleAd, SidebarAd } from './AdBanner';
 export { AdSenseScript } from './AdSenseScript';
-export { RecommendedServices, InlineAffiliate, AffiliateBanner } from './AffiliateBanner';
+export {
+	AffiliateBanner,
+	InlineAffiliate,
+	RecommendedServices,
+} from './AffiliateBanner';

@@ -1,2 +1,2 @@
 // Analytics - 分析・トラッキング
-export { GoogleAnalytics, trackPageView, trackEvent } from './GoogleAnalytics';
+export { GoogleAnalytics, trackEvent, trackPageView } from './GoogleAnalytics';

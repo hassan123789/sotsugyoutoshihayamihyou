@@ -23,6 +23,39 @@
   }
 }
 
+/* View Transitions API */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 0.2s ease-out both;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.3s ease-in both;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* カード要素のトランジション */
+.card {
+  view-transition-name: card;
+}
+
+::view-transition-old(card),
+::view-transition-new(card) {
+  animation-duration: 0.3s;
+}
+
 /* 
   デザインコンセプト：「桜と藍」
   - 上品な華やかさと落ち着きの両立
