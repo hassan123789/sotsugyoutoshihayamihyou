@@ -181,7 +181,26 @@ export default function HomePage() {
         <h2 className="text-lg font-bold mb-4 text-center" style={{ color: 'var(--color-text)' }}>
           関連ツール
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* 世代診断クイズ（目立つ位置） */}
+          <a 
+            href="/quiz" 
+            className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px] sm:col-span-2 lg:col-span-1 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200 dark:border-purple-800"
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+            >
+              🎯
+            </div>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>
+                世代診断クイズ
+              </div>
+              <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                あなたは何世代？
+              </div>
+            </div>
+          </a>
           <a 
             href="/birth" 
             className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
