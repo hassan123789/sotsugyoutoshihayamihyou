@@ -86,6 +86,9 @@ export const metadata: Metadata = {
     // Google Search Console の確認コード（後で設定）
     // google: 'your-google-verification-code',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-2145087068476394',
+  },
   category: 'education',
 };
 
