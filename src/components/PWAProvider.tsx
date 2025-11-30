@@ -12,8 +12,8 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
   const [showInstallBanner, setShowInstallBanner] = useState(false);
 
   useEffect(() => {
-    // Service Workerの登録
-    if ('serviceWorker' in navigator) {
+    // Service Workerの登録（本番環境のみ）
+    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {

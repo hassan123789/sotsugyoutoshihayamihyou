@@ -7,6 +7,7 @@ import { HistoryTimeline, ReverseResult } from '@/components/HistoryTimeline';
 import { CopyButton } from '@/components/CopyButton';
 import { ShareButton } from '@/components/ShareButton';
 import { FAQ, faqJsonLd } from '@/components/FAQ';
+import { Celebrities } from '@/components/Celebrities';
 
 export default function HomePage() {
   const {
@@ -98,7 +99,16 @@ export default function HomePage() {
         <div className="space-y-6">
           {/* 順方向の結果：タイムライン */}
           {result?.type === 'forward' && result.data && (
-            <HistoryTimeline events={result.data.events} />
+            <>
+              <HistoryTimeline events={result.data.events} />
+              
+              {/* 同い年の有名人 */}
+              <Celebrities 
+                birthYear={parseInt(formState.birthYear)}
+                birthMonth={parseInt(formState.birthMonth)}
+                birthDay={parseInt(formState.birthDay)}
+              />
+            </>
           )}
 
           {/* 逆算の結果 */}
@@ -130,6 +140,53 @@ export default function HomePage() {
 
       {/* FAQ */}
       <FAQ />
+
+      {/* 関連ツール */}
+      <section className="mt-10">
+        <h2 className="text-lg font-bold mb-4 text-center" style={{ color: 'var(--color-text)' }}>
+          関連ツール
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a 
+            href="/wareki" 
+            className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
+              style={{ background: 'rgba(44, 82, 130, 0.1)', color: 'var(--color-primary)' }}
+            >
+              📅
+            </div>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>
+                西暦・和暦変換
+              </div>
+              <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                令和・平成・昭和を簡単変換
+              </div>
+            </div>
+          </a>
+          <a 
+            href="/age" 
+            className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
+              style={{ background: 'rgba(213, 63, 140, 0.1)', color: 'var(--color-accent)' }}
+            >
+              🎂
+            </div>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>
+                年齢早見表
+              </div>
+              <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                年齢・干支・星座を計算
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
 
       {/* FAQ用JSON-LD */}
       <script
