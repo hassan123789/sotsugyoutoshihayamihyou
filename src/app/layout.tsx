@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider, PWAProvider } from '@/components/providers';
 import { DarkModeToggle, LanguageSwitcher } from '@/components/ui';
 import { GoogleAnalytics } from '@/components/analytics';
@@ -177,6 +178,7 @@ export default function RootLayout({
             </PWAProvider>
           </LocaleProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
