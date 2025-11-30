@@ -148,6 +148,35 @@ function estimateBirthYear(
 
 // ========== HTML生成 ==========
 
+/** 履歴書形式のフォーマット種別 */
+type ResumeFormat = 'both' | 'western' | 'japanese';
+
+/** 履歴書形式でテキストを生成 */
+function formatForResume(history: AcademicHistory[], format: ResumeFormat = 'both'): string {
+  return history.flatMap(h => {
+    const entranceDate = formatResumeDate(h.entranceYear, 4, h.entranceWareki, format);
+    const graduationDate = formatResumeDate(h.graduationYear, 3, h.graduationWareki, format);
+    return [
+      `${entranceDate}  ${h.schoolName} 入学`,
+      `${graduationDate}  ${h.schoolName} 卒業`,
+    ];
+  }).join('\n');
+}
+
+/** 履歴書用の日付フォーマット */
+function formatResumeDate(year: number, month: number, wareki: string, format: ResumeFormat): string {
+  const monthStr = String(month).padStart(2, ' ') + '月';
+  switch (format) {
+    case 'western':
+      return `${year}年${monthStr}`;
+    case 'japanese':
+      return `${wareki}年${monthStr}`;
+    case 'both':
+    default:
+      return `${year}年(${wareki}年)${monthStr}`;
+  }
+}
+
 function renderHistory(history: AcademicHistory[]): string {
   return history.map(h => `
     <h3>${h.schoolName}入学</h3>
@@ -197,12 +226,28 @@ function validateDate(year: number, month: number, day: number): string | null {
 
 // ========== フォームコントローラー ==========
 
+const STORAGE_KEY = 'academicCalculatorData';
+
+/** 保存するデータの型 */
+interface StoredData {
+  year: string;
+  month: string;
+  day: string;
+  universityDuration: string;
+  delayYears: string;
+  highschoolExtra: string;
+  universityExtra: string;
+  graduateExtra: string;
+  resumeFormat: ResumeFormat;
+}
+
 class FormController {
   private form = document.getElementById("form") as HTMLFormElement;
   private output = document.getElementById("output") as HTMLDivElement;
   private forwardInput = document.getElementById("forward-input") as HTMLElement;
   private reverseInput = document.getElementById("reverse-input") as HTMLElement;
   private debounceTimeout: number | null = null;
+  private lastCalculatedHistory: AcademicHistory[] | null = null;
 
   constructor() {
     this.init();
@@ -213,15 +258,24 @@ class FormController {
     this.getInput("year").max = String(currentYear);
     this.getInput("reverseYear").max = String(currentYear + 30);
 
+    // LocalStorageから復元
+    this.restoreFromStorage();
+
     // イベント設定
     this.form.querySelectorAll('input[name="calcMode"]').forEach(r => 
       r.addEventListener("change", () => this.toggleMode())
     );
     this.form.addEventListener("submit", e => { e.preventDefault(); this.calculate(); });
     this.form.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener("change", () => this.autoCalculate());
+      el.addEventListener("change", () => {
+        this.autoCalculate();
+        this.saveToStorage();
+      });
       if ((el as HTMLInputElement).type === 'number') {
-        el.addEventListener("input", () => this.debounce(() => this.autoCalculate(), 300));
+        el.addEventListener("input", () => this.debounce(() => {
+          this.autoCalculate();
+          this.saveToStorage();
+        }, 300));
       }
     });
 
@@ -230,8 +284,117 @@ class FormController {
     // 逆算の学校種別変更時にUI連動
     this.getSelect("reverseSchoolType").addEventListener("change", () => this.updateExtraFieldsVisibility());
 
+    // 履歴書形式コピーボタン
+    document.getElementById("copy-resume-btn")?.addEventListener("click", () => this.copyToClipboard());
+
     // 初期表示を更新
     this.updateExtraFieldsVisibility();
+
+    // 復元後に自動計算
+    const { year, month, day } = this.getBirthDate();
+    if (year && month && day) {
+      this.calculate();
+    }
+  }
+
+  /** LocalStorageに保存 */
+  private saveToStorage(): void {
+    const resumeFormatEl = document.getElementById("resumeFormat") as HTMLSelectElement | null;
+    const data: StoredData = {
+      year: this.getInput("year").value,
+      month: this.getInput("month").value,
+      day: this.getInput("day").value,
+      universityDuration: this.getSelect("universityDuration").value,
+      delayYears: this.getSelect("delayYears").value,
+      highschoolExtra: this.getSelect("highschoolExtra").value,
+      universityExtra: this.getSelect("universityExtra").value,
+      graduateExtra: this.getSelect("graduateExtra").value,
+      resumeFormat: (resumeFormatEl?.value as ResumeFormat) || 'both',
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  /** LocalStorageから復元 */
+  private restoreFromStorage(): void {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return;
+
+    try {
+      const data: StoredData = JSON.parse(stored);
+      if (data.year) this.getInput("year").value = data.year;
+      if (data.month) this.getInput("month").value = data.month;
+      if (data.day) this.getInput("day").value = data.day;
+      if (data.universityDuration) this.getSelect("universityDuration").value = data.universityDuration;
+      if (data.delayYears) this.getSelect("delayYears").value = data.delayYears;
+      if (data.highschoolExtra) this.getSelect("highschoolExtra").value = data.highschoolExtra;
+      if (data.universityExtra) this.getSelect("universityExtra").value = data.universityExtra;
+      if (data.graduateExtra) this.getSelect("graduateExtra").value = data.graduateExtra;
+      if (data.resumeFormat) {
+        const formatSelect = document.getElementById("resumeFormat") as HTMLSelectElement | null;
+        if (formatSelect) formatSelect.value = data.resumeFormat;
+      }
+    } catch {
+      // 無効なデータの場合は無視
+    }
+  }
+
+  /** クリップボードにコピー */
+  private async copyToClipboard(): Promise<void> {
+    if (!this.lastCalculatedHistory || this.lastCalculatedHistory.length === 0) {
+      this.showToast('先に計算を実行してください', 'error');
+      return;
+    }
+
+    const resumeFormatEl = document.getElementById("resumeFormat") as HTMLSelectElement | null;
+    const format = (resumeFormatEl?.value as ResumeFormat) || 'both';
+    const text = formatForResume(this.lastCalculatedHistory, format);
+
+    try {
+      await navigator.clipboard.writeText(text);
+      this.showToast('コピーしました！', 'success');
+    } catch {
+      // フォールバック
+      this.fallbackCopy(text);
+    }
+  }
+
+  /** コピーのフォールバック（古いブラウザ対応） */
+  private fallbackCopy(text: string): void {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      this.showToast('コピーしました！', 'success');
+    } catch {
+      this.showToast('コピーに失敗しました', 'error');
+    }
+    document.body.removeChild(textarea);
+  }
+
+  /** トースト通知を表示 */
+  private showToast(message: string, type: 'success' | 'error'): void {
+    // 既存のトーストを削除
+    document.querySelectorAll('.toast').forEach(el => el.remove());
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // アニメーション用にrequestAnimationFrameで遅延
+    requestAnimationFrame(() => {
+      toast.classList.add('toast-show');
+    });
+
+    // 3秒後に消す
+    setTimeout(() => {
+      toast.classList.remove('toast-show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
   }
 
   /** 大学種別や計算モードに応じて留年・休学フィールドの表示を切り替え */
@@ -351,10 +514,12 @@ class FormController {
     const error = validateDate(year, month, day);
     if (error) {
       this.output.innerHTML = `<p class="error-message">${error}</p>`;
+      this.lastCalculatedHistory = null;
       return;
     }
 
     const history = calculateHistory(year, month, day, this.getSelect("universityDuration").value, this.getExtra());
+    this.lastCalculatedHistory = history;
     this.output.innerHTML = "<h2>あなたの学歴</h2>" + renderHistory(history);
   }
 
@@ -362,10 +527,12 @@ class FormController {
     const year = parseInt(this.getInput("reverseYear").value);
     if (isNaN(year) || year < 1950 || year > 2100) {
       this.output.innerHTML = `<p class="error-message">有効な卒業年を入力してください。</p>`;
+      this.lastCalculatedHistory = null;
       return;
     }
 
     const schoolType = this.getSelect("reverseSchoolType").value as 'university' | 'highschool' | 'junior';
+    this.lastCalculatedHistory = null; // 逆算時はコピー非対応
     this.output.innerHTML = renderReverseResult(year, schoolType, this.getExtra(), this.getSelect("universityDuration").value);
   }
 }

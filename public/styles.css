@@ -437,3 +437,125 @@ body.dark .dark-mode-btn::after {
     -webkit-backdrop-filter: blur(4px);
   }
 }
+
+/* ========== Copy Card Styles ========== */
+.copy-card {
+  margin-top: 2rem;
+  padding: 1.5rem 2rem;
+}
+
+.copy-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+}
+
+.copy-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.format-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.format-select-wrapper label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.select-format {
+  width: auto;
+  max-width: 12rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.copy-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+  transform: translateY(-2px);
+}
+
+.copy-btn:active {
+  transform: translateY(0);
+}
+
+.copy-hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  opacity: 0.8;
+}
+
+/* ========== Toast Notification Styles ========== */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.toast-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.toast-error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* Mobile adjustments for copy card */
+@media (max-width: 640px) {
+  .copy-card {
+    padding: 1.25rem;
+  }
+
+  .copy-controls {
+    flex-direction: column;
+  }
+
+  .format-select-wrapper {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+}

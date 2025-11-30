@@ -124,6 +124,25 @@
     <div id="output" class="glass-card output-card">
       <p class="output-placeholder">ここに結果が表示されます。</p>
     </div>
+
+    <!-- 履歴書コピー機能 -->
+    <div class="glass-card copy-card">
+      <h2 class="copy-title">履歴書形式でコピー</h2>
+      <div class="copy-controls">
+        <div class="format-select-wrapper">
+          <label for="resumeFormat">表記形式：</label>
+          <select id="resumeFormat" class="select-field select-format">
+            <option value="both" selected>西暦・和暦併記</option>
+            <option value="western">西暦のみ</option>
+            <option value="japanese">和暦のみ</option>
+          </select>
+        </div>
+        <button type="button" id="copy-resume-btn" class="copy-btn">
+          📋 履歴書形式でコピー
+        </button>
+      </div>
+      <p class="copy-hint">※ 計算結果をJIS規格の履歴書形式でクリップボードにコピーします</p>
+    </div>
   </div>
   
   <button id="dark-mode-toggle" class="dark-mode-btn">
