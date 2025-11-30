@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { trackEvent } from '@/components/GoogleAnalytics';
+import { trackEvent } from '@/components/analytics';
 
 // クイズの質問データ
 interface Question {

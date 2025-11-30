@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { DarkModeToggle } from '@/components/DarkModeToggle';
-import { PWAProvider } from '@/components/PWAProvider';
-import { GoogleAnalytics } from '@/components/GoogleAnalytics';
-import { AdSenseScript } from '@/components/AdSenseScript';
+import { ThemeProvider, PWAProvider } from '@/components/providers';
+import { DarkModeToggle } from '@/components/ui';
+import { GoogleAnalytics } from '@/components/analytics';
+import { AdSenseScript } from '@/components/ads';
 import './globals.css';
 
 // SEO メタデータ

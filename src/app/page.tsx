@@ -2,17 +2,21 @@
 
 import { useEffect } from 'react';
 import { useAcademicHistory } from '@/hooks/useAcademicHistory';
-import { InputForm } from '@/components/InputForm';
-import { HistoryTimeline, ReverseResult } from '@/components/HistoryTimeline';
-import { CopyButton } from '@/components/CopyButton';
-import { ShareButton } from '@/components/ShareButton';
-import { FAQ, faqJsonLd } from '@/components/FAQ';
-import { Celebrities } from '@/components/Celebrities';
-import { PDFButton } from '@/components/PDFButton';
-import { AIResumeGenerator } from '@/components/AIResumeGenerator';
-import { GenerationAruaru } from '@/components/GenerationAruaru';
-import { ShareCard } from '@/components/ShareCard';
-import { InArticleAd, FooterAd } from '@/components/AdBanner';
+import { CopyButton } from '@/components/ui';
+import {
+  InputForm,
+  HistoryTimeline,
+  ReverseResult,
+  ShareButton,
+  FAQ,
+  faqJsonLd,
+  Celebrities,
+  PDFButton,
+  AIResumeGenerator,
+  GenerationAruaru,
+  ShareCard,
+} from '@/components/features';
+import { InArticleAd, FooterAd } from '@/components/ads';
 
 export default function HomePage() {
   const {
