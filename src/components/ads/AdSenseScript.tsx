@@ -3,7 +3,7 @@
 import Script from 'next/script';
 
 // Google AdSense Publisher ID
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || 'ca-pub-XXXXXXXXXX';
+const ADSENSE_CLIENT = 'ca-pub-2145087068476394';
 
 /**
  * AdSense スクリプトローダー

@@ -17,8 +17,7 @@ interface AdBannerProps {
 }
 
 // Google AdSense Publisher ID
-// 環境変数から取得、または直接設定
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || 'ca-pub-XXXXXXXXXX';
+const ADSENSE_CLIENT = 'ca-pub-2145087068476394';
 
 /**
  * Google AdSense 広告バナーコンポーネント
