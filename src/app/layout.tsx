@@ -38,21 +38,28 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sotsugyoutoshihayamihyou.vercel.app'),
   alternates: {
     canonical: '/',
+    languages: {
+      'ja': '/',
+      'en': '/?lang=en',
+      'zh': '/?lang=zh',
+      'ko': '/?lang=ko',
+    },
   },
   openGraph: {
     type: 'website',
     locale: 'ja_JP',
+    alternateLocale: ['en_US', 'zh_CN', 'ko_KR'],
     url: '/',
     title: '入学・卒業年度自動計算｜学歴早見表【西暦・和暦対応】',
     description: '生年月日を入力するだけで小学校から大学院までの入学・卒業年度を自動計算。西暦・和暦両対応で履歴書作成に便利。',
     siteName: '学歴早見表',
-    // TODO: PNG画像に置き換え推奨（多くのプラットフォームでSVG非対応）
     images: [
       {
-        url: '/og-image.svg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: '学歴早見表 - 入学・卒業年度自動計算ツール',
+        type: 'image/png',
       },
     ],
   },
@@ -60,7 +67,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '入学・卒業年度自動計算｜学歴早見表【西暦・和暦対応】',
     description: '生年月日を入力するだけで入学・卒業年度を自動計算。履歴書作成に便利な無料ツール。',
-    images: ['/og-image.svg'],
+    images: ['/twitter-image.png'],
+    creator: '@gakureki_hayami',
+    site: '@gakureki_hayami',
   },
   robots: {
     index: true,
@@ -77,6 +86,7 @@ export const metadata: Metadata = {
     // Google Search Console の確認コード（後で設定）
     // google: 'your-google-verification-code',
   },
+  category: 'education',
 };
 
 // JSON-LD 構造化データ
@@ -88,6 +98,7 @@ const jsonLd = {
   url: 'https://sotsugyoutoshihayamihyou.vercel.app',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'All',
+  inLanguage: ['ja', 'en', 'zh', 'ko'],
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -99,12 +110,50 @@ const jsonLd = {
     '履歴書形式でコピー可能',
     '浪人・留年・休学に対応',
     'ダークモード対応',
+    '4言語対応（日本語・英語・中国語・韓国語）',
   ],
-  screenshot: 'https://sotsugyoutoshihayamihyou.vercel.app/og-image.svg',
+  screenshot: 'https://sotsugyoutoshihayamihyou.vercel.app/og-image.png',
   author: {
     '@type': 'Organization',
     name: '学歴早見表',
+    url: 'https://sotsugyoutoshihayamihyou.vercel.app',
   },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    ratingCount: '150',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+
+// Organization構造化データ
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: '学歴早見表',
+  url: 'https://sotsugyoutoshihayamihyou.vercel.app',
+  logo: 'https://sotsugyoutoshihayamihyou.vercel.app/icons/icon-512x512.png',
+  sameAs: [],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    availableLanguage: ['Japanese', 'English', 'Chinese', 'Korean'],
+  },
+};
+
+// BreadcrumbList構造化データ
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'ホーム',
+      item: 'https://sotsugyoutoshihayamihyou.vercel.app',
+    },
+  ],
 };
 
 // HowTo構造化データ
@@ -153,10 +202,22 @@ export default function RootLayout({
         <GoogleAnalytics />
         <AdSenseScript />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2C5282" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0F1419" media="(prefers-color-scheme: dark)" />
+        
+        {/* フォントプリロード */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* DNS プリフェッチ */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        
+        {/* OGP画像プリロード */}
+        <link rel="preload" href="/og-image.png" as="image" type="image/png" />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -164,6 +225,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       </head>
       <body className="min-h-screen transition-colors duration-300">

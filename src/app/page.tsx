@@ -300,13 +300,44 @@ export default function HomePage() {
       />
 
       {/* フッター */}
-      <footer className="mt-14 pt-8 text-center text-sm border-t"
-        style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-muted)' }}>
-        <p>
-          {t.footerNote1}
-        </p>
-        <p className="mt-1.5">
-          {t.footerNote2}
+      <footer className="mt-14 pt-8 border-t"
+        style={{ borderColor: 'var(--color-border)' }}>
+        {/* サイト内リンク */}
+        <nav className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
+          <a href="/wareki" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
+            和暦西暦変換
+          </a>
+          <span style={{ color: 'var(--color-border)' }}>|</span>
+          <a href="/age" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
+            年齢計算
+          </a>
+          <span style={{ color: 'var(--color-border)' }}>|</span>
+          <a href="/birth" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
+            生年月日一覧
+          </a>
+          <span style={{ color: 'var(--color-border)' }}>|</span>
+          <a href="/quiz" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
+            クイズ
+          </a>
+          <span style={{ color: 'var(--color-border)' }}>|</span>
+          <a href="/privacy" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
+            プライバシーポリシー
+          </a>
+        </nav>
+        
+        {/* 注意書き */}
+        <div className="text-center text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          <p>
+            {t.footerNote1}
+          </p>
+          <p className="mt-1.5">
+            {t.footerNote2}
+          </p>
+        </div>
+        
+        {/* コピーライト */}
+        <p className="text-center text-xs mt-6 pb-4" style={{ color: 'var(--color-text-muted)' }}>
+          © {new Date().getFullYear()} 学歴早見表 - 入学・卒業年度自動計算ツール
         </p>
       </footer>
     </main>
