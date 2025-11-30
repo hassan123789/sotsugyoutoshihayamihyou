@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import type { FormState, CalculationResult } from '@/hooks/useAcademicHistory';
-import { UNIVERSITY_OPTIONS, DELAY_OPTIONS } from '@/lib/types';
 import type { CalcMode, UniversityDuration, ReverseSchoolType, ResumeFormat } from '@/lib/types';
+import { useLocale } from '@/lib/i18n';
 
 interface InputFormProps {
   formState: FormState;
@@ -28,6 +28,8 @@ export function InputForm({
   showDelayFields,
   showHighschoolFields,
 }: InputFormProps) {
+  const { t } = useLocale();
+  
   // フォーム変更時に自動計算
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,13 +55,13 @@ export function InputForm({
   return (
     <div className="card p-6">
       <h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
-        計算設定
+        {t.calcSettings}
       </h2>
 
       {/* 計算モード切替 */}
       <div className="mb-6">
         <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-          計算モード
+          {t.calcMode}
         </label>
         <div className="flex gap-2">
           <button
@@ -75,7 +77,7 @@ export function InputForm({
               boxShadow: formState.calcMode === 'forward' ? '0 2px 8px rgba(44, 82, 130, 0.25)' : 'none'
             }}
           >
-            生年月日 → 学歴
+            {t.forwardMode}
           </button>
           <button
             type="button"
@@ -90,7 +92,7 @@ export function InputForm({
               boxShadow: formState.calcMode === 'reverse' ? '0 2px 8px rgba(44, 82, 130, 0.25)' : 'none'
             }}
           >
-            卒業年 → 生年月日
+            {t.reverseMode}
           </button>
         </div>
       </div>
@@ -99,39 +101,39 @@ export function InputForm({
       {formState.calcMode === 'forward' && (
         <div className="mb-6">
           <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-            生年月日
+            {t.birthDate}
           </label>
           <div className="flex gap-2 items-center">
             <input
               type="number"
-              placeholder="年"
+              placeholder={t.birthYear}
               value={formState.birthYear}
               onChange={(e) => updateField('birthYear', e.target.value)}
               min={1950}
               max={currentYear}
               className="input-field w-24"
             />
-            <span style={{ color: 'var(--color-text-muted)' }}>年</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>{t.years}</span>
             <input
               type="number"
-              placeholder="月"
+              placeholder={t.birthMonth}
               value={formState.birthMonth}
               onChange={(e) => updateField('birthMonth', e.target.value)}
               min={1}
               max={12}
               className="input-field w-16"
             />
-            <span style={{ color: 'var(--color-text-muted)' }}>月</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>{t.months}</span>
             <input
               type="number"
-              placeholder="日"
+              placeholder={t.birthDay}
               value={formState.birthDay}
               onChange={(e) => updateField('birthDay', e.target.value)}
               min={1}
               max={31}
               className="input-field w-16"
             />
-            <span style={{ color: 'var(--color-text-muted)' }}>日</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>{t.days}</span>
           </div>
         </div>
       )}
@@ -141,33 +143,33 @@ export function InputForm({
         <div className="mb-6 space-y-4">
           <div>
             <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-              卒業年（西暦）
+              {t.graduationYear}
             </label>
             <div className="flex gap-2 items-center">
               <input
                 type="number"
-                placeholder="例: 2025"
+                placeholder="2025"
                 value={formState.reverseYear}
                 onChange={(e) => updateField('reverseYear', e.target.value)}
                 min={1970}
                 max={currentYear + 30}
                 className="input-field w-28"
               />
-              <span style={{ color: 'var(--color-text-muted)' }}>年 卒業</span>
+              <span style={{ color: 'var(--color-text-muted)' }}>{t.years} {t.graduation}</span>
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-              学校種別
+              {t.reverseSchoolType}
             </label>
             <select
               value={formState.reverseSchoolType}
               onChange={(e) => updateField('reverseSchoolType', e.target.value as ReverseSchoolType)}
               className="input-field"
             >
-              <option value="junior">中学校</option>
-              <option value="highschool">高等学校</option>
-              <option value="university">大学・専門学校等</option>
+              <option value="junior">{t.juniorGrad}</option>
+              <option value="highschool">{t.highschoolGrad}</option>
+              <option value="university">{t.universityGrad}</option>
             </select>
           </div>
         </div>
@@ -177,18 +179,20 @@ export function InputForm({
       {(formState.calcMode === 'forward' || showUniversityFields) && (
         <div className="mb-6">
           <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-            大学等
+            {t.universityDuration}
           </label>
           <select
             value={formState.universityDuration}
             onChange={(e) => updateField('universityDuration', e.target.value as UniversityDuration)}
             className="input-field"
           >
-            {UNIVERSITY_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
+            <option value="0">{t.noUniversity}</option>
+            <option value="2">{t.twoYearCollege}</option>
+            <option value="3">{t.threeYearVocational}</option>
+            <option value="4">{t.fourYearUniversity}</option>
+            <option value="6">{t.sixYearMedical}</option>
+            <option value="6-master">{t.mastersDegree}</option>
+            <option value="9-doctor">{t.doctoralDegree}</option>
           </select>
         </div>
       )}
@@ -197,18 +201,17 @@ export function InputForm({
       {showDelayFields && (
         <div className="mb-6">
           <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-            浪人年数
+            {t.delayYears}
           </label>
           <select
             value={formState.delayYears}
             onChange={(e) => updateField('delayYears', parseInt(e.target.value))}
             className="input-field"
           >
-            {DELAY_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
+            <option value="0">{t.delay0}</option>
+            <option value="1">{t.delay1}</option>
+            <option value="2">{t.delay2}</option>
+            <option value="3">{t.delay3}</option>
           </select>
         </div>
       )}
@@ -216,12 +219,12 @@ export function InputForm({
       {/* 留年・休学 */}
       <div className="mb-6">
         <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-secondary)' }}>
-          留年・休学
+          {t.advancedOptions}
         </label>
         <div className="grid grid-cols-1 gap-3">
           {showHighschoolFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>高校</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>{t.highschoolExtra}</span>
               <input
                 type="number"
                 value={formState.highschoolExtra}
@@ -230,12 +233,12 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{t.years}</span>
             </div>
           )}
           {showUniversityFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>大学等</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>{t.universityExtra}</span>
               <input
                 type="number"
                 value={formState.universityExtra}
@@ -244,12 +247,12 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{t.years}</span>
             </div>
           )}
           {showGraduateFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>大学院</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>{t.graduateExtra}</span>
               <input
                 type="number"
                 value={formState.graduateExtra}
@@ -258,7 +261,7 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{t.years}</span>
             </div>
           )}
         </div>

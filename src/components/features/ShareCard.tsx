@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { getCelebritiesByAcademicYear } from '@/data/celebrities';
 import { toWareki } from '@/lib/academic';
+import { useLocale } from '@/lib/i18n/LocaleContext';
 
 interface ShareCardProps {
   birthYear: number;
@@ -20,6 +21,7 @@ function getEto(year: number) {
 }
 
 export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
+  const { t } = useLocale();
   const [isGenerating, setIsGenerating] = useState(false);
   const [cardImage, setCardImage] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -155,11 +157,11 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
     <div className="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl border border-indigo-100 dark:border-gray-600 shadow-lg">
       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
         <span className="text-2xl">🎴</span>
-        同い年診断シェアカード
+        {t.shareCardTitle}
       </h2>
 
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-        あなたの生まれ年と同い年の有名人をカード画像にして、SNSでシェアしよう！
+        {t.shareCardSubtitle}
       </p>
 
       {/* カード生成ボタン */}
@@ -175,12 +177,12 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              生成中...
+              {t.generating}
             </>
           ) : (
             <>
               <span>🎨</span>
-              シェアカードを作成
+              {t.shareCardGenerate}
             </>
           )}
         </button>
@@ -192,7 +194,7 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
           <div className="rounded-xl overflow-hidden shadow-lg">
             <img 
               src={cardImage} 
-              alt="同い年診断カード" 
+              alt={t.shareCardTitle}
               className="w-full"
             />
           </div>
@@ -204,14 +206,14 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
               className="py-3 px-4 bg-gray-600 text-white font-medium rounded-xl hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
             >
               <span>💾</span>
-              保存
+              {t.save}
             </button>
             <button
               onClick={shareToX}
               className="py-3 px-4 bg-black text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
             >
               <span>𝕏</span>
-              シェア
+              {t.share}
             </button>
             <button
               onClick={shareToLine}
@@ -228,7 +230,7 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
             disabled={isGenerating}
             className="w-full py-2 px-4 text-primary dark:text-blue-300 font-medium rounded-xl border border-primary dark:border-blue-300 hover:bg-primary/10 transition-colors"
           >
-            🔄 カードを再生成
+            🔄 {t.shareCardGenerate}
           </button>
         </div>
       )}

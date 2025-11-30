@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAcademicHistory } from '@/hooks/useAcademicHistory';
+import { useLocale } from '@/lib/i18n';
 import { CopyButton } from '@/components/ui';
 import {
   InputForm,
@@ -15,10 +16,12 @@ import {
   AIResumeGenerator,
   GenerationAruaru,
   ShareCard,
+  InfographicGenerator,
 } from '@/components/features';
 import { InArticleAd, FooterAd } from '@/components/ads';
 
 export default function HomePage() {
+  const { t } = useLocale();
   const {
     formState,
     result,
@@ -69,10 +72,10 @@ export default function HomePage() {
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3"
           style={{ color: 'var(--color-text)' }}>
-          卒業年月日 早見表
+          {t.title}
         </h1>
         <p style={{ color: 'var(--color-text-secondary)' }}>
-          生年月日から学歴年表を自動計算
+          {t.subtitle}
         </p>
       </header>
 
@@ -96,11 +99,17 @@ export default function HomePage() {
             <div className="mt-5 space-y-3">
               <CopyButton
                 getText={getResumeText}
-                label="履歴書形式でコピー"
+                label={t.copyResume}
                 className="w-full justify-center"
               />
               <ShareButton getShareData={getShareData} />
               <PDFButton 
+                events={result.data.events}
+                birthYear={parseInt(formState.birthYear)}
+                birthMonth={parseInt(formState.birthMonth)}
+                birthDay={parseInt(formState.birthDay)}
+              />
+              <InfographicGenerator
                 events={result.data.events}
                 birthYear={parseInt(formState.birthYear)}
                 birthMonth={parseInt(formState.birthMonth)}
@@ -166,8 +175,8 @@ export default function HomePage() {
               </div>
               <p style={{ color: 'var(--color-text-secondary)' }}>
                 {formState.calcMode === 'forward'
-                  ? '生年月日を入力すると、学歴タイムラインが表示されます'
-                  : '卒業年を入力すると、推定生年月日が表示されます'}
+                  ? t.resultPlaceholder
+                  : t.reversePlaceholder}
               </p>
             </div>
           )}
@@ -183,7 +192,7 @@ export default function HomePage() {
       {/* 関連ツール */}
       <section className="mt-10">
         <h2 className="text-lg font-bold mb-4 text-center" style={{ color: 'var(--color-text)' }}>
-          関連ツール
+          {t.relatedTools}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* 世代診断クイズ（目立つ位置） */}
@@ -198,10 +207,10 @@ export default function HomePage() {
             </div>
             <div>
               <div className="font-medium" style={{ color: 'var(--color-text)' }}>
-                世代診断クイズ
+                {t.quiz}
               </div>
               <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                あなたは何世代？
+                {t.quizDescription}
               </div>
             </div>
           </a>
@@ -217,10 +226,10 @@ export default function HomePage() {
             </div>
             <div>
               <div className="font-medium" style={{ color: 'var(--color-text)' }}>
-                年別早見表
+                {t.yearlyTable}
               </div>
               <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                生まれ年から一発検索
+                {t.yearlyTableDesc}
               </div>
             </div>
           </a>
@@ -236,10 +245,10 @@ export default function HomePage() {
             </div>
             <div>
               <div className="font-medium" style={{ color: 'var(--color-text)' }}>
-                西暦・和暦変換
+                {t.warekiConverter}
               </div>
               <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                令和・平成・昭和を簡単変換
+                {t.warekiConverterDesc}
               </div>
             </div>
           </a>
@@ -255,10 +264,29 @@ export default function HomePage() {
             </div>
             <div>
               <div className="font-medium" style={{ color: 'var(--color-text)' }}>
-                年齢早見表
+                {t.ageTable}
               </div>
               <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                年齢・干支・星座を計算
+                {t.ageTableDesc}
+              </div>
+            </div>
+          </a>
+          <a 
+            href="/recruiter" 
+            className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
+              style={{ background: 'rgba(56, 178, 172, 0.1)', color: '#38B2AC' }}
+            >
+              💼
+            </div>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>
+                {t.recruiter}
+              </div>
+              <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                {t.recruiterDesc}
               </div>
             </div>
           </a>
@@ -275,10 +303,10 @@ export default function HomePage() {
       <footer className="mt-14 pt-8 text-center text-sm border-t"
         style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-muted)' }}>
         <p>
-          ※ 日本の一般的な学制に基づいて計算しています。
+          {t.footerNote1}
         </p>
         <p className="mt-1.5">
-          ※ 早生まれ（1月1日〜4月1日生まれ）を正しく考慮しています。
+          {t.footerNote2}
         </p>
       </footer>
     </main>

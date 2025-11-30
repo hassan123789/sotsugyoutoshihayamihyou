@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useLocale } from '@/lib/i18n';
 
 interface ShareButtonProps {
   getShareData: () => { url: string; text: string } | null;
@@ -9,11 +10,12 @@ interface ShareButtonProps {
 export function ShareButton({ getShareData }: ShareButtonProps) {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const { t } = useLocale();
 
   const handleShare = useCallback(async () => {
     const data = getShareData();
     if (!data) {
-      setToastMessage('シェアするデータがありません');
+      setToastMessage(t.resultPlaceholder);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
       return;
@@ -25,7 +27,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: '学歴早見表 - 計算結果',
+          title: t.siteName,
           text,
           url,
         });
@@ -39,15 +41,15 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
     // フォールバック: URLをコピー
     try {
       await navigator.clipboard.writeText(url);
-      setToastMessage('URLをコピーしました');
+      setToastMessage(t.copied);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
     } catch {
-      setToastMessage('コピーに失敗しました');
+      setToastMessage('Copy failed');
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
     }
-  }, [getShareData]);
+  }, [getShareData, t]);
 
   const handleTwitterShare = useCallback(() => {
     const data = getShareData();
@@ -75,7 +77,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
           </svg>
-          URLをシェア
+          {t.share}
         </button>
 
         {/* Xシェアボタン */}
@@ -87,7 +89,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
             background: '#000',
             color: '#fff'
           }}
-          aria-label="Xでシェア"
+          aria-label={t.shareOnX}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

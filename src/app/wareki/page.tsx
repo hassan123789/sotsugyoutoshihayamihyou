@@ -2,14 +2,15 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useLocale } from '@/lib/i18n/LocaleContext';
 
 // 元号データ
 const ERA_DATA = [
-  { name: '令和', romaji: 'Reiwa', startYear: 2019, startDate: '2019年5月1日〜' },
-  { name: '平成', romaji: 'Heisei', startYear: 1989, endYear: 2019, startDate: '1989年1月8日〜2019年4月30日' },
-  { name: '昭和', romaji: 'Showa', startYear: 1926, endYear: 1989, startDate: '1926年12月25日〜1989年1月7日' },
-  { name: '大正', romaji: 'Taisho', startYear: 1912, endYear: 1926, startDate: '1912年7月30日〜1926年12月24日' },
-  { name: '明治', romaji: 'Meiji', startYear: 1868, endYear: 1912, startDate: '1868年9月8日〜1912年7月29日' },
+  { name: '令和', romaji: 'Reiwa', key: 'reiwa', startYear: 2019, startDate: '2019年5月1日〜' },
+  { name: '平成', romaji: 'Heisei', key: 'heisei', startYear: 1989, endYear: 2019, startDate: '1989年1月8日〜2019年4月30日' },
+  { name: '昭和', romaji: 'Showa', key: 'showa', startYear: 1926, endYear: 1989, startDate: '1926年12月25日〜1989年1月7日' },
+  { name: '大正', romaji: 'Taisho', key: 'taisho', startYear: 1912, endYear: 1926, startDate: '1912年7月30日〜1926年12月24日' },
+  { name: '明治', romaji: 'Meiji', key: 'meiji', startYear: 1868, endYear: 1912, startDate: '1868年9月8日〜1912年7月29日' },
 ];
 
 // 西暦→和暦変換
@@ -61,6 +62,7 @@ function generateEraTable() {
 }
 
 export default function WarekiPage() {
+  const { t } = useLocale();
   const [conversionMode, setConversionMode] = useState<'toWareki' | 'toSeireki'>('toWareki');
   const [seirekiInput, setSeirekiInput] = useState('');
   const [selectedEra, setSelectedEra] = useState('令和');
@@ -82,24 +84,36 @@ export default function WarekiPage() {
     return warekiToSeireki(selectedEra, year);
   }, [selectedEra, eraYearInput]);
 
+  // 元号名を翻訳
+  const getEraName = (key: string): string => {
+    const keyMap: { [k: string]: keyof typeof t } = {
+      reiwa: 'reiwa',
+      heisei: 'heisei',
+      showa: 'showa',
+      taisho: 'taisho',
+      meiji: 'meiji',
+    };
+    return t[keyMap[key] as keyof typeof t] || key;
+  };
+
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       {/* パンくずリスト */}
       <nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
         <Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
-          ホーム
+          {t.home}
         </Link>
         <span className="mx-2">›</span>
-        <span>西暦・和暦変換</span>
+        <span>{t.warekiTitle}</span>
       </nav>
 
       {/* ヘッダー */}
       <header className="text-center mb-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>
-          西暦・和暦 変換ツール
+          {t.warekiTitle}
         </h1>
         <p style={{ color: 'var(--color-text-secondary)' }}>
-          西暦と和暦（令和・平成・昭和・大正・明治）を相互変換
+          {t.warekiSubtitle}
         </p>
       </header>
 
@@ -118,7 +132,7 @@ export default function WarekiPage() {
               border: conversionMode === 'toWareki' ? 'none' : '1px solid var(--color-border)',
             }}
           >
-            西暦 → 和暦
+            {t.toWareki}
           </button>
           <button
             onClick={() => setConversionMode('toSeireki')}
@@ -131,7 +145,7 @@ export default function WarekiPage() {
               border: conversionMode === 'toSeireki' ? 'none' : '1px solid var(--color-border)',
             }}
           >
-            和暦 → 西暦
+            {t.toSeireki}
           </button>
         </div>
 
@@ -139,7 +153,7 @@ export default function WarekiPage() {
         {conversionMode === 'toWareki' && (
           <div>
             <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-              西暦を入力
+              {t.inputSeireki}
             </label>
             <div className="flex gap-2 items-center mb-4">
               <input
@@ -151,12 +165,12 @@ export default function WarekiPage() {
                 max={2100}
                 className="input-field w-32"
               />
-              <span style={{ color: 'var(--color-text-muted)' }}>年</span>
+              <span style={{ color: 'var(--color-text-muted)' }}>{t.yearUnit}</span>
             </div>
             
             {warekiResult && warekiResult.length > 0 && (
               <div className="p-4 rounded-xl" style={{ background: 'rgba(44, 82, 130, 0.08)' }}>
-                <div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>変換結果</div>
+                <div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>{t.convertResult}</div>
                 <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
                   {warekiResult.join(' / ')}
                 </div>
@@ -169,7 +183,7 @@ export default function WarekiPage() {
         {conversionMode === 'toSeireki' && (
           <div>
             <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
-              和暦を入力
+              {t.inputWareki}
             </label>
             <div className="flex gap-2 items-center mb-4">
               <select
@@ -189,14 +203,14 @@ export default function WarekiPage() {
                 min={1}
                 className="input-field w-20"
               />
-              <span style={{ color: 'var(--color-text-muted)' }}>年</span>
+              <span style={{ color: 'var(--color-text-muted)' }}>{t.yearUnit}</span>
             </div>
             
             {seirekiResult && (
               <div className="p-4 rounded-xl" style={{ background: 'rgba(44, 82, 130, 0.08)' }}>
-                <div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>変換結果</div>
+                <div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>{t.convertResult}</div>
                 <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
-                  西暦 {seirekiResult}年
+                  {seirekiResult}{t.yearUnit}
                 </div>
               </div>
             )}
@@ -207,13 +221,13 @@ export default function WarekiPage() {
       {/* 元号一覧 */}
       <section className="mb-8">
         <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
-          元号一覧
+          {t.eraTable}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {ERA_DATA.map((era) => (
             <div key={era.name} className="card p-4">
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>{era.name}</span>
+                <span className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>{getEraName(era.key)}</span>
                 <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{era.romaji}</span>
               </div>
               <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
@@ -222,6 +236,9 @@ export default function WarekiPage() {
             </div>
           ))}
         </div>
+        <p className="text-xs mt-2" style={{ color: 'var(--color-text-muted)' }}>
+          {t.eraTableNote}
+        </p>
       </section>
 
       {/* 年号対照表 */}
@@ -272,7 +289,7 @@ export default function WarekiPage() {
             border: '1px solid var(--color-border)'
           }}
         >
-          ← 学歴早見表に戻る
+          ← {t.title}
         </Link>
       </div>
     </main>

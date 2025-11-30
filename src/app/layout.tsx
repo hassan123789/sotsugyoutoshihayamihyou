@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { ThemeProvider, PWAProvider } from '@/components/providers';
-import { DarkModeToggle } from '@/components/ui';
+import { DarkModeToggle, LanguageSwitcher } from '@/components/ui';
 import { GoogleAnalytics } from '@/components/analytics';
 import { AdSenseScript } from '@/components/ads';
+import { LocaleProvider } from '@/lib/i18n';
 import './globals.css';
 
 // SEO メタデータ
@@ -165,10 +166,16 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen transition-colors duration-300">
         <ThemeProvider>
-          <PWAProvider>
-            <DarkModeToggle />
-            {children}
-          </PWAProvider>
+          <LocaleProvider>
+            <PWAProvider>
+              {/* ヘッダーツールバー */}
+              <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+                <LanguageSwitcher />
+                <DarkModeToggle />
+              </div>
+              {children}
+            </PWAProvider>
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

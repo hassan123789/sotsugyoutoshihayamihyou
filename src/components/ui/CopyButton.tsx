@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useLocale } from '@/lib/i18n/LocaleContext';
 
 interface CopyButtonProps {
   getText: () => string;
@@ -10,16 +11,19 @@ interface CopyButtonProps {
 
 export function CopyButton({
   getText,
-  label = '履歴書形式でコピー',
+  label,
   className = '',
 }: CopyButtonProps) {
+  const { t } = useLocale();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  
+  const displayLabel = label || t.copyResume;
 
   const handleCopy = useCallback(async () => {
     const text = getText();
     if (!text) {
-      setToastMessage('コピーするデータがありません');
+      setToastMessage(t.copyFailed);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
       return;
@@ -27,7 +31,7 @@ export function CopyButton({
 
     try {
       await navigator.clipboard.writeText(text);
-      setToastMessage('クリップボードにコピーしました！');
+      setToastMessage(t.copySuccess);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
     } catch {
@@ -41,16 +45,16 @@ export function CopyButton({
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        setToastMessage('クリップボードにコピーしました！');
+        setToastMessage(t.copySuccess);
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       } catch {
-        setToastMessage('コピーに失敗しました');
+        setToastMessage(t.copyFailed);
         setShowToast(true);
         setTimeout(() => setShowToast(false), 2000);
       }
     }
-  }, [getText]);
+  }, [getText, t]);
 
   return (
     <>
@@ -90,7 +94,7 @@ export function CopyButton({
             d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
           />
         </svg>
-        {label}
+        {displayLabel}
       </button>
 
       {/* トースト通知 */}

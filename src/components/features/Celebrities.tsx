@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import { getCelebritiesByAcademicYear, type Celebrity } from '@/data/celebrities';
+import { useLocale } from '@/lib/i18n';
 
 interface CelebritiesProps {
   birthYear: number;
@@ -10,6 +11,8 @@ interface CelebritiesProps {
 }
 
 export function Celebrities({ birthYear, birthMonth, birthDay }: CelebritiesProps) {
+  const { t } = useLocale();
+  
   const celebrities = useMemo(() => {
     // NaNチェック
     if (isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDay)) {
@@ -25,7 +28,7 @@ export function Celebrities({ birthYear, birthMonth, birthDay }: CelebritiesProp
   return (
     <div className="card p-6">
       <h2 className="text-lg font-bold mb-4" style={{ color: 'var(--color-text)' }}>
-        🎭 同い年の有名人
+        🎭 {t.celebritiesTitle}
       </h2>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -35,7 +38,7 @@ export function Celebrities({ birthYear, birthMonth, birthDay }: CelebritiesProp
       </div>
       
       <p className="text-xs mt-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
-        ※ 同じ学年（4月2日〜翌年4月1日生まれ）の有名人を表示
+        ※ {t.celebritiesSubtitle}
       </p>
     </div>
   );

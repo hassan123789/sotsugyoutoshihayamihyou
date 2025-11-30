@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { trackEvent } from '@/components/analytics';
+import { useLocale } from '@/lib/i18n';
 
 // クイズの質問データ
 interface Question {
@@ -166,6 +167,7 @@ const GENERATIONS: Record<string, GenerationResult> = {
 };
 
 export default function QuizPage() {
+  const { t } = useLocale();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
@@ -237,13 +239,13 @@ export default function QuizPage() {
         {/* ヘッダー */}
         <header className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 text-primary dark:text-blue-300 hover:underline mb-4">
-            ← 学歴早見表に戻る
+            ← {t.backToTop}
           </Link>
           <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            🎯 世代診断クイズ
+            🎯 {t.quizTitle}
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            8つの質問であなたの「世代」を診断！
+            {t.quizSubtitle}
           </p>
         </header>
 
@@ -252,7 +254,7 @@ export default function QuizPage() {
             {/* プログレスバー */}
             <div className="mb-6">
               <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
-                <span>Q{currentQuestion + 1} / {QUESTIONS.length}</span>
+                <span>{t.quizQuestion}{currentQuestion + 1} / {QUESTIONS.length}</span>
                 <span>{Math.round(progress)}%</span>
               </div>
               <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -295,7 +297,7 @@ export default function QuizPage() {
             {/* 結果ヘッダー */}
             <div className={`bg-gradient-to-r ${result.color} p-8 text-white text-center`}>
               <div className="text-6xl mb-4">{result.emoji}</div>
-              <h2 className="text-3xl font-bold mb-2">あなたは...</h2>
+              <h2 className="text-3xl font-bold mb-2">{t.quizYourGeneration}...</h2>
               <div className="text-4xl font-black">{result.name}</div>
               <div className="text-lg opacity-90 mt-2">{result.years}</div>
             </div>
@@ -307,7 +309,7 @@ export default function QuizPage() {
               </p>
 
               <h3 className="font-bold text-gray-800 dark:text-white mb-3">
-                📋 {result.name}の特徴
+                📋 {t.quizCharacteristics}
               </h3>
               <ul className="space-y-2 mb-8">
                 {result.characteristics.map((char, i) => (
@@ -321,7 +323,7 @@ export default function QuizPage() {
               {/* シェアボタン */}
               <div className="space-y-3">
                 <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  結果をシェアしよう！
+                  {t.quizShare}
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <button
@@ -329,7 +331,7 @@ export default function QuizPage() {
                     className="py-3 px-4 bg-black text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
                   >
                     <span className="text-lg">𝕏</span>
-                    シェア
+                    {t.share}
                   </button>
                   <button
                     onClick={shareToLine}
@@ -344,14 +346,14 @@ export default function QuizPage() {
                   onClick={resetQuiz}
                   className="w-full py-3 px-4 border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-medium rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
                 >
-                  🔄 もう一度診断する
+                  🔄 {t.quizRetry}
                 </button>
 
                 <Link
                   href="/"
                   className="block w-full py-3 px-4 bg-gradient-to-r from-primary to-accent text-white font-medium rounded-xl text-center hover:opacity-90 transition-opacity"
                 >
-                  🎓 学歴早見表で詳しく調べる
+                  🎓 {t.useDetailedTool}
                 </Link>
               </div>
             </div>

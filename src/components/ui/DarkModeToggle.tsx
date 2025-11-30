@@ -14,7 +14,7 @@ export function DarkModeToggle() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="fixed top-4 right-4 z-50 p-3 rounded-xl transition-all duration-200"
+      className="p-3 rounded-xl transition-all duration-200"
       style={{
         background: 'var(--color-card)',
         border: '1px solid var(--color-border)',

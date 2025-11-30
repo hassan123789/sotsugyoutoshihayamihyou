@@ -3,12 +3,15 @@
 import type { AcademicEvent } from '@/lib/types';
 import { getNostalgia } from '@/lib/nostalgia';
 import { toWareki } from '@/lib/academic';
+import { useLocale } from '@/lib/i18n';
 
 interface HistoryTimelineProps {
   events: AcademicEvent[];
 }
 
 export function HistoryTimeline({ events }: HistoryTimelineProps) {
+  const { t } = useLocale();
+  
   if (events.length === 0) {
     return null;
   }
@@ -16,7 +19,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
   return (
     <div className="card p-6">
       <h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
-        学歴タイムライン
+        {t.timeline}
       </h2>
 
       <div className="relative">
@@ -73,7 +76,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
                           color: 'white' 
                         }}
                       >
-                        最新
+                        {t.latest}
                       </span>
                     )}
                   </div>
@@ -85,7 +88,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 
                   {/* 年齢 */}
                   <div className="text-sm mb-3" style={{ color: 'var(--color-text-muted)' }}>
-                    {item.age}歳
+                    {item.age}{t.ageUnit}
                     {item.isEarlyBorn && (
                       <span 
                         className="ml-2 px-2 py-0.5 text-xs rounded-full"
@@ -94,7 +97,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
                           color: 'var(--color-primary)' 
                         }}
                       >
-                        早生まれ
+                        {t.earlyBorn}
                       </span>
                     )}
                   </div>

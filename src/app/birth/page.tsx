@@ -1,19 +1,15 @@
-import { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { toWareki } from '@/lib/academic';
-
-export const metadata: Metadata = {
-  title: '年別学歴早見表一覧｜1950年〜2020年生まれ',
-  description: '1950年から2020年生まれまでの年別学歴早見表。生まれ年を選択するだけで入学・卒業年度を確認できます。',
-  keywords: ['年別', '学歴早見表', '卒業年度', '入学年度', '生まれ年'],
-};
+import { useLocale } from '@/lib/i18n/LocaleContext';
 
 // 年代別にグループ化
 function groupByDecade(startYear: number, endYear: number) {
   const decades: { [key: string]: number[] } = {};
   
   for (let year = endYear; year >= startYear; year--) {
-    const decade = `${Math.floor(year / 10) * 10}年代`;
+    const decade = `${Math.floor(year / 10) * 10}`;
     if (!decades[decade]) {
       decades[decade] = [];
     }
@@ -24,6 +20,7 @@ function groupByDecade(startYear: number, endYear: number) {
 }
 
 export default function BirthIndexPage() {
+  const { t } = useLocale();
   const decades = groupByDecade(1950, 2020);
 
   // BreadcrumbList構造化データ
@@ -31,8 +28,8 @@ export default function BirthIndexPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://sotsugyoutoshihayamihyou.vercel.app/' },
-      { '@type': 'ListItem', position: 2, name: '年別早見表', item: 'https://sotsugyoutoshihayamihyou.vercel.app/birth' },
+      { '@type': 'ListItem', position: 1, name: t.home, item: 'https://sotsugyoutoshihayamihyou.vercel.app/' },
+      { '@type': 'ListItem', position: 2, name: t.birthTitle, item: 'https://sotsugyoutoshihayamihyou.vercel.app/birth' },
     ],
   };
 
@@ -47,19 +44,19 @@ export default function BirthIndexPage() {
       {/* パンくずリスト */}
       <nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
         <Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
-          ホーム
+          {t.home}
         </Link>
         <span className="mx-2">›</span>
-        <span>年別早見表</span>
+        <span>{t.birthTitle}</span>
       </nav>
 
       {/* ヘッダー */}
       <header className="text-center mb-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>
-          年別 学歴早見表
+          {t.birthTitle}
         </h1>
         <p style={{ color: 'var(--color-text-secondary)' }}>
-          生まれ年を選択して入学・卒業年度を確認
+          {t.birthSubtitle}
         </p>
       </header>
 
@@ -67,7 +64,7 @@ export default function BirthIndexPage() {
       {Object.entries(decades).map(([decade, years]) => (
         <section key={decade} className="mb-8">
           <h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
-            {decade}
+            {decade}s
           </h2>
           <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
             {years.map((year) => (
@@ -95,7 +92,7 @@ export default function BirthIndexPage() {
             border: '1px solid var(--color-border)'
           }}
         >
-          ← 詳細な学歴計算
+          ← {t.detailedCalc}
         </Link>
         <Link 
           href="/age" 
@@ -106,7 +103,7 @@ export default function BirthIndexPage() {
             border: '1px solid var(--color-border)'
           }}
         >
-          年齢早見表 →
+          {t.ageTitle} →
         </Link>
       </div>
     </main>
