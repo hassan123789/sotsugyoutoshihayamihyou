@@ -33,6 +33,20 @@ export async function generateMetadata({ params }: { params: { year: string } })
     openGraph: {
       title: `${year}年（${wareki}）生まれの学歴早見表`,
       description: `${year}年生まれの入学・卒業年度一覧。履歴書作成に便利。`,
+      images: [
+        {
+          url: `/ogp/${year}.svg`,
+          width: 1200,
+          height: 630,
+          alt: `${year}年生まれの学歴早見表`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${year}年（${wareki}）生まれの学歴早見表`,
+      description: `${year}年生まれの入学・卒業年度一覧。履歴書作成に便利。`,
+      images: [`/ogp/${year}.svg`],
     },
   };
 }

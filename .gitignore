@@ -9,6 +9,9 @@ out
 dist
 build
 
+# Generated OGP images (created during build)
+public/ogp/
+
 # Debug
 npm-debug.log*
 yarn-debug.log*

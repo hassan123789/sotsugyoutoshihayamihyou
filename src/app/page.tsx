@@ -10,6 +10,9 @@ import { FAQ, faqJsonLd } from '@/components/FAQ';
 import { Celebrities } from '@/components/Celebrities';
 import { PDFButton } from '@/components/PDFButton';
 import { AIResumeGenerator } from '@/components/AIResumeGenerator';
+import { GenerationAruaru } from '@/components/GenerationAruaru';
+import { ShareCard } from '@/components/ShareCard';
+import { InArticleAd, FooterAd } from '@/components/AdBanner';
 
 export default function HomePage() {
   const {
@@ -124,6 +127,19 @@ export default function HomePage() {
                 birthMonth={parseInt(formState.birthMonth)}
                 birthDay={parseInt(formState.birthDay)}
               />
+              
+              {/* 記事内広告 */}
+              <InArticleAd slot="YOUR_AD_SLOT_1" />
+              
+              {/* 学年あるある */}
+              <GenerationAruaru birthYear={parseInt(formState.birthYear)} />
+              
+              {/* 同い年診断シェアカード */}
+              <ShareCard 
+                birthYear={parseInt(formState.birthYear)}
+                birthMonth={parseInt(formState.birthMonth)}
+                birthDay={parseInt(formState.birthDay)}
+              />
             </>
           )}
 
@@ -156,6 +172,9 @@ export default function HomePage() {
 
       {/* FAQ */}
       <FAQ />
+
+      {/* フッター広告 */}
+      <FooterAd slot="YOUR_AD_SLOT_2" />
 
       {/* 関連ツール */}
       <section className="mt-10">

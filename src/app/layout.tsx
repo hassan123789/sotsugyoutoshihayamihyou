@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { DarkModeToggle } from '@/components/DarkModeToggle';
 import { PWAProvider } from '@/components/PWAProvider';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import { AdSenseScript } from '@/components/AdSenseScript';
 import './globals.css';
 
 // SEO メタデータ
@@ -146,6 +148,8 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
+        <GoogleAnalytics />
+        <AdSenseScript />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/icon.svg" />
         <link rel="manifest" href="/manifest.json" />

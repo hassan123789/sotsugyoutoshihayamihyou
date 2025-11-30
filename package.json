@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run generate:ogp && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:ogp": "npx ts-node --esm scripts/generate-ogp.ts"
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
