@@ -18,7 +18,7 @@ import {
   ShareCard,
   InfographicGenerator,
 } from '@/components/features';
-import { InArticleAd, FooterAd } from '@/components/ads';
+import { InArticleAd, FooterAd, RecommendedServices } from '@/components/ads';
 
 export default function HomePage() {
   const { t } = useLocale();
@@ -205,6 +205,9 @@ export default function HomePage() {
 
       {/* FAQ */}
       <FAQ />
+
+      {/* おすすめサービス（アフィリエイト） */}
+      <RecommendedServices className="mt-10" />
 
       {/* フッター広告 */}
       <FooterAd slot="YOUR_AD_SLOT_2" />
