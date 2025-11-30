@@ -8,6 +8,8 @@ import { CopyButton } from '@/components/CopyButton';
 import { ShareButton } from '@/components/ShareButton';
 import { FAQ, faqJsonLd } from '@/components/FAQ';
 import { Celebrities } from '@/components/Celebrities';
+import { PDFButton } from '@/components/PDFButton';
+import { AIResumeGenerator } from '@/components/AIResumeGenerator';
 
 export default function HomePage() {
   const {
@@ -91,6 +93,12 @@ export default function HomePage() {
                 className="w-full justify-center"
               />
               <ShareButton getShareData={getShareData} />
+              <PDFButton 
+                events={result.data.events}
+                birthYear={parseInt(formState.birthYear)}
+                birthMonth={parseInt(formState.birthMonth)}
+                birthDay={parseInt(formState.birthDay)}
+              />
             </div>
           )}
         </div>
@@ -101,6 +109,14 @@ export default function HomePage() {
           {result?.type === 'forward' && result.data && (
             <>
               <HistoryTimeline events={result.data.events} />
+              
+              {/* AI履歴書生成 */}
+              <AIResumeGenerator
+                events={result.data.events}
+                birthYear={parseInt(formState.birthYear)}
+                birthMonth={parseInt(formState.birthMonth)}
+                birthDay={parseInt(formState.birthDay)}
+              />
               
               {/* 同い年の有名人 */}
               <Celebrities 
@@ -146,7 +162,26 @@ export default function HomePage() {
         <h2 className="text-lg font-bold mb-4 text-center" style={{ color: 'var(--color-text)' }}>
           関連ツール
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <a 
+            href="/birth" 
+            className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
+              style={{ background: 'rgba(44, 82, 130, 0.1)', color: 'var(--color-primary)' }}
+            >
+              📆
+            </div>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>
+                年別早見表
+              </div>
+              <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                生まれ年から一発検索
+              </div>
+            </div>
+          </a>
           <a 
             href="/wareki" 
             className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"

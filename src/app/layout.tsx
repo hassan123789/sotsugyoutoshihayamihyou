@@ -103,6 +103,41 @@ const jsonLd = {
   },
 };
 
+// HowTo構造化データ
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: '生年月日から卒業年度を調べる方法',
+  description: '生年月日を入力するだけで、小学校から大学院までの入学・卒業年度を自動計算できます。',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: '生年月日を入力',
+      text: '年・月・日を選択または入力します。',
+      position: 1,
+    },
+    {
+      '@type': 'HowToStep',
+      name: '学歴オプションを選択',
+      text: '大学の修業年数、大学院進学の有無などを選択します。',
+      position: 2,
+    },
+    {
+      '@type': 'HowToStep',
+      name: '結果を確認',
+      text: '入学・卒業年度が自動計算され、タイムライン形式で表示されます。',
+      position: 3,
+    },
+    {
+      '@type': 'HowToStep',
+      name: '履歴書形式でコピー',
+      text: '「履歴書形式でコピー」ボタンで、履歴書に貼り付けられる形式でコピーできます。',
+      position: 4,
+    },
+  ],
+  totalTime: 'PT1M',
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -119,6 +154,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
         />
       </head>
       <body className="min-h-screen transition-colors duration-300">
