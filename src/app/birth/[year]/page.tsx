@@ -107,12 +107,56 @@ export default function BirthYearPage({ params }: { params: { year: string } }) 
     ],
   };
 
+  // FAQ構造化データ
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `${year}年生まれは何歳ですか？`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${year}年生まれの方は現在${age}〜${age + 1}歳です（${currentYear}年時点）。`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `${year}年生まれの干支は？`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${year}年生まれの干支は${eto.kanji}（${eto.reading}）年です。`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `${year}年生まれの小学校入学・卒業年度は？`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${year}年4月2日〜${year + 1}年4月1日生まれの方は、${year + 7}年4月に小学校入学、${year + 13}年3月に卒業です。`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `${year}年生まれの大学卒業年度は？`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${year}年4月2日〜${year + 1}年4月1日生まれで4年制大学に進学した場合、${year + 23}年3月に卒業（ストレートの場合）です。`,
+        },
+      },
+    ],
+  };
+
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       {/* 構造化データ */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* パンくずリスト */}

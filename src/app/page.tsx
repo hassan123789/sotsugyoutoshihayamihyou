@@ -77,6 +77,26 @@ export default function HomePage() {
         <p style={{ color: 'var(--color-text-secondary)' }}>
           {t.subtitle}
         </p>
+        
+        {/* 信頼性バッジ */}
+        <div className="flex flex-wrap justify-center gap-3 mt-6">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+            style={{ background: 'rgba(44, 82, 130, 0.1)', color: 'var(--color-primary)' }}>
+            ✓ 完全無料
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+            style={{ background: 'rgba(213, 63, 140, 0.1)', color: 'var(--color-accent)' }}>
+            ✓ 登録不要
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+            style={{ background: 'rgba(56, 161, 105, 0.1)', color: '#38A169' }}>
+            ✓ 即時計算
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
+            style={{ background: 'rgba(49, 130, 206, 0.1)', color: '#3182CE' }}>
+            ✓ 西暦・和暦対応
+          </span>
+        </div>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -290,6 +310,58 @@ export default function HomePage() {
               </div>
             </div>
           </a>
+        </div>
+      </section>
+
+      {/* 使い方・ユースケース */}
+      <section className="mt-12 card p-6">
+        <h2 className="text-lg font-bold mb-4" style={{ color: 'var(--color-text)' }}>
+          📝 こんな時に便利
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">📋</span>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>履歴書・エントリーシート作成</div>
+              <p>就活や転職で学歴欄を記入する際に、入学・卒業年度をすぐに確認できます。</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">🎓</span>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>卒業年度の確認</div>
+              <p>「自分は何年に大学を卒業したっけ？」そんな時にすぐ調べられます。</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">👨‍👩‍👧</span>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>お子さんの入学時期確認</div>
+              <p>早生まれ・遅生まれも考慮して、正確な入学年度を計算します。</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <span className="text-lg">📅</span>
+            <div>
+              <div className="font-medium" style={{ color: 'var(--color-text)' }}>和暦・西暦の変換</div>
+              <p>令和・平成・昭和の和暦と西暦を相互に変換。公的書類作成に便利。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 関連キーワード（SEO用） */}
+      <section className="mt-8 text-center">
+        <div className="flex flex-wrap justify-center gap-2 text-xs" style={{ color: 'var(--color-text-muted)' }}>
+          {['卒業年度計算', '入学年度計算', '学歴早見表', '履歴書学歴', '和暦西暦変換', '生年月日から卒業年', '令和平成昭和変換'].map((keyword) => (
+            <span 
+              key={keyword}
+              className="px-3 py-1 rounded-full"
+              style={{ background: 'var(--color-border)' }}
+            >
+              #{keyword}
+            </span>
+          ))}
         </div>
       </section>
 
