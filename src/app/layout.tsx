@@ -83,8 +83,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Google Search Console の確認コード（後で設定）
-    // google: 'your-google-verification-code',
+    google: 'V1-keVq1sImNfHStAjHPsSXQ_5Z5JABh8dJnq3zkDlU',
   },
   other: {
     'google-adsense-account': 'ca-pub-2145087068476394',
