@@ -52,35 +52,43 @@ export function InputForm({
 
   return (
     <div className="card p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-        📅 計算設定
+      <h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
+        計算設定
       </h2>
 
       {/* 計算モード切替 */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
           計算モード
         </label>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setCalcMode('forward')}
-            className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-              formState.calcMode === 'forward'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
+            className="flex-1 py-2.5 px-4 rounded-lg font-medium transition-all"
+            style={{
+              background: formState.calcMode === 'forward'
+                ? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
+                : 'var(--color-card)',
+              color: formState.calcMode === 'forward' ? 'white' : 'var(--color-text-secondary)',
+              border: formState.calcMode === 'forward' ? 'none' : '1px solid var(--color-border)',
+              boxShadow: formState.calcMode === 'forward' ? '0 2px 8px rgba(44, 82, 130, 0.25)' : 'none'
+            }}
           >
             生年月日 → 学歴
           </button>
           <button
             type="button"
             onClick={() => setCalcMode('reverse')}
-            className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-              formState.calcMode === 'reverse'
-                ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
+            className="flex-1 py-2.5 px-4 rounded-lg font-medium transition-all"
+            style={{
+              background: formState.calcMode === 'reverse'
+                ? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
+                : 'var(--color-card)',
+              color: formState.calcMode === 'reverse' ? 'white' : 'var(--color-text-secondary)',
+              border: formState.calcMode === 'reverse' ? 'none' : '1px solid var(--color-border)',
+              boxShadow: formState.calcMode === 'reverse' ? '0 2px 8px rgba(44, 82, 130, 0.25)' : 'none'
+            }}
           >
             卒業年 → 生年月日
           </button>
@@ -90,7 +98,7 @@ export function InputForm({
       {/* 順方向入力 */}
       {formState.calcMode === 'forward' && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
             生年月日
           </label>
           <div className="flex gap-2 items-center">
@@ -103,7 +111,7 @@ export function InputForm({
               max={currentYear}
               className="input-field w-24"
             />
-            <span className="text-gray-600 dark:text-gray-400">年</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>年</span>
             <input
               type="number"
               placeholder="月"
@@ -113,7 +121,7 @@ export function InputForm({
               max={12}
               className="input-field w-16"
             />
-            <span className="text-gray-600 dark:text-gray-400">月</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>月</span>
             <input
               type="number"
               placeholder="日"
@@ -123,7 +131,7 @@ export function InputForm({
               max={31}
               className="input-field w-16"
             />
-            <span className="text-gray-600 dark:text-gray-400">日</span>
+            <span style={{ color: 'var(--color-text-muted)' }}>日</span>
           </div>
         </div>
       )}
@@ -132,7 +140,7 @@ export function InputForm({
       {formState.calcMode === 'reverse' && (
         <div className="mb-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
               卒業年（西暦）
             </label>
             <div className="flex gap-2 items-center">
@@ -145,11 +153,11 @@ export function InputForm({
                 max={currentYear + 30}
                 className="input-field w-28"
               />
-              <span className="text-gray-600 dark:text-gray-400">年 卒業</span>
+              <span style={{ color: 'var(--color-text-muted)' }}>年 卒業</span>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
               学校種別
             </label>
             <select
@@ -168,7 +176,7 @@ export function InputForm({
       {/* 大学種別 */}
       {(formState.calcMode === 'forward' || showUniversityFields) && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
             大学等
           </label>
           <select
@@ -188,7 +196,7 @@ export function InputForm({
       {/* 浪人年数 */}
       {showDelayFields && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
             浪人年数
           </label>
           <select
@@ -207,13 +215,13 @@ export function InputForm({
 
       {/* 留年・休学 */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+        <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-secondary)' }}>
           留年・休学
         </label>
         <div className="grid grid-cols-1 gap-3">
           {showHighschoolFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600 dark:text-gray-400 w-24">高校</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>高校</span>
               <input
                 type="number"
                 value={formState.highschoolExtra}
@@ -222,12 +230,12 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm text-gray-600 dark:text-gray-400">年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
             </div>
           )}
           {showUniversityFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600 dark:text-gray-400 w-24">大学等</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>大学等</span>
               <input
                 type="number"
                 value={formState.universityExtra}
@@ -236,12 +244,12 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm text-gray-600 dark:text-gray-400">年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
             </div>
           )}
           {showGraduateFields && (
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600 dark:text-gray-400 w-24">大学院</span>
+              <span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>大学院</span>
               <input
                 type="number"
                 value={formState.graduateExtra}
@@ -250,7 +258,7 @@ export function InputForm({
                 max={5}
                 className="input-field w-16"
               />
-              <span className="text-sm text-gray-600 dark:text-gray-400">年</span>
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>年</span>
             </div>
           )}
         </div>
@@ -259,7 +267,7 @@ export function InputForm({
       {/* 履歴書フォーマット（順方向のみ） */}
       {formState.calcMode === 'forward' && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-secondary)' }}>
             履歴書フォーマット
           </label>
           <select
@@ -276,8 +284,12 @@ export function InputForm({
 
       {/* エラー表示 */}
       {result?.error && (
-        <div className="p-4 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300">
-          ⚠️ {result.error}
+        <div className="p-4 rounded-lg" style={{
+          background: 'rgba(213, 63, 140, 0.1)',
+          border: '1px solid var(--color-accent)',
+          color: 'var(--color-accent)'
+        }}>
+          {result.error}
         </div>
       )}
     </div>

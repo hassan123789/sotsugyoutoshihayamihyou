@@ -59,14 +59,23 @@ export function CopyButton({
         onClick={handleCopy}
         className={`
           inline-flex items-center gap-2 px-6 py-3
-          bg-gradient-to-r from-green-500 to-emerald-500
-          hover:from-green-600 hover:to-emerald-600
-          text-white font-medium rounded-xl
-          shadow-lg hover:shadow-xl
-          transform hover:scale-105 active:scale-95
+          font-medium rounded-xl
           transition-all duration-200
           ${className}
         `}
+        style={{
+          background: 'linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%)',
+          color: 'white',
+          boxShadow: '0 2px 8px rgba(56, 161, 105, 0.25)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-1px)';
+          e.currentTarget.style.boxShadow = '0 4px 16px rgba(56, 161, 105, 0.35)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 2px 8px rgba(56, 161, 105, 0.25)';
+        }}
       >
         <svg
           className="w-5 h-5"
@@ -87,7 +96,13 @@ export function CopyButton({
       {/* トースト通知 */}
       {showToast && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 animate-toast-in">
-          <div className="px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-xl shadow-2xl font-medium">
+          <div 
+            className="px-6 py-3 rounded-xl shadow-xl font-medium"
+            style={{
+              background: 'var(--color-text)',
+              color: 'var(--color-bg)'
+            }}
+          >
             {toastMessage}
           </div>
         </div>

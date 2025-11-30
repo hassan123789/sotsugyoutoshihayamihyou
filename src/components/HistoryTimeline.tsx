@@ -2,7 +2,7 @@
 
 import type { AcademicEvent } from '@/lib/types';
 import { getNostalgia } from '@/lib/nostalgia';
-import { getSchoolIcon, toWareki } from '@/lib/academic';
+import { toWareki } from '@/lib/academic';
 
 interface HistoryTimelineProps {
   events: AcademicEvent[];
@@ -15,67 +15,85 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 
   return (
     <div className="card p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-        📜 学歴タイムライン
+      <h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
+        学歴タイムライン
       </h2>
 
       <div className="relative">
         {/* タイムラインの縦線 */}
-        <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500" />
+        <div 
+          className="absolute left-3 top-2 bottom-2 w-0.5"
+          style={{ background: 'linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%)' }}
+        />
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           {events.map((item, index) => {
             const nostalgia = getNostalgia(item.year);
-            const icon = getSchoolIcon(item.schoolType);
             const isLast = index === events.length - 1;
 
             return (
               <div
                 key={`${item.year}-${item.event}-${index}`}
-                className="relative pl-16 animate-slide-in"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="relative pl-10 animate-slide-in"
+                style={{ animationDelay: `${index * 80}ms` }}
               >
                 {/* タイムラインのドット */}
-                <div className="absolute left-4 w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-4 border-white dark:border-gray-800 shadow-lg" />
+                <div 
+                  className="absolute left-1.5 w-4 h-4 rounded-full border-2"
+                  style={{
+                    borderColor: isLast ? 'var(--color-accent)' : 'var(--color-primary)',
+                    background: isLast ? 'var(--color-accent)' : 'var(--color-card)'
+                  }}
+                />
 
                 {/* カード */}
                 <div
-                  className={`relative overflow-hidden rounded-xl p-4 transition-all hover:scale-[1.02] ${
-                    isLast
-                      ? 'bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 border-2 border-yellow-400 dark:border-yellow-600'
-                      : 'bg-white/70 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700'
-                  }`}
+                  className="rounded-xl p-4 transition-all hover:translate-x-1"
+                  style={{
+                    background: isLast 
+                      ? 'linear-gradient(135deg, rgba(213, 63, 140, 0.08) 0%, rgba(44, 82, 130, 0.08) 100%)'
+                      : 'var(--color-card)',
+                    border: isLast 
+                      ? '1px solid var(--color-accent)'
+                      : '1px solid var(--color-border)'
+                  }}
                 >
                   {/* 年度ヘッダー */}
                   <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{icon}</span>
-                      <div>
-                        <div className="font-bold text-gray-800 dark:text-white">
-                          {item.year}年（{toWareki(item.year, item.month)}）
-                        </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {item.month}月
-                        </div>
+                    <div>
+                      <div className="font-bold" style={{ color: 'var(--color-text)' }}>
+                        {item.year}年（{toWareki(item.year, item.month)}）{item.month}月
                       </div>
                     </div>
                     {isLast && (
-                      <span className="px-3 py-1 bg-yellow-400 dark:bg-yellow-600 text-yellow-900 dark:text-yellow-100 text-xs font-bold rounded-full">
+                      <span 
+                        className="px-2.5 py-0.5 text-xs font-medium rounded-full"
+                        style={{ 
+                          background: 'var(--color-accent)', 
+                          color: 'white' 
+                        }}
+                      >
                         最新
                       </span>
                     )}
                   </div>
 
                   {/* イベント */}
-                  <div className="font-medium text-gray-700 dark:text-gray-200 mb-2">
+                  <div className="font-medium mb-1" style={{ color: 'var(--color-text-secondary)' }}>
                     {item.event}
                   </div>
 
                   {/* 年齢 */}
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                  <div className="text-sm mb-3" style={{ color: 'var(--color-text-muted)' }}>
                     {item.age}歳
                     {item.isEarlyBorn && (
-                      <span className="ml-2 px-2 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs rounded-full">
+                      <span 
+                        className="ml-2 px-2 py-0.5 text-xs rounded-full"
+                        style={{ 
+                          background: 'rgba(44, 82, 130, 0.1)', 
+                          color: 'var(--color-primary)' 
+                        }}
+                      >
                         早生まれ
                       </span>
                     )}
@@ -83,31 +101,37 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 
                   {/* ノスタルジア */}
                   {nostalgia && (
-                    <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
-                      <div className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-2">
-                        ✨ この年の出来事
+                    <div 
+                      className="mt-3 pt-3 border-t"
+                      style={{ borderColor: 'var(--color-border)' }}
+                    >
+                      <div 
+                        className="text-xs font-medium mb-2"
+                        style={{ color: 'var(--color-accent)' }}
+                      >
+                        この年の出来事
                       </div>
-                      <div className="space-y-2 text-xs">
+                      <div className="space-y-1.5 text-xs">
                         {nostalgia.hit && (
                           <div className="flex items-start gap-2">
-                            <span className="text-pink-500 flex-shrink-0">🎵</span>
-                            <span className="text-gray-600 dark:text-gray-400">
+                            <span style={{ color: 'var(--color-accent)' }}>♪</span>
+                            <span style={{ color: 'var(--color-text-muted)' }}>
                               {nostalgia.hit}
                             </span>
                           </div>
                         )}
                         {nostalgia.culture && (
                           <div className="flex items-start gap-2">
-                            <span className="text-blue-500 flex-shrink-0">📺</span>
-                            <span className="text-gray-600 dark:text-gray-400">
+                            <span style={{ color: 'var(--color-primary)' }}>◆</span>
+                            <span style={{ color: 'var(--color-text-muted)' }}>
                               {nostalgia.culture}
                             </span>
                           </div>
                         )}
                         {nostalgia.news && (
                           <div className="flex items-start gap-2">
-                            <span className="text-orange-500 flex-shrink-0">📰</span>
-                            <span className="text-gray-600 dark:text-gray-400">
+                            <span style={{ color: 'var(--color-info)' }}>●</span>
+                            <span style={{ color: 'var(--color-text-muted)' }}>
                               {nostalgia.news}
                             </span>
                           </div>
@@ -148,47 +172,56 @@ export function ReverseResult({
 }: ReverseResultProps) {
   return (
     <div className="card p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-        🔍 逆算結果
+      <h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
+        逆算結果
       </h2>
 
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
-        <div className="text-center mb-4">
-          <div className="text-lg text-gray-600 dark:text-gray-400">
+      <div 
+        className="rounded-xl p-6"
+        style={{
+          background: 'linear-gradient(135deg, rgba(44, 82, 130, 0.06) 0%, rgba(213, 63, 140, 0.06) 100%)',
+          border: '1px solid var(--color-border)'
+        }}
+      >
+        <div className="text-center mb-5">
+          <div style={{ color: 'var(--color-text-secondary)' }}>
             {graduationYear}年に{schoolLabel}を卒業した場合
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-4 flex-wrap">
+        <div className="flex justify-center items-center gap-6 flex-wrap">
           <div className="text-center">
-            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+            <div className="text-sm mb-1" style={{ color: 'var(--color-text-muted)' }}>
               遅生まれ（4/2〜12/31）
             </div>
-            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+            <div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
               {earliest}年
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
               （{earliestWareki}）
             </div>
           </div>
 
-          <div className="text-2xl text-gray-400">〜</div>
+          <div className="text-2xl" style={{ color: 'var(--color-text-muted)' }}>〜</div>
 
           <div className="text-center">
-            <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+            <div className="text-sm mb-1" style={{ color: 'var(--color-text-muted)' }}>
               早生まれ（1/1〜4/1）
             </div>
-            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+            <div className="text-2xl font-bold" style={{ color: 'var(--color-accent)' }}>
               {latest}年
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
               （{latestWareki}）
             </div>
           </div>
         </div>
 
         {(delayYears > 0 || hasExtraYears) && (
-          <div className="mt-4 pt-4 border-t border-blue-200 dark:border-blue-800 text-center text-sm text-gray-500 dark:text-gray-400">
+          <div 
+            className="mt-5 pt-4 border-t text-center text-sm"
+            style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-muted)' }}
+          >
             ※ 浪人・留年・休学を考慮した場合の生年です
           </div>
         )}

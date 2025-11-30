@@ -2,45 +2,157 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+  デザインコンセプト：「桜と藍」
+  - 上品な華やかさと落ち着きの両立
+  - 日本の伝統色をモダンに解釈
+  - 卒業・学歴というテーマに相応しい品格
+*/
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* 藍色系（メイン） */
+  --color-primary: #2C5282;
+  --color-primary-light: #4299E1;
+  --color-primary-dark: #1A365D;
+  
+  /* 桜色系（アクセント） */
+  --color-accent: #D53F8C;
+  --color-accent-light: #ED64A6;
+  --color-accent-pale: #FED7E2;
+  
+  /* 背景・テキスト */
+  --color-bg: #FAFBFC;
+  --color-bg-warm: #FDF8F6;
+  --color-card: #FFFFFF;
+  --color-text: #1A202C;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #718096;
+  
+  /* ボーダー・装飾 */
+  --color-border: #E2E8F0;
+  --color-border-light: #EDF2F7;
+  
+  /* 成功・情報 */
+  --color-success: #38A169;
+  --color-info: #3182CE;
 }
 
 .dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 30, 41, 59;
-  --background-end-rgb: 15, 23, 42;
+  --color-primary: #63B3ED;
+  --color-primary-light: #90CDF4;
+  --color-primary-dark: #2B6CB0;
+  
+  --color-accent: #F687B3;
+  --color-accent-light: #FBB6CE;
+  --color-accent-pale: #702459;
+  
+  --color-bg: #0F1419;
+  --color-bg-warm: #1A1F26;
+  --color-card: #1E2530;
+  --color-text: #F7FAFC;
+  --color-text-secondary: #CBD5E0;
+  --color-text-muted: #A0AEC0;
+  
+  --color-border: #2D3748;
+  --color-border-light: #1A202C;
+  
+  --color-success: #68D391;
+  --color-info: #63B3ED;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--color-text);
+  background: var(--color-bg);
   min-height: 100vh;
+}
+
+/* 微細な背景パターン（和紙風） */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, var(--color-accent-pale) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(66, 153, 225, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark body::before {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(214, 63, 140, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(99, 179, 237, 0.05) 0%, transparent 50%);
 }
 
 /* カスタムコンポーネントスタイル */
 @layer components {
   .card {
-    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-700/50;
+    background: var(--color-card);
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    box-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      0 8px 24px rgba(0, 0, 0, 0.05);
   }
 
   .input-field {
-    @apply w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all;
+    @apply w-full px-4 py-2.5 rounded-lg transition-all duration-200;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+  
+  .input-field::placeholder {
+    color: var(--color-text-muted);
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.15);
+  }
+  
+  .dark .input-field:focus {
+    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 transition-all duration-200;
+    @apply px-6 py-3 font-medium rounded-xl transition-all duration-200;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(44, 82, 130, 0.25);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(44, 82, 130, 0.35);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0);
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-200;
+    @apply px-6 py-3 font-medium rounded-xl transition-all duration-200;
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+  
+  .btn-secondary:hover {
+    background: var(--color-border-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
   }
 }
 

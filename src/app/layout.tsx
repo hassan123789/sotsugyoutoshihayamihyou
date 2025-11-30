@@ -41,9 +41,10 @@ export const metadata: Metadata = {
     title: '入学・卒業年度自動計算｜学歴早見表【西暦・和暦対応】',
     description: '生年月日を入力するだけで小学校から大学院までの入学・卒業年度を自動計算。西暦・和暦両対応で履歴書作成に便利。',
     siteName: '学歴早見表',
+    // TODO: PNG画像に置き換え推奨（多くのプラットフォームでSVG非対応）
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.svg',
         width: 1200,
         height: 630,
         alt: '学歴早見表 - 入学・卒業年度自動計算ツール',
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '入学・卒業年度自動計算｜学歴早見表【西暦・和暦対応】',
     description: '生年月日を入力するだけで入学・卒業年度を自動計算。履歴書作成に便利な無料ツール。',
-    images: ['/og-image.png'],
+    images: ['/og-image.svg'],
   },
   robots: {
     index: true,
@@ -94,7 +95,7 @@ const jsonLd = {
     '浪人・留年・休学に対応',
     'ダークモード対応',
   ],
-  screenshot: 'https://sotsugyoutoshihayamihyou.vercel.app/og-image.png',
+  screenshot: 'https://sotsugyoutoshihayamihyou.vercel.app/og-image.svg',
   author: {
     '@type': 'Organization',
     name: '学歴早見表',
@@ -109,16 +110,17 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#3b82f6" />
+        <meta name="theme-color" content="#2C5282" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0F1419" media="(prefers-color-scheme: dark)" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-gradient-to-br from-slate-100 to-blue-100 dark:from-slate-900 dark:to-slate-800 transition-colors duration-300">
+      <body className="min-h-screen transition-colors duration-300">
         <ThemeProvider>
           <DarkModeToggle />
           {children}
