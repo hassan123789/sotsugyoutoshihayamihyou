@@ -6,20 +6,32 @@
 
 /* Custom theme */
 @theme {
-  --color-accent: #3B82F6;
-  --color-accent-hover: #2563EB;
+  --color-accent: #0071e3;
+  --color-accent-hover: #0077ED;
   
-  --animate-slide-in: slideIn 0.4s ease-out forwards;
-  --animate-toast-in: toastIn 0.3s ease-out forwards;
+  --animate-fade-up: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-scale-in: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-float: float 6s ease-in-out infinite;
   
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
-  @keyframes toastIn {
-    from { opacity: 0; transform: translateX(-50%) translateY(100px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 }
 
@@ -29,11 +41,11 @@
 }
 
 ::view-transition-old(root) {
-  animation: fade-out 0.2s ease-out both;
+  animation: fade-out 0.15s ease-out both;
 }
 
 ::view-transition-new(root) {
-  animation: fade-in 0.3s ease-in both;
+  animation: fade-in 0.25s ease-in both;
 }
 
 @keyframes fade-out {
@@ -46,124 +58,125 @@
   to { opacity: 1; }
 }
 
-/* カード要素のトランジション */
-.card {
-  view-transition-name: card;
-}
-
-::view-transition-old(card),
-::view-transition-new(card) {
-  animation-duration: 0.3s;
-}
-
 /* 
-  デザインコンセプト：「桜と藍」
-  - 上品な華やかさと落ち着きの両立
-  - 日本の伝統色をモダンに解釈
-  - 卒業・学歴というテーマに相応しい品格
+  デザインコンセプト：Apple風クリーンUI
+  - 極限のミニマリズム
+  - 大胆なタイポグラフィ
+  - 洗練されたアニメーション
+  - 余白を贅沢に使用
 */
 
 :root {
-  /* 藍色系（メイン） */
-  --color-primary: #2C5282;
-  --color-primary-light: #4299E1;
-  --color-primary-dark: #1A365D;
+  /* Apple風カラーパレット */
+  --color-primary: #1d1d1f;
+  --color-primary-light: #424245;
+  --color-primary-dark: #000000;
   
-  /* 桜色系（アクセント） */
-  --color-accent: #D53F8C;
-  --color-accent-light: #ED64A6;
-  --color-accent-pale: #FED7E2;
+  /* アクセント（Apple Blue） */
+  --color-accent: #0071e3;
+  --color-accent-light: #2997ff;
+  --color-accent-pale: rgba(0, 113, 227, 0.08);
   
   /* 背景・テキスト */
-  --color-bg: #FAFBFC;
-  --color-bg-warm: #FDF8F6;
-  --color-card: #FFFFFF;
-  --color-text: #1A202C;
-  --color-text-secondary: #4A5568;
-  --color-text-muted: #718096;
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f5f5f7;
+  --color-bg-tertiary: #fbfbfd;
+  --color-card: #ffffff;
+  --color-text: #1d1d1f;
+  --color-text-secondary: #86868b;
+  --color-text-muted: #6e6e73;
   
   /* ボーダー・装飾 */
-  --color-border: #E2E8F0;
-  --color-border-light: #EDF2F7;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-light: rgba(0, 0, 0, 0.04);
   
   /* 成功・情報 */
-  --color-success: #38A169;
-  --color-info: #3182CE;
+  --color-success: #30d158;
+  --color-info: #0071e3;
+  
+  /* グラデーション */
+  --gradient-hero: linear-gradient(180deg, #fbfbfd 0%, #ffffff 100%);
+  --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.95) 100%);
 }
 
 .dark {
-  --color-primary: #63B3ED;
-  --color-primary-light: #90CDF4;
-  --color-primary-dark: #2B6CB0;
+  --color-primary: #f5f5f7;
+  --color-primary-light: #d2d2d7;
+  --color-primary-dark: #ffffff;
   
-  --color-accent: #F687B3;
-  --color-accent-light: #FBB6CE;
-  --color-accent-pale: #702459;
+  --color-accent: #2997ff;
+  --color-accent-light: #5ac8fa;
+  --color-accent-pale: rgba(41, 151, 255, 0.12);
   
-  --color-bg: #0F1419;
-  --color-bg-warm: #1A1F26;
-  --color-card: #1E2530;
-  --color-text: #F7FAFC;
-  --color-text-secondary: #CBD5E0;
-  --color-text-muted: #A0AEC0;
+  --color-bg: #000000;
+  --color-bg-secondary: #1d1d1f;
+  --color-bg-tertiary: #0d0d0d;
+  --color-card: #1d1d1f;
+  --color-text: #f5f5f7;
+  --color-text-secondary: #a1a1a6;
+  --color-text-muted: #86868b;
   
-  --color-border: #2D3748;
-  --color-border-light: #1A202C;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-light: rgba(255, 255, 255, 0.05);
   
-  --color-success: #68D391;
-  --color-info: #63B3ED;
+  --color-success: #30d158;
+  --color-info: #2997ff;
+  
+  --gradient-hero: linear-gradient(180deg, #000000 0%, #1d1d1f 100%);
+  --gradient-card: linear-gradient(180deg, rgba(29,29,31,0.8) 0%, rgba(29,29,31,0.95) 100%);
+}
+
+/* ベーススタイル */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
   color: var(--color-text);
   background: var(--color-bg);
   min-height: 100vh;
-}
-
-/* 微細な背景パターン（和紙風） */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, var(--color-accent-pale) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(66, 153, 225, 0.08) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-.dark body::before {
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(214, 63, 140, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(99, 179, 237, 0.05) 0%, transparent 50%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
 /* カスタムコンポーネントスタイル */
 @layer components {
+  /* Apple風カード */
   .card {
     background: var(--color-card);
-    border-radius: 1rem;
+    border-radius: 20px;
     border: 1px solid var(--color-border);
-    box-shadow: 
-      0 1px 3px rgba(0, 0, 0, 0.04),
-      0 4px 12px rgba(0, 0, 0, 0.03);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   
   .card:hover {
+    transform: translateY(-2px);
     box-shadow: 
-      0 2px 8px rgba(0, 0, 0, 0.06),
-      0 8px 24px rgba(0, 0, 0, 0.05);
+      0 12px 40px rgba(0, 0, 0, 0.08),
+      0 4px 12px rgba(0, 0, 0, 0.04);
   }
 
-  .input-field {
-    @apply w-full px-4 py-2.5 rounded-lg transition-all duration-200;
-    background: var(--color-card);
+  /* グラスモーフィズムカード */
+  .card-glass {
+    background: var(--gradient-card);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 24px;
     border: 1px solid var(--color-border);
+  }
+
+  /* 入力フィールド */
+  .input-field {
+    @apply w-full px-5 py-4 rounded-2xl transition-all duration-300;
+    background: var(--color-bg-secondary);
+    border: 2px solid transparent;
     color: var(--color-text);
+    font-size: 17px;
+    font-weight: 400;
   }
   
   .input-field::placeholder {
@@ -172,81 +185,133 @@ body::before {
   
   .input-field:focus {
     outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.15);
-  }
-  
-  .dark .input-field:focus {
-    box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+    background: var(--color-bg);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-accent-pale);
   }
 
+  /* プライマリボタン（Apple風） */
   .btn-primary {
-    @apply px-6 py-3 font-medium rounded-xl transition-all duration-200;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    @apply px-8 py-4 font-semibold rounded-full transition-all duration-300;
+    background: var(--color-accent);
     color: white;
-    box-shadow: 0 2px 8px rgba(44, 82, 130, 0.25);
+    font-size: 17px;
+    letter-spacing: -0.01em;
   }
   
   .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(44, 82, 130, 0.35);
+    background: var(--color-accent-light);
+    transform: scale(1.02);
   }
   
   .btn-primary:active {
-    transform: translateY(0);
+    transform: scale(0.98);
   }
 
+  /* セカンダリボタン */
   .btn-secondary {
-    @apply px-6 py-3 font-medium rounded-xl transition-all duration-200;
-    background: var(--color-card);
-    color: var(--color-text);
-    border: 1px solid var(--color-border);
+    @apply px-8 py-4 font-semibold rounded-full transition-all duration-300;
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    font-size: 17px;
   }
   
   .btn-secondary:hover {
-    background: var(--color-border-light);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    background: var(--color-accent);
+    color: white;
+  }
+
+  /* テキストリンク（Apple風） */
+  .link-arrow {
+    color: var(--color-accent);
+    font-size: 17px;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s ease;
+  }
+  
+  .link-arrow:hover {
+    gap: 8px;
+  }
+  
+  .link-arrow::after {
+    content: '›';
+    font-size: 20px;
+    transition: transform 0.2s ease;
+  }
+  
+  .link-arrow:hover::after {
+    transform: translateX(2px);
   }
 }
 
-/* アニメーション */
+/* Apple風タイポグラフィ */
+.hero-title {
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+}
+
+.hero-subtitle {
+  font-size: clamp(19px, 2.5vw, 24px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  letter-spacing: -0.01em;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+}
+
+.section-subtitle {
+  font-size: clamp(17px, 2vw, 21px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+/* アニメーションユーティリティ */
 @layer utilities {
-  .animate-slide-in {
-    animation: slideIn 0.5s ease-out forwards;
+  .animate-fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
-
-  .animate-toast-in {
-    animation: toastIn 0.3s ease-out forwards;
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+    opacity: 0;
   }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
   }
-
-  @keyframes toastIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, 20px);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
+  
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-400 { animation-delay: 0.4s; }
+  .delay-500 { animation-delay: 0.5s; }
 }
 
-/* スクロールバーのカスタマイズ */
+/* スクロールバー（Apple風） */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -254,24 +319,54 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(155, 155, 155, 0.5);
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 155, 155, 0.7);
+  background: rgba(0, 0, 0, 0.35);
 }
 
-/* セレクトボックスのスタイル */
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* セレクトボックス */
 select.input-field {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.5rem center;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2386868b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 16px center;
   background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
+  background-size: 16px;
+  padding-right: 48px;
+  cursor: pointer;
 }
 
-.dark select.input-field {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+/* フォーカス時のアウトライン（アクセシビリティ） */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* グラデーションテキスト */
+.gradient-text {
+  background: linear-gradient(90deg, var(--color-accent) 0%, #5856d6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ホバーエフェクト */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
 }

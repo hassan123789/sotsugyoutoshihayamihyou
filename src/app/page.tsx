@@ -55,524 +55,373 @@ export default function HomePage() {
 	const reverseResultData = getReverseResultText();
 
 	return (
-		<main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-			{/* ヘッダー */}
-			<header className="text-center mb-10">
-				{/* 装飾アイコン */}
-				<div
-					className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
+		<main className="min-h-screen">
+			{/* ヒーローセクション - Apple風 */}
+			<section className="relative overflow-hidden" style={{ background: 'var(--color-bg)' }}>
+				<div className="max-w-5xl mx-auto px-6 pt-20 pb-16 sm:pt-28 sm:pb-24 text-center">
+					{/* メインタイトル - 超大型 */}
+					<h1 className="hero-title animate-fade-up">
+						{t.title}
+					</h1>
+					
+					{/* サブタイトル */}
+					<p className="hero-subtitle mt-6 max-w-2xl mx-auto animate-fade-up delay-100">
+						{t.subtitle}
+					</p>
+
+					{/* CTAボタン */}
+					<div className="flex flex-wrap justify-center gap-4 mt-10 animate-fade-up delay-200">
+						<a href="#calculator" className="btn-primary">
+							今すぐ計算する
+						</a>
+						<a href="#features" className="btn-secondary">
+							詳しく見る
+						</a>
+					</div>
+
+					{/* 信頼性バッジ - ミニマル */}
+					<div className="flex flex-wrap justify-center gap-6 mt-12 animate-fade-up delay-300">
+						{['完全無料', '登録不要', '即時計算', '西暦・和暦対応'].map((badge, i) => (
+							<span
+								key={badge}
+								className="text-sm font-medium"
+								style={{ color: 'var(--color-text-secondary)' }}
+							>
+								{badge}
+							</span>
+						))}
+					</div>
+				</div>
+
+				{/* 装飾グラデーション */}
+				<div 
+					className="absolute inset-0 pointer-events-none"
 					style={{
-						background:
-							'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
-						boxShadow: '0 4px 14px rgba(44, 82, 130, 0.25)',
+						background: 'radial-gradient(ellipse 80% 50% at 50% -20%, var(--color-accent-pale), transparent)',
+						opacity: 0.6,
 					}}
-				>
-					<svg
-						className="w-8 h-8 text-white"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M12 14l9-5-9-5-9 5 9 5z"
-						/>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"
-						/>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-						/>
-					</svg>
-				</div>
-				<h1
-					className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3"
-					style={{ color: 'var(--color-text)' }}
-				>
-					{t.title}
-				</h1>
-				<p style={{ color: 'var(--color-text-secondary)' }}>{t.subtitle}</p>
+				/>
+			</section>
 
-				{/* 信頼性バッジ */}
-				<div className="flex flex-wrap justify-center gap-3 mt-6">
-					<span
-						className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-						style={{
-							background: 'rgba(44, 82, 130, 0.1)',
-							color: 'var(--color-primary)',
-						}}
-					>
-						✓ 完全無料
-					</span>
-					<span
-						className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-						style={{
-							background: 'rgba(213, 63, 140, 0.1)',
-							color: 'var(--color-accent)',
-						}}
-					>
-						✓ 登録不要
-					</span>
-					<span
-						className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-						style={{ background: 'rgba(56, 161, 105, 0.1)', color: '#38A169' }}
-					>
-						✓ 即時計算
-					</span>
-					<span
-						className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium"
-						style={{ background: 'rgba(49, 130, 206, 0.1)', color: '#3182CE' }}
-					>
-						✓ 西暦・和暦対応
-					</span>
-				</div>
-			</header>
+			{/* メイン計算セクション */}
+			<section 
+				id="calculator" 
+				className="py-16 sm:py-24"
+				style={{ background: 'var(--color-bg-secondary)' }}
+			>
+				<div className="max-w-6xl mx-auto px-6">
+					{/* セクションヘッダー */}
+					<div className="text-center mb-12">
+						<h2 className="section-title">学歴を計算</h2>
+						<p className="section-subtitle mt-3">
+							生年月日を入力するだけで、すべての入学・卒業年度がわかります
+						</p>
+					</div>
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-				{/* 入力フォーム */}
-				<div>
-					<InputForm
-						formState={formState}
-						result={result}
-						updateField={updateField}
-						setCalcMode={setCalcMode}
-						autoCalculate={autoCalculate}
-						showUniversityFields={showUniversityFields}
-						showGraduateFields={showGraduateFields}
-						showDelayFields={showDelayFields}
-						showHighschoolFields={showHighschoolFields}
-					/>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+						{/* 入力フォーム */}
+						<div className="animate-fade-up">
+							<div className="card p-8">
+								<InputForm
+									formState={formState}
+									result={result}
+									updateField={updateField}
+									setCalcMode={setCalcMode}
+									autoCalculate={autoCalculate}
+									showUniversityFields={showUniversityFields}
+									showGraduateFields={showGraduateFields}
+									showDelayFields={showDelayFields}
+									showHighschoolFields={showHighschoolFields}
+								/>
 
-					{/* コピーボタン（順方向で結果があるとき） */}
-					{result?.type === 'forward' && result.data && (
-						<div className="mt-5 space-y-3">
-							<CopyButton
-								getText={getResumeText}
-								label={t.copyResume}
-								className="w-full justify-center"
-							/>
-							<ShareButton getShareData={getShareData} />
-							<PDFButton
-								events={result.data.events}
-								birthYear={parseInt(formState.birthYear, 10)}
-								birthMonth={parseInt(formState.birthMonth, 10)}
-								birthDay={parseInt(formState.birthDay, 10)}
-							/>
-							<InfographicGenerator
-								events={result.data.events}
-								birthYear={parseInt(formState.birthYear, 10)}
-								birthMonth={parseInt(formState.birthMonth, 10)}
-								birthDay={parseInt(formState.birthDay, 10)}
-							/>
+								{/* アクションボタン */}
+								{result?.type === 'forward' && result.data && (
+									<div className="mt-8 space-y-4">
+										<CopyButton
+											getText={getResumeText}
+											label={t.copyResume}
+											className="w-full justify-center"
+										/>
+										<div className="grid grid-cols-2 gap-3">
+											<ShareButton getShareData={getShareData} />
+											<PDFButton
+												events={result.data.events}
+												birthYear={parseInt(formState.birthYear, 10)}
+												birthMonth={parseInt(formState.birthMonth, 10)}
+												birthDay={parseInt(formState.birthDay, 10)}
+											/>
+										</div>
+										<InfographicGenerator
+											events={result.data.events}
+											birthYear={parseInt(formState.birthYear, 10)}
+											birthMonth={parseInt(formState.birthMonth, 10)}
+											birthDay={parseInt(formState.birthDay, 10)}
+										/>
+									</div>
+								)}
+							</div>
 						</div>
-					)}
+
+						{/* 結果表示 */}
+						<div className="space-y-6 animate-fade-up delay-100">
+							{result?.type === 'forward' && result.data && (
+								<>
+									<HistoryTimeline events={result.data.events} />
+									<AIResumeGenerator
+										events={result.data.events}
+										birthYear={parseInt(formState.birthYear, 10)}
+										birthMonth={parseInt(formState.birthMonth, 10)}
+										birthDay={parseInt(formState.birthDay, 10)}
+									/>
+								</>
+							)}
+
+							{result?.type === 'reverse' && reverseResultData && (
+								<ReverseResult {...reverseResultData} />
+							)}
+
+							{!result && (
+								<div className="card p-12 text-center">
+									<div
+										className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-5"
+										style={{ background: 'var(--color-bg-secondary)' }}
+									>
+										<svg
+											className="w-8 h-8"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											style={{ color: 'var(--color-text-muted)' }}
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={1.5}
+												d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+											/>
+										</svg>
+									</div>
+									<p className="text-lg" style={{ color: 'var(--color-text-secondary)' }}>
+										{formState.calcMode === 'forward'
+											? t.resultPlaceholder
+											: t.reversePlaceholder}
+									</p>
+								</div>
+							)}
+						</div>
+					</div>
 				</div>
+			</section>
 
-				{/* 結果表示 */}
-				<div className="space-y-6">
-					{/* 順方向の結果：タイムライン */}
-					{result?.type === 'forward' && result.data && (
-						<>
-							<HistoryTimeline events={result.data.events} />
+			{/* 同い年の有名人 & あるある */}
+			{result?.type === 'forward' && result.data && (
+				<section className="py-16 sm:py-20" style={{ background: 'var(--color-bg)' }}>
+					<div className="max-w-6xl mx-auto px-6 space-y-8">
+						<Celebrities
+							birthYear={parseInt(formState.birthYear, 10)}
+							birthMonth={parseInt(formState.birthMonth, 10)}
+							birthDay={parseInt(formState.birthDay, 10)}
+						/>
+						<InArticleAd slot="YOUR_AD_SLOT_1" />
+						<GenerationAruaru birthYear={parseInt(formState.birthYear, 10)} />
+						<ShareCard
+							birthYear={parseInt(formState.birthYear, 10)}
+							birthMonth={parseInt(formState.birthMonth, 10)}
+							birthDay={parseInt(formState.birthDay, 10)}
+						/>
+					</div>
+				</section>
+			)}
 
-							{/* AI履歴書生成 */}
-							<AIResumeGenerator
-								events={result.data.events}
-								birthYear={parseInt(formState.birthYear, 10)}
-								birthMonth={parseInt(formState.birthMonth, 10)}
-								birthDay={parseInt(formState.birthDay, 10)}
-							/>
+			{/* 機能紹介セクション */}
+			<section 
+				id="features" 
+				className="py-20 sm:py-28"
+				style={{ background: 'var(--color-bg-secondary)' }}
+			>
+				<div className="max-w-6xl mx-auto px-6">
+					<div className="text-center mb-16">
+						<h2 className="section-title">こんな時に便利</h2>
+						<p className="section-subtitle mt-3">
+							履歴書作成から学歴確認まで、あらゆるシーンで活躍
+						</p>
+					</div>
 
-							{/* 同い年の有名人 */}
-							<Celebrities
-								birthYear={parseInt(formState.birthYear, 10)}
-								birthMonth={parseInt(formState.birthMonth, 10)}
-								birthDay={parseInt(formState.birthDay, 10)}
-							/>
-
-							{/* 記事内広告 */}
-							<InArticleAd slot="YOUR_AD_SLOT_1" />
-
-							{/* 学年あるある */}
-							<GenerationAruaru birthYear={parseInt(formState.birthYear, 10)} />
-
-							{/* 同い年診断シェアカード */}
-							<ShareCard
-								birthYear={parseInt(formState.birthYear, 10)}
-								birthMonth={parseInt(formState.birthMonth, 10)}
-								birthDay={parseInt(formState.birthDay, 10)}
-							/>
-						</>
-					)}
-
-					{/* 逆算の結果 */}
-					{result?.type === 'reverse' && reverseResultData && (
-						<ReverseResult {...reverseResultData} />
-					)}
-
-					{/* 結果がない場合のプレースホルダー */}
-					{!result && (
-						<div className="card p-10 text-center">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+						{[
+							{
+								icon: '📋',
+								title: '履歴書・ES作成',
+								desc: '就活や転職で学歴欄を記入する際に、入学・卒業年度をすぐに確認',
+							},
+							{
+								icon: '🎓',
+								title: '卒業年度の確認',
+								desc: '「何年に大学を卒業したっけ？」そんな疑問をすぐに解決',
+							},
+							{
+								icon: '👨‍👩‍👧',
+								title: 'お子さんの入学時期',
+								desc: '早生まれ・遅生まれも考慮して、正確な入学年度を計算',
+							},
+							{
+								icon: '📅',
+								title: '和暦・西暦の変換',
+								desc: '令和・平成・昭和の和暦と西暦を相互に変換',
+							},
+						].map((feature, i) => (
 							<div
-								className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4"
-								style={{
-									background: 'var(--color-border-light)',
+								key={feature.title}
+								className="card p-8 hover-lift"
+								style={{ animationDelay: `${i * 0.1}s` }}
+							>
+								<span className="text-4xl mb-4 block">{feature.icon}</span>
+								<h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text)' }}>
+									{feature.title}
+								</h3>
+								<p style={{ color: 'var(--color-text-secondary)' }}>
+									{feature.desc}
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* 関連ツール */}
+			<section className="py-20 sm:py-28" style={{ background: 'var(--color-bg)' }}>
+				<div className="max-w-6xl mx-auto px-6">
+					<div className="text-center mb-16">
+						<h2 className="section-title">{t.relatedTools}</h2>
+					</div>
+
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+						{[
+							{ href: '/quiz', icon: '🎯', title: t.quiz, desc: t.quizDescription, highlight: true },
+							{ href: '/birth', icon: '📆', title: t.yearlyTable, desc: t.yearlyTableDesc },
+							{ href: '/wareki', icon: '📅', title: t.warekiConverter, desc: t.warekiConverterDesc },
+							{ href: '/age', icon: '🎂', title: t.ageTable, desc: t.ageTableDesc },
+							{ href: '/recruiter', icon: '💼', title: t.recruiter, desc: t.recruiterDesc },
+						].map((tool) => (
+							<a
+								key={tool.href}
+								href={tool.href}
+								className={`card p-6 hover-lift ${tool.highlight ? 'ring-2 ring-offset-2' : ''}`}
+								style={tool.highlight ? { 
+									borderColor: 'var(--color-accent)',
+									boxShadow: '0 0 0 2px var(--color-accent-pale)',
+								} : {}}
+							>
+								<span className="text-3xl mb-4 block">{tool.icon}</span>
+								<h3 className="font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
+									{tool.title}
+								</h3>
+								<p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+									{tool.desc}
+								</p>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* FAQ */}
+			<section className="py-16 sm:py-20" style={{ background: 'var(--color-bg-secondary)' }}>
+				<div className="max-w-4xl mx-auto px-6">
+					<FAQ />
+				</div>
+			</section>
+
+			{/* おすすめサービス */}
+			<section className="py-16" style={{ background: 'var(--color-bg)' }}>
+				<div className="max-w-6xl mx-auto px-6">
+					<RecommendedServices />
+				</div>
+			</section>
+
+			<FooterAd slot="YOUR_AD_SLOT_2" />
+
+			{/* SEOキーワード */}
+			<section className="py-8" style={{ background: 'var(--color-bg-secondary)' }}>
+				<div className="max-w-4xl mx-auto px-6 text-center">
+					<div className="flex flex-wrap justify-center gap-3">
+						{[
+							'卒業年度計算',
+							'入学年度計算',
+							'学歴早見表',
+							'履歴書学歴',
+							'和暦西暦変換',
+							'生年月日から卒業年',
+							'令和平成昭和変換',
+						].map((keyword) => (
+							<span
+								key={keyword}
+								className="px-4 py-2 rounded-full text-sm"
+								style={{ 
+									background: 'var(--color-bg)',
 									color: 'var(--color-text-muted)',
 								}}
 							>
-								<svg
-									className="w-7 h-7"
-									fill="none"
-									stroke="currentColor"
-									viewBox="0 0 24 24"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={1.5}
-										d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-									/>
-								</svg>
-							</div>
-							<p style={{ color: 'var(--color-text-secondary)' }}>
-								{formState.calcMode === 'forward'
-									? t.resultPlaceholder
-									: t.reversePlaceholder}
-							</p>
-						</div>
-					)}
-				</div>
-			</div>
-
-			{/* FAQ */}
-			<FAQ />
-
-			{/* おすすめサービス（アフィリエイト） */}
-			<RecommendedServices className="mt-10" />
-
-			{/* フッター広告 */}
-			<FooterAd slot="YOUR_AD_SLOT_2" />
-
-			{/* 関連ツール */}
-			<section className="mt-10">
-				<h2
-					className="text-lg font-bold mb-4 text-center"
-					style={{ color: 'var(--color-text)' }}
-				>
-					{t.relatedTools}
-				</h2>
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-					{/* 世代診断クイズ（目立つ位置） */}
-					<a
-						href="/quiz"
-						className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px] sm:col-span-2 lg:col-span-1 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200 dark:border-purple-800"
-					>
-						<div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-							🎯
-						</div>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								{t.quiz}
-							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
-								{t.quizDescription}
-							</div>
-						</div>
-					</a>
-					<a
-						href="/birth"
-						className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
-					>
-						<div
-							className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
-							style={{
-								background: 'rgba(44, 82, 130, 0.1)',
-								color: 'var(--color-primary)',
-							}}
-						>
-							📆
-						</div>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								{t.yearlyTable}
-							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
-								{t.yearlyTableDesc}
-							</div>
-						</div>
-					</a>
-					<a
-						href="/wareki"
-						className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
-					>
-						<div
-							className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
-							style={{
-								background: 'rgba(44, 82, 130, 0.1)',
-								color: 'var(--color-primary)',
-							}}
-						>
-							📅
-						</div>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								{t.warekiConverter}
-							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
-								{t.warekiConverterDesc}
-							</div>
-						</div>
-					</a>
-					<a
-						href="/age"
-						className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
-					>
-						<div
-							className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
-							style={{
-								background: 'rgba(213, 63, 140, 0.1)',
-								color: 'var(--color-accent)',
-							}}
-						>
-							🎂
-						</div>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								{t.ageTable}
-							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
-								{t.ageTableDesc}
-							</div>
-						</div>
-					</a>
-					<a
-						href="/recruiter"
-						className="card p-4 flex items-center gap-4 transition-all hover:translate-y-[-2px]"
-					>
-						<div
-							className="w-12 h-12 rounded-xl flex items-center justify-center text-xl"
-							style={{
-								background: 'rgba(56, 178, 172, 0.1)',
-								color: '#38B2AC',
-							}}
-						>
-							💼
-						</div>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								{t.recruiter}
-							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
-								{t.recruiterDesc}
-							</div>
-						</div>
-					</a>
-				</div>
-			</section>
-
-			{/* 使い方・ユースケース */}
-			<section className="mt-12 card p-6">
-				<h2
-					className="text-lg font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
-					📝 こんな時に便利
-				</h2>
-				<div
-					className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm"
-					style={{ color: 'var(--color-text-secondary)' }}
-				>
-					<div className="flex items-start gap-3">
-						<span className="text-lg">📋</span>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								履歴書・エントリーシート作成
-							</div>
-							<p>
-								就活や転職で学歴欄を記入する際に、入学・卒業年度をすぐに確認できます。
-							</p>
-						</div>
-					</div>
-					<div className="flex items-start gap-3">
-						<span className="text-lg">🎓</span>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								卒業年度の確認
-							</div>
-							<p>
-								「自分は何年に大学を卒業したっけ？」そんな時にすぐ調べられます。
-							</p>
-						</div>
-					</div>
-					<div className="flex items-start gap-3">
-						<span className="text-lg">👨‍👩‍👧</span>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								お子さんの入学時期確認
-							</div>
-							<p>早生まれ・遅生まれも考慮して、正確な入学年度を計算します。</p>
-						</div>
-					</div>
-					<div className="flex items-start gap-3">
-						<span className="text-lg">📅</span>
-						<div>
-							<div
-								className="font-medium"
-								style={{ color: 'var(--color-text)' }}
-							>
-								和暦・西暦の変換
-							</div>
-							<p>
-								令和・平成・昭和の和暦と西暦を相互に変換。公的書類作成に便利。
-							</p>
-						</div>
+								#{keyword}
+							</span>
+						))}
 					</div>
 				</div>
 			</section>
 
-			{/* 関連キーワード（SEO用） */}
-			<section className="mt-8 text-center">
-				<div
-					className="flex flex-wrap justify-center gap-2 text-xs"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
-					{[
-						'卒業年度計算',
-						'入学年度計算',
-						'学歴早見表',
-						'履歴書学歴',
-						'和暦西暦変換',
-						'生年月日から卒業年',
-						'令和平成昭和変換',
-					].map((keyword) => (
-						<span
-							key={keyword}
-							className="px-3 py-1 rounded-full"
-							style={{ background: 'var(--color-border)' }}
-						>
-							#{keyword}
-						</span>
-					))}
-				</div>
-			</section>
-
-			{/* FAQ用JSON-LD */}
+			{/* JSON-LD */}
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
 			/>
 
 			{/* フッター */}
-			<footer
-				className="mt-14 pt-8 border-t"
-				style={{ borderColor: 'var(--color-border)' }}
+			<footer 
+				className="py-12"
+				style={{ 
+					background: 'var(--color-bg)',
+					borderTop: '1px solid var(--color-border)',
+				}}
 			>
-				{/* サイト内リンク */}
-				<nav className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
-					<a
-						href="/wareki"
-						className="hover:underline"
-						style={{ color: 'var(--color-primary)' }}
-					>
-						和暦西暦変換
-					</a>
-					<span style={{ color: 'var(--color-border)' }}>|</span>
-					<a
-						href="/age"
-						className="hover:underline"
-						style={{ color: 'var(--color-primary)' }}
-					>
-						年齢計算
-					</a>
-					<span style={{ color: 'var(--color-border)' }}>|</span>
-					<a
-						href="/birth"
-						className="hover:underline"
-						style={{ color: 'var(--color-primary)' }}
-					>
-						生年月日一覧
-					</a>
-					<span style={{ color: 'var(--color-border)' }}>|</span>
-					<a
-						href="/quiz"
-						className="hover:underline"
-						style={{ color: 'var(--color-primary)' }}
-					>
-						クイズ
-					</a>
-					<span style={{ color: 'var(--color-border)' }}>|</span>
-					<a
-						href="/privacy"
-						className="hover:underline"
-						style={{ color: 'var(--color-primary)' }}
-					>
-						プライバシーポリシー
-					</a>
-				</nav>
+				<div className="max-w-6xl mx-auto px-6">
+					{/* ナビゲーション */}
+					<nav className="flex flex-wrap justify-center gap-6 mb-8">
+						{[
+							{ href: '/wareki', label: '和暦西暦変換' },
+							{ href: '/age', label: '年齢計算' },
+							{ href: '/birth', label: '生年月日一覧' },
+							{ href: '/quiz', label: 'クイズ' },
+							{ href: '/privacy', label: 'プライバシーポリシー' },
+						].map((link) => (
+							<a
+								key={link.href}
+								href={link.href}
+								className="text-sm link-arrow"
+								style={{ color: 'var(--color-accent)' }}
+							>
+								{link.label}
+							</a>
+						))}
+					</nav>
 
-				{/* 注意書き */}
-				<div
-					className="text-center text-sm"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
-					<p>{t.footerNote1}</p>
-					<p className="mt-1.5">{t.footerNote2}</p>
+					{/* 注意書き */}
+					<div className="text-center space-y-2 mb-8">
+						<p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+							{t.footerNote1}
+						</p>
+						<p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+							{t.footerNote2}
+						</p>
+					</div>
+
+					{/* コピーライト */}
+					<p 
+						className="text-center text-xs"
+						style={{ color: 'var(--color-text-muted)' }}
+					>
+						© {new Date().getFullYear()} 学歴早見表 - 入学・卒業年度自動計算ツール
+					</p>
 				</div>
-
-				{/* コピーライト */}
-				<p
-					className="text-center text-xs mt-6 pb-4"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
-					© {new Date().getFullYear()} 学歴早見表 - 入学・卒業年度自動計算ツール
-				</p>
 			</footer>
 		</main>
 	);
