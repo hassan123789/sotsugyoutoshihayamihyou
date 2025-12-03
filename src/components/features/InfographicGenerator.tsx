@@ -216,7 +216,7 @@ export function InfographicGenerator({
 					cursor: isGenerating ? 'not-allowed' : 'pointer',
 					boxShadow: isGenerating
 						? 'none'
-						: '0 4px 14px rgba(44, 82, 130, 0.25)',
+						: '0 4px 14px var(--color-shadow-accent)',
 				}}
 			>
 				{isGenerating ? (
@@ -276,7 +276,7 @@ export function InfographicGenerator({
 							style={{
 								maxHeight: '500px',
 								objectFit: 'contain',
-								background: '#1a1a1a',
+								background: 'var(--color-bg-secondary)',
 							}}
 						/>
 					</div>

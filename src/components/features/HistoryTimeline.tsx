@@ -64,7 +64,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 									className="rounded-xl p-4 transition-all hover:translate-x-1"
 									style={{
 										background: isLast
-											? 'linear-gradient(135deg, rgba(213, 63, 140, 0.08) 0%, rgba(44, 82, 130, 0.08) 100%)'
+											? 'var(--color-accent-pale)'
 											: 'var(--color-card)',
 										border: isLast
 											? '1px solid var(--color-accent)'
@@ -114,7 +114,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 											<span
 												className="ml-2 px-2 py-0.5 text-xs rounded-full"
 												style={{
-													background: 'rgba(44, 82, 130, 0.1)',
+													background: 'var(--color-accent-pale)',
 													color: 'var(--color-primary)',
 												}}
 											>
@@ -212,8 +212,7 @@ export function ReverseResult({
 			<div
 				className="rounded-xl p-6"
 				style={{
-					background:
-						'linear-gradient(135deg, rgba(44, 82, 130, 0.06) 0%, rgba(213, 63, 140, 0.06) 100%)',
+					background: 'var(--color-accent-pale)',
 					border: '1px solid var(--color-border)',
 				}}
 			>

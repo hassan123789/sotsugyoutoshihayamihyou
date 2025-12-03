@@ -100,8 +100,8 @@ export default function RecruiterPage() {
 					className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
 					style={{
 						background:
-							'linear-gradient(135deg, var(--color-primary) 0%, #38B2AC 100%)',
-						boxShadow: '0 4px 14px rgba(44, 82, 130, 0.25)',
+							'linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%)',
+						boxShadow: '0 4px 14px var(--color-shadow)',
 					}}
 				>
 					<svg
@@ -209,8 +209,7 @@ export default function RecruiterPage() {
 						<div
 							className="mt-6 p-4 rounded-xl"
 							style={{
-								background:
-									'linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(56, 178, 172, 0.1) 100%)',
+								background: 'var(--color-accent-pale)',
 								border: '1px solid var(--color-border)',
 							}}
 						>
@@ -407,7 +406,7 @@ export default function RecruiterPage() {
 										borderBottom: '1px solid var(--color-border)',
 										background:
 											row.graduationYear === currentYear
-												? 'rgba(44, 82, 130, 0.1)'
+												? 'var(--color-accent-pale)'
 												: index % 2 === 0
 													? 'transparent'
 													: 'var(--color-card)',

@@ -218,12 +218,12 @@ export default function PrivacyPolicyPage() {
 	const t = content[locale] || content.ja;
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+		<div className="min-h-screen" style={{ background: 'var(--color-bg)' }}>
 			<div className="max-w-3xl mx-auto px-4 py-12">
-				<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+				<h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>
 					{t.title}
 				</h1>
-				<p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
+				<p className="text-sm mb-8" style={{ color: 'var(--color-text-muted)' }}>
 					{t.lastUpdated}
 				</p>
 
@@ -231,12 +231,13 @@ export default function PrivacyPolicyPage() {
 					{t.sections.map((section, index) => (
 						<section
 							key={index}
-							className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm"
+							className="rounded-lg p-6 shadow-sm"
+							style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}
 						>
-							<h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+							<h2 className="text-xl font-semibold mb-3" style={{ color: 'var(--color-text)' }}>
 								{section.title}
 							</h2>
-							<p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
+							<p className="whitespace-pre-line" style={{ color: 'var(--color-text-secondary)' }}>
 								{section.content}
 							</p>
 						</section>
@@ -246,7 +247,8 @@ export default function PrivacyPolicyPage() {
 				<div className="mt-12 text-center">
 					<Link
 						href="/"
-						className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+						className="inline-flex items-center px-6 py-3 text-white font-medium rounded-lg transition-colors"
+						style={{ background: 'var(--color-accent)' }}
 					>
 						← {t.backToHome}
 					</Link>

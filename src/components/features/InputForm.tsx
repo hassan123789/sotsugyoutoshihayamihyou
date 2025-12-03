@@ -85,7 +85,7 @@ export function InputForm({
 									: '1px solid var(--color-border)',
 							boxShadow:
 								formState.calcMode === 'forward'
-									? '0 2px 8px rgba(44, 82, 130, 0.25)'
+									? '0 2px 8px var(--color-shadow)'
 									: 'none',
 						}}
 					>
@@ -110,7 +110,7 @@ export function InputForm({
 									: '1px solid var(--color-border)',
 							boxShadow:
 								formState.calcMode === 'reverse'
-									? '0 2px 8px rgba(44, 82, 130, 0.25)'
+									? '0 2px 8px var(--color-shadow)'
 									: 'none',
 						}}
 					>
@@ -394,7 +394,7 @@ export function InputForm({
 				<div
 					className="p-4 rounded-lg"
 					style={{
-						background: 'rgba(213, 63, 140, 0.1)',
+						background: 'var(--color-accent-pale)',
 						border: '1px solid var(--color-accent)',
 						color: 'var(--color-accent)',
 					}}

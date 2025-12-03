@@ -531,7 +531,7 @@ export default function BirthYearPage({
 								<div
 									key={index}
 									className="flex items-center gap-3 p-3 rounded-lg"
-									style={{ background: 'rgba(44, 82, 130, 0.04)' }}
+									style={{ background: 'var(--color-highlight-secondary)' }}
 								>
 									<div
 										className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold"

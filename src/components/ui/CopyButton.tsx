@@ -71,17 +71,17 @@ export function CopyButton({
 					background:
 						'linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%)',
 					color: 'white',
-					boxShadow: '0 2px 8px rgba(56, 161, 105, 0.25)',
+					boxShadow: '0 2px 8px var(--color-shadow-success)',
 				}}
 				onMouseEnter={(e) => {
 					e.currentTarget.style.transform = 'translateY(-1px)';
 					e.currentTarget.style.boxShadow =
-						'0 4px 16px rgba(56, 161, 105, 0.35)';
+						'0 4px 16px var(--color-shadow-success)';
 				}}
 				onMouseLeave={(e) => {
 					e.currentTarget.style.transform = 'translateY(0)';
 					e.currentTarget.style.boxShadow =
-						'0 2px 8px rgba(56, 161, 105, 0.25)';
+						'0 2px 8px var(--color-shadow-success)';
 				}}
 			>
 				<svg

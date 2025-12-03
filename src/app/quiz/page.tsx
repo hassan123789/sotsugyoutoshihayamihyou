@@ -245,20 +245,21 @@ export default function QuizPage() {
 	const progress = ((currentQuestion + 1) / QUESTIONS.length) * 100;
 
 	return (
-		<main className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+		<main className="min-h-screen" style={{ background: 'var(--color-bg)' }}>
 			<div className="max-w-2xl mx-auto px-4 py-10">
 				{/* ヘッダー */}
 				<header className="text-center mb-8">
 					<Link
 						href="/"
-						className="inline-flex items-center gap-2 text-primary dark:text-blue-300 hover:underline mb-4"
+						className="inline-flex items-center gap-2 hover:underline mb-4"
+						style={{ color: 'var(--color-accent)' }}
 					>
 						← {t.backToTop}
 					</Link>
-					<h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+					<h1 className="text-3xl sm:text-4xl font-bold gradient-text">
 						🎯 {t.quizTitle}
 					</h1>
-					<p className="mt-2 text-gray-600 dark:text-gray-400">
+					<p className="mt-2" style={{ color: 'var(--color-text-muted)' }}>
 						{t.quizSubtitle}
 					</p>
 				</header>
@@ -267,40 +268,45 @@ export default function QuizPage() {
 					<>
 						{/* プログレスバー */}
 						<div className="mb-6">
-							<div className="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-2">
+							<div className="flex justify-between text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
 								<span>
 									{t.quizQuestion}
 									{currentQuestion + 1} / {QUESTIONS.length}
 								</span>
 								<span>{Math.round(progress)}%</span>
 							</div>
-							<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+							<div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--color-bg-secondary)' }}>
 								<div
-									className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500 ease-out"
-									style={{ width: `${progress}%` }}
+									className="h-full transition-all duration-500 ease-out"
+									style={{ width: `${progress}%`, background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))' }}
 								/>
 							</div>
 						</div>
 
 						{/* 質問 */}
-						<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8">
-							<h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-6">
+						<div className="rounded-2xl shadow-xl p-6 sm:p-8" style={{ background: 'var(--color-card)' }}>
+							<h2 className="text-xl sm:text-2xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 								{QUESTIONS[currentQuestion].question}
 							</h2>
 
 							<div className="space-y-3">
 								{QUESTIONS[currentQuestion].options.map((option, index) => (
 									<button
+										type="button"
 										key={index}
 										onClick={() => handleAnswer(option.generation, index)}
 										disabled={selectedOption !== null}
 										className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 ${
-											selectedOption === index
-												? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 scale-[1.02]'
-												: 'border-gray-200 dark:border-gray-600 hover:border-purple-300 hover:bg-purple-50/50 dark:hover:bg-gray-700'
-										} ${selectedOption !== null && selectedOption !== index ? 'opacity-50' : ''}`}
-									>
-										<span className="text-gray-800 dark:text-gray-200 font-medium">
+												selectedOption === index
+													? 'scale-[1.02]'
+													: ''
+											} ${selectedOption !== null && selectedOption !== index ? 'opacity-50' : ''}`}
+											style={{ 
+												borderColor: selectedOption === index ? 'var(--color-accent)' : 'var(--color-border)',
+												background: selectedOption === index ? 'var(--color-accent-pale)' : 'var(--color-card)'
+											}}
+										>
+											<span className="font-medium" style={{ color: 'var(--color-text)' }}>
 											{option.text}
 										</span>
 									</button>
@@ -309,9 +315,9 @@ export default function QuizPage() {
 						</div>
 					</>
 				) : (
-					result && (
-						/* 結果表示 */
-						<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+						result && (
+							/* 結果表示 */
+							<div className="rounded-2xl shadow-xl overflow-hidden" style={{ background: 'var(--color-card)' }}>
 							{/* 結果ヘッダー */}
 							<div
 								className={`bg-gradient-to-r ${result.color} p-8 text-white text-center`}
@@ -326,20 +332,21 @@ export default function QuizPage() {
 
 							{/* 結果詳細 */}
 							<div className="p-6 sm:p-8">
-								<p className="text-gray-700 dark:text-gray-300 text-lg mb-6">
+								<p className="text-lg mb-6" style={{ color: 'var(--color-text-secondary)' }}>
 									{result.description}
 								</p>
 
-								<h3 className="font-bold text-gray-800 dark:text-white mb-3">
+								<h3 className="font-bold mb-3" style={{ color: 'var(--color-text)' }}>
 									📋 {t.quizCharacteristics}
 								</h3>
 								<ul className="space-y-2 mb-8">
 									{result.characteristics.map((char, i) => (
 										<li
 											key={i}
-											className="flex items-start gap-2 text-gray-600 dark:text-gray-400"
+											className="flex items-start gap-2"
+											style={{ color: 'var(--color-text-muted)' }}
 										>
-											<span className="text-purple-500">✓</span>
+											<span style={{ color: 'var(--color-accent)' }}>✓</span>
 											<span>{char}</span>
 										</li>
 									))}
@@ -347,18 +354,21 @@ export default function QuizPage() {
 
 								{/* シェアボタン */}
 								<div className="space-y-3">
-									<p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+									<p className="text-center text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
 										{t.quizShare}
 									</p>
 									<div className="grid grid-cols-2 gap-3">
 										<button
+											type="button"
 											onClick={shareToX}
-											className="py-3 px-4 bg-black text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+											className="py-3 px-4 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+											style={{ background: 'var(--color-primary)' }}
 										>
 											<span className="text-lg">𝕏</span>
 											{t.share}
 										</button>
 										<button
+											type="button"
 											onClick={shareToLine}
 											className="py-3 px-4 bg-[#00B900] text-white font-medium rounded-xl hover:bg-[#00A000] transition-colors flex items-center justify-center gap-2"
 										>
@@ -368,8 +378,14 @@ export default function QuizPage() {
 									</div>
 
 									<button
+										type="button"
 										onClick={resetQuiz}
-										className="w-full py-3 px-4 border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-medium rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+										className="w-full py-3 px-4 font-medium rounded-xl transition-colors"
+										style={{ 
+											border: '2px solid var(--color-accent)',
+											color: 'var(--color-accent)',
+											background: 'transparent'
+										}}
 									>
 										🔄 {t.quizRetry}
 									</button>
@@ -387,19 +403,21 @@ export default function QuizPage() {
 				)}
 
 				{/* フッター */}
-				<footer className="mt-10 text-center text-sm text-gray-500 dark:text-gray-400">
-					<p>※ この診断はエンターテイメント目的です</p>
+				<footer className="mt-10 text-center text-sm" style={{ color: 'var(--color-text-muted)' }}>
+					<p>※ この診断はエンターテインメント目的です</p>
 					<p className="mt-1">
 						<Link
 							href="/"
-							className="text-primary dark:text-blue-300 hover:underline"
+							className="hover:underline"
+							style={{ color: 'var(--color-accent)' }}
 						>
 							学歴早見表
 						</Link>{' '}
 						|{' '}
 						<Link
 							href="/birth"
-							className="text-primary dark:text-blue-300 hover:underline"
+							className="hover:underline"
+							style={{ color: 'var(--color-accent)' }}
 						>
 							年別早見表
 						</Link>

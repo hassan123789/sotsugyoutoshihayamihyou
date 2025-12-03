@@ -330,7 +330,7 @@ export default function AgePage() {
 					<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
 						<div
 							className="p-4 rounded-xl text-center"
-							style={{ background: 'rgba(44, 82, 130, 0.08)' }}
+							style={{ background: 'var(--color-highlight-primary)' }}
 						>
 							<div
 								className="text-xs mb-1"
@@ -348,7 +348,7 @@ export default function AgePage() {
 						</div>
 						<div
 							className="p-4 rounded-xl text-center"
-							style={{ background: 'rgba(213, 63, 140, 0.08)' }}
+							style={{ background: 'var(--color-highlight-primary)' }}
 						>
 							<div
 								className="text-xs mb-1"
@@ -371,7 +371,7 @@ export default function AgePage() {
 						</div>
 						<div
 							className="p-4 rounded-xl text-center"
-							style={{ background: 'rgba(44, 82, 130, 0.08)' }}
+							style={{ background: 'var(--color-highlight-primary)' }}
 						>
 							<div
 								className="text-xs mb-1"
@@ -394,7 +394,7 @@ export default function AgePage() {
 						</div>
 						<div
 							className="p-4 rounded-xl text-center"
-							style={{ background: 'rgba(213, 63, 140, 0.08)' }}
+							style={{ background: 'var(--color-highlight-primary)' }}
 						>
 							<div
 								className="text-xs mb-1"

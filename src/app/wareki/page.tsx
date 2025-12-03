@@ -246,7 +246,7 @@ export default function WarekiPage() {
 						{warekiResult && warekiResult.length > 0 && (
 							<div
 								className="p-4 rounded-xl"
-								style={{ background: 'rgba(44, 82, 130, 0.08)' }}
+								style={{ background: 'var(--color-accent-pale)' }}
 							>
 								<div
 									className="text-sm mb-2"
@@ -302,7 +302,7 @@ export default function WarekiPage() {
 						{seirekiResult && (
 							<div
 								className="p-4 rounded-xl"
-								style={{ background: 'rgba(44, 82, 130, 0.08)' }}
+								style={{ background: 'var(--color-accent-pale)' }}
 							>
 								<div
 									className="text-sm mb-2"

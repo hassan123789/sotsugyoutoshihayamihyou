@@ -40,6 +40,23 @@ export default function HomePage() {
 		showHighschoolFields,
 	} = useAcademicHistory();
 
+	// スクロール連動アニメーション（Intersection Observer）
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+					}
+				});
+			},
+			{ threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+		);
+
+		document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+		return () => observer.disconnect();
+	}, []);
+
 	// 初期化時にLocalStorageから復元
 	useEffect(() => {
 		restoreFromStorage();
@@ -56,12 +73,29 @@ export default function HomePage() {
 
 	return (
 		<main className="min-h-screen">
+			{/* スティッキーヘッダー */}
+			<header className="sticky-header">
+				<div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+					<a href="/" className="font-semibold text-lg" style={{ color: 'var(--color-text)' }}>
+						📚 学歴早見表
+					</a>
+					<nav className="hidden sm:flex items-center gap-6 mr-24">
+						<a href="#calculator" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>計算する</a>
+						<a href="#features" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>機能</a>
+						<a href="/quiz" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>クイズ</a>
+					</nav>
+				</div>
+			</header>
+
 			{/* ヒーローセクション - Apple風 */}
 			<section className="relative overflow-hidden" style={{ background: 'var(--color-bg)' }}>
-				<div className="max-w-5xl mx-auto px-6 pt-20 pb-16 sm:pt-28 sm:pb-24 text-center">
-					{/* メインタイトル - 超大型 */}
+				<div className="max-w-5xl mx-auto px-6 pt-24 pb-20 sm:pt-32 sm:pb-28 text-center">
+					{/* メインタイトル */}
 					<h1 className="hero-title animate-fade-up">
-						{t.title}
+						<span className="gradient-text">{t.title.split('・')[0]}</span>
+						<br className="sm:hidden" />
+						<span className="hidden sm:inline"> ・ </span>
+						<span>{t.title.split('・')[1]}</span>
 					</h1>
 					
 					{/* サブタイトル */}
@@ -74,17 +108,14 @@ export default function HomePage() {
 						<a href="#calculator" className="btn-primary">
 							今すぐ計算する
 						</a>
-						<a href="#features" className="btn-secondary">
-							詳しく見る
-						</a>
 					</div>
 
-					{/* 信頼性バッジ - ミニマル */}
-					<div className="flex flex-wrap justify-center gap-6 mt-12 animate-fade-up delay-300">
-						{['完全無料', '登録不要', '即時計算', '西暦・和暦対応'].map((badge, i) => (
+					{/* 特徴 - シンプルに */}
+					<div className="flex flex-wrap justify-center items-center gap-8 mt-16 animate-fade-up delay-300">
+						{['登録不要', '和暦対応', '履歴書出力', 'PDF保存'].map((badge) => (
 							<span
 								key={badge}
-								className="text-sm font-medium"
+								className="text-sm"
 								style={{ color: 'var(--color-text-secondary)' }}
 							>
 								{badge}
@@ -233,21 +264,21 @@ export default function HomePage() {
 				</section>
 			)}
 
-			{/* 機能紹介セクション */}
+			{/* 機能紹介セクション（Apple風フィーチャーグリッド） */}
 			<section 
 				id="features" 
 				className="py-20 sm:py-28"
 				style={{ background: 'var(--color-bg-secondary)' }}
 			>
 				<div className="max-w-6xl mx-auto px-6">
-					<div className="text-center mb-16">
+					<div className="text-center mb-16 reveal">
 						<h2 className="section-title">こんな時に便利</h2>
-						<p className="section-subtitle mt-3">
+						<p className="section-subtitle mt-4">
 							履歴書作成から学歴確認まで、あらゆるシーンで活躍
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="feature-grid">
 						{[
 							{
 								icon: '📋',
@@ -272,10 +303,9 @@ export default function HomePage() {
 						].map((feature, i) => (
 							<div
 								key={feature.title}
-								className="card p-8 hover-lift"
-								style={{ animationDelay: `${i * 0.1}s` }}
+								className={`feature-card reveal reveal-delay-${i + 1}`}
 							>
-								<span className="text-4xl mb-4 block">{feature.icon}</span>
+								<div className="feature-icon">{feature.icon}</div>
 								<h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text)' }}>
 									{feature.title}
 								</h3>
@@ -291,28 +321,24 @@ export default function HomePage() {
 			{/* 関連ツール */}
 			<section className="py-20 sm:py-28" style={{ background: 'var(--color-bg)' }}>
 				<div className="max-w-6xl mx-auto px-6">
-					<div className="text-center mb-16">
+					<div className="text-center mb-16 reveal">
 						<h2 className="section-title">{t.relatedTools}</h2>
 					</div>
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 						{[
-							{ href: '/quiz', icon: '🎯', title: t.quiz, desc: t.quizDescription, highlight: true },
+							{ href: '/quiz', icon: '🎯', title: t.quiz, desc: t.quizDescription },
 							{ href: '/birth', icon: '📆', title: t.yearlyTable, desc: t.yearlyTableDesc },
 							{ href: '/wareki', icon: '📅', title: t.warekiConverter, desc: t.warekiConverterDesc },
 							{ href: '/age', icon: '🎂', title: t.ageTable, desc: t.ageTableDesc },
 							{ href: '/recruiter', icon: '💼', title: t.recruiter, desc: t.recruiterDesc },
-						].map((tool) => (
+						].map((tool, i) => (
 							<a
 								key={tool.href}
 								href={tool.href}
-								className={`card p-6 hover-lift ${tool.highlight ? 'ring-2 ring-offset-2' : ''}`}
-								style={tool.highlight ? { 
-									borderColor: 'var(--color-accent)',
-									boxShadow: '0 0 0 2px var(--color-accent-pale)',
-								} : {}}
+								className={`feature-card reveal reveal-delay-${Math.min(i + 1, 4)}`}
 							>
-								<span className="text-3xl mb-4 block">{tool.icon}</span>
+								<div className="feature-icon">{tool.icon}</div>
 								<h3 className="font-semibold mb-1" style={{ color: 'var(--color-text)' }}>
 									{tool.title}
 								</h3>
@@ -326,48 +352,20 @@ export default function HomePage() {
 			</section>
 
 			{/* FAQ */}
-			<section className="py-16 sm:py-20" style={{ background: 'var(--color-bg-secondary)' }}>
-				<div className="max-w-4xl mx-auto px-6">
+			<section className="py-16 sm:py-20" style={{ background: 'var(--color-bg)' }}>
+				<div className="max-w-4xl mx-auto px-6 reveal">
 					<FAQ />
 				</div>
 			</section>
 
 			{/* おすすめサービス */}
-			<section className="py-16" style={{ background: 'var(--color-bg)' }}>
+			<section className="py-16" style={{ background: 'var(--color-bg-secondary)' }}>
 				<div className="max-w-6xl mx-auto px-6">
 					<RecommendedServices />
 				</div>
 			</section>
 
 			<FooterAd slot="YOUR_AD_SLOT_2" />
-
-			{/* SEOキーワード */}
-			<section className="py-8" style={{ background: 'var(--color-bg-secondary)' }}>
-				<div className="max-w-4xl mx-auto px-6 text-center">
-					<div className="flex flex-wrap justify-center gap-3">
-						{[
-							'卒業年度計算',
-							'入学年度計算',
-							'学歴早見表',
-							'履歴書学歴',
-							'和暦西暦変換',
-							'生年月日から卒業年',
-							'令和平成昭和変換',
-						].map((keyword) => (
-							<span
-								key={keyword}
-								className="px-4 py-2 rounded-full text-sm"
-								style={{ 
-									background: 'var(--color-bg)',
-									color: 'var(--color-text-muted)',
-								}}
-							>
-								#{keyword}
-							</span>
-						))}
-					</div>
-				</div>
-			</section>
 
 			{/* JSON-LD */}
 			<script

@@ -61,8 +61,14 @@ export function AdBanner({
 	if (process.env.NODE_ENV !== 'production') {
 		return (
 			<div
-				className={`bg-gray-100 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center text-gray-400 dark:text-gray-500 text-sm ${className}`}
-				style={{ minHeight: '100px', ...style }}
+				className={`border-2 border-dashed rounded-lg flex items-center justify-center text-sm ${className}`}
+				style={{ 
+					minHeight: '100px', 
+					background: 'var(--color-bg-secondary)',
+					borderColor: 'var(--color-border)',
+					color: 'var(--color-text-muted)',
+					...style 
+				}}
 			>
 				<div className="text-center p-4">
 					<p>📢 広告スペース</p>

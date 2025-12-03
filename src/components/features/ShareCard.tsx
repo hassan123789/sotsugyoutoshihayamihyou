@@ -193,13 +193,13 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 	}
 
 	return (
-		<div className="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl border border-indigo-100 dark:border-gray-600 shadow-lg">
-			<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+		<div className="mt-8 p-6 rounded-2xl shadow-lg" style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}>
+			<h2 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
 				<span className="text-2xl">🎴</span>
 				{t.shareCardTitle}
 			</h2>
 
-			<p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+			<p className="text-sm mb-4" style={{ color: 'var(--color-text-muted)' }}>
 				{t.shareCardSubtitle}
 			</p>
 
@@ -250,14 +250,16 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 					<div className="grid grid-cols-3 gap-3">
 						<button
 							onClick={downloadCard}
-							className="py-3 px-4 bg-gray-600 text-white font-medium rounded-xl hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+							className="py-3 px-4 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+							style={{ background: 'var(--color-text-secondary)' }}
 						>
 							<span>💾</span>
 							{t.save}
 						</button>
 						<button
 							onClick={shareToX}
-							className="py-3 px-4 bg-black text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+							className="py-3 px-4 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+							style={{ background: 'var(--color-primary)' }}
 						>
 							<span>𝕏</span>
 							{t.share}
@@ -275,7 +277,12 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 					<button
 						onClick={generateCard}
 						disabled={isGenerating}
-						className="w-full py-2 px-4 text-primary dark:text-blue-300 font-medium rounded-xl border border-primary dark:border-blue-300 hover:bg-primary/10 transition-colors"
+						className="w-full py-2 px-4 font-medium rounded-xl transition-colors"
+						style={{ 
+							color: 'var(--color-accent)', 
+							border: '1px solid var(--color-accent)',
+							background: 'transparent'
+						}}
 					>
 						🔄 {t.shareCardGenerate}
 					</button>

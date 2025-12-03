@@ -183,9 +183,9 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
 							{/* X(Twitter) */}
 							<button
 								onClick={handleTwitterShare}
-								className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all hover:bg-black/5"
+								className="share-btn flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
 							>
-								<div className="w-12 h-12 rounded-full flex items-center justify-center bg-black text-white">
+								<div className="w-12 h-12 rounded-full flex items-center justify-center text-white" style={{ background: 'var(--color-primary)' }}>
 									<svg
 										className="w-5 h-5"
 										viewBox="0 0 24 24"
@@ -205,7 +205,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
 							{/* LINE */}
 							<button
 								onClick={handleLineShare}
-								className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all hover:bg-black/5"
+								className="share-btn flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
 							>
 								<div
 									className="w-12 h-12 rounded-full flex items-center justify-center text-white"
@@ -230,7 +230,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
 							{/* Facebook */}
 							<button
 								onClick={handleFacebookShare}
-								className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all hover:bg-black/5"
+								className="share-btn flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
 							>
 								<div
 									className="w-12 h-12 rounded-full flex items-center justify-center text-white"
@@ -255,7 +255,7 @@ export function ShareButton({ getShareData }: ShareButtonProps) {
 							{/* コピー */}
 							<button
 								onClick={handleCopyLink}
-								className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all hover:bg-black/5"
+								className="share-btn flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
 							>
 								<div
 									className="w-12 h-12 rounded-full flex items-center justify-center"

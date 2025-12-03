@@ -232,8 +232,8 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 	}
 
 	return (
-		<div className="mt-8 p-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl border border-purple-100 dark:border-gray-600 shadow-lg">
-			<h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
+		<div className="mt-8 p-6 rounded-2xl shadow-lg" style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}>
+			<h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: 'var(--color-text)' }}>
 				<span className="text-3xl">🎓</span>
 				<span
 					className={`bg-gradient-to-r ${generationData.color} bg-clip-text text-transparent`}
@@ -245,51 +245,54 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 
 			{/* 世代あるある */}
 			<div className="grid md:grid-cols-3 gap-4 mb-6">
-				<div className="bg-white/80 dark:bg-gray-700/80 p-4 rounded-xl">
-					<h3 className="font-bold text-primary dark:text-blue-300 mb-3 flex items-center gap-2">
+				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
+					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
 						<span>💭</span> 世代あるある
 					</h3>
 					<ul className="space-y-2">
 						{generationData.aruaru.map((item, i) => (
 							<li
 								key={i}
-								className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2"
+								className="text-sm flex items-start gap-2"
+								style={{ color: 'var(--color-text-secondary)' }}
 							>
-								<span className="text-accent">•</span>
+								<span style={{ color: 'var(--color-accent)' }}>•</span>
 								<span>{item}</span>
 							</li>
 						))}
 					</ul>
 				</div>
 
-				<div className="bg-white/80 dark:bg-gray-700/80 p-4 rounded-xl">
-					<h3 className="font-bold text-primary dark:text-blue-300 mb-3 flex items-center gap-2">
+				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
+					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
 						<span>📱</span> テクノロジーの思い出
 					</h3>
 					<ul className="space-y-2">
 						{generationData.techMemory.map((item, i) => (
 							<li
 								key={i}
-								className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2"
+								className="text-sm flex items-start gap-2"
+								style={{ color: 'var(--color-text-secondary)' }}
 							>
-								<span className="text-accent">•</span>
+								<span style={{ color: 'var(--color-accent)' }}>•</span>
 								<span>{item}</span>
 							</li>
 						))}
 					</ul>
 				</div>
 
-				<div className="bg-white/80 dark:bg-gray-700/80 p-4 rounded-xl">
-					<h3 className="font-bold text-primary dark:text-blue-300 mb-3 flex items-center gap-2">
+				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
+					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
 						<span>🏫</span> 学校の思い出
 					</h3>
 					<ul className="space-y-2">
 						{generationData.schoolMemory.map((item, i) => (
 							<li
 								key={i}
-								className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2"
+								className="text-sm flex items-start gap-2"
+								style={{ color: 'var(--color-text-secondary)' }}
 							>
-								<span className="text-accent">•</span>
+								<span style={{ color: 'var(--color-accent)' }}>•</span>
 								<span>{item}</span>
 							</li>
 						))}
@@ -298,20 +301,20 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 			</div>
 
 			{/* 学生時代のヒット */}
-			<div className="bg-white/60 dark:bg-gray-700/60 p-4 rounded-xl">
-				<h3 className="font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+			<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
+				<h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
 					<span>🎵</span> あなたの学生時代に流行っていたもの
 				</h3>
 
 				<div className="grid md:grid-cols-3 gap-4 text-sm">
 					{schoolMemories.elementary.length > 0 && (
 						<div>
-							<h4 className="font-semibold text-primary dark:text-blue-300 mb-2">
+							<h4 className="font-semibold mb-2" style={{ color: 'var(--color-primary)' }}>
 								🎒 小学生時代
 							</h4>
 							<ul className="space-y-1">
 								{schoolMemories.elementary.map((m, i) => (
-									<li key={i} className="text-gray-600 dark:text-gray-400">
+									<li key={i} style={{ color: 'var(--color-text-muted)' }}>
 										{m.year}年: {m.event}
 									</li>
 								))}
@@ -321,12 +324,12 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 
 					{schoolMemories.juniorHigh.length > 0 && (
 						<div>
-							<h4 className="font-semibold text-primary dark:text-blue-300 mb-2">
+							<h4 className="font-semibold mb-2" style={{ color: 'var(--color-primary)' }}>
 								📚 中学生時代
 							</h4>
 							<ul className="space-y-1">
 								{schoolMemories.juniorHigh.map((m, i) => (
-									<li key={i} className="text-gray-600 dark:text-gray-400">
+									<li key={i} style={{ color: 'var(--color-text-muted)' }}>
 										{m.year}年: {m.event}
 									</li>
 								))}
@@ -336,12 +339,12 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 
 					{schoolMemories.highSchool.length > 0 && (
 						<div>
-							<h4 className="font-semibold text-primary dark:text-blue-300 mb-2">
+							<h4 className="font-semibold mb-2" style={{ color: 'var(--color-primary)' }}>
 								🎓 高校生時代
 							</h4>
 							<ul className="space-y-1">
 								{schoolMemories.highSchool.map((m, i) => (
-									<li key={i} className="text-gray-600 dark:text-gray-400">
+									<li key={i} style={{ color: 'var(--color-text-muted)' }}>
 										{m.year}年: {m.event}
 									</li>
 								))}

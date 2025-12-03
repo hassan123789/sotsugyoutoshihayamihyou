@@ -18,7 +18,7 @@ export function DarkModeToggle() {
 			style={{
 				background: 'var(--color-card)',
 				border: '1px solid var(--color-border)',
-				boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+				boxShadow: '0 2px 8px var(--color-shadow)',
 			}}
 			onMouseEnter={(e) => {
 				e.currentTarget.style.transform = 'scale(1.05)';

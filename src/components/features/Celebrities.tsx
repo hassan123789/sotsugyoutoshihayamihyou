@@ -71,8 +71,8 @@ function CelebrityCard({ celebrity }: { celebrity: Celebrity }) {
 		<div
 			className="flex items-center gap-3 p-3 rounded-lg transition-all hover:translate-x-1"
 			style={{
-				background: 'rgba(44, 82, 130, 0.04)',
-				border: '1px solid var(--color-border-light)',
+				background: 'var(--color-bg-secondary)',
+				border: '1px solid var(--color-border)',
 			}}
 		>
 			<div
