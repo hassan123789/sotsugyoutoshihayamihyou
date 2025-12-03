@@ -62,12 +62,12 @@ export function AdBanner({
 		return (
 			<div
 				className={`border-2 border-dashed rounded-lg flex items-center justify-center text-sm ${className}`}
-				style={{ 
-					minHeight: '100px', 
+				style={{
+					minHeight: '100px',
 					background: 'var(--color-bg-secondary)',
 					borderColor: 'var(--color-border)',
 					color: 'var(--color-text-muted)',
-					...style 
+					...style,
 				}}
 			>
 				<div className="text-center p-4">
@@ -98,13 +98,7 @@ export function AdBanner({
  * 記事内広告コンポーネント
  * コンテンツ間に挿入する用
  */
-export function InArticleAd({
-	slot,
-	className = '',
-}: {
-	slot: string;
-	className?: string;
-}) {
+export function InArticleAd({ slot, className = '' }: { slot: string; className?: string }) {
 	return (
 		<div className={`my-6 ${className}`}>
 			<AdBanner slot={slot} format="fluid" style={{ minHeight: '250px' }} />
@@ -116,20 +110,10 @@ export function InArticleAd({
  * サイドバー広告コンポーネント
  * 縦長のサイドバー用
  */
-export function SidebarAd({
-	slot,
-	className = '',
-}: {
-	slot: string;
-	className?: string;
-}) {
+export function SidebarAd({ slot, className = '' }: { slot: string; className?: string }) {
 	return (
 		<div className={`sticky top-4 ${className}`}>
-			<AdBanner
-				slot={slot}
-				format="vertical"
-				style={{ minWidth: '160px', minHeight: '600px' }}
-			/>
+			<AdBanner slot={slot} format="vertical" style={{ minWidth: '160px', minHeight: '600px' }} />
 		</div>
 	);
 }
@@ -138,13 +122,7 @@ export function SidebarAd({
  * フッター広告コンポーネント
  * ページ下部の横長広告用
  */
-export function FooterAd({
-	slot,
-	className = '',
-}: {
-	slot: string;
-	className?: string;
-}) {
+export function FooterAd({ slot, className = '' }: { slot: string; className?: string }) {
 	return (
 		<div className={`mt-8 ${className}`}>
 			<AdBanner slot={slot} format="horizontal" style={{ minHeight: '90px' }} />

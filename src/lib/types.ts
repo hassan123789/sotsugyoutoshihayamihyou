@@ -1,12 +1,7 @@
 // ========== 型定義 ==========
 
 /** 学校カテゴリー */
-export type SchoolCategory =
-	| 'elementary'
-	| 'junior'
-	| 'highschool'
-	| 'university'
-	| 'graduate';
+export type SchoolCategory = 'elementary' | 'junior' | 'highschool' | 'university' | 'graduate';
 
 /** 学歴イベント（タイムライン用） */
 export interface AcademicEvent {
@@ -53,14 +48,7 @@ export type CalcMode = 'forward' | 'reverse';
 export type ReverseSchoolType = 'university' | 'highschool' | 'junior';
 
 /** 大学修業年数の選択肢 */
-export type UniversityDuration =
-	| '0'
-	| '2'
-	| '3'
-	| '4'
-	| '6'
-	| '6-master'
-	| '9-doctor';
+export type UniversityDuration = '0' | '2' | '3' | '4' | '6' | '6-master' | '9-doctor';
 
 // ========== 定数 ==========
 
@@ -79,9 +67,7 @@ export const UNIVERSITY_MAP: Record<string, SchoolInfo[]> = {
 	'2': [{ name: '短大・専門学校', duration: 2, category: 'university' }],
 	'3': [{ name: '専門学校', duration: 3, category: 'university' }],
 	'4': [{ name: '大学／専門学校', duration: 4, category: 'university' }],
-	'6': [
-		{ name: '大学（医学部・薬学部等）', duration: 6, category: 'university' },
-	],
+	'6': [{ name: '大学（医学部・薬学部等）', duration: 6, category: 'university' }],
 	'6-master': [
 		{ name: '大学（学部）', duration: 4, category: 'university' },
 		{ name: '大学院（修士）', duration: 2, category: 'graduate' },

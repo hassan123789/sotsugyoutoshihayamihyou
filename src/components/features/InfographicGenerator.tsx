@@ -33,12 +33,7 @@ export function InfographicGenerator({
 			canvas.height = 1920;
 
 			// グラデーション背景
-			const gradient = ctx.createLinearGradient(
-				0,
-				0,
-				canvas.width,
-				canvas.height,
-			);
+			const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 			gradient.addColorStop(0, '#2C5282');
 			gradient.addColorStop(0.5, '#4A5568');
 			gradient.addColorStop(1, '#D53F8C');
@@ -54,7 +49,7 @@ export function InfographicGenerator({
 					Math.random() * canvas.height,
 					Math.random() * 100 + 50,
 					0,
-					Math.PI * 2,
+					Math.PI * 2
 				);
 				ctx.fillStyle = '#ffffff';
 				ctx.fill();
@@ -70,11 +65,7 @@ export function InfographicGenerator({
 			// 生年月日
 			ctx.font = '36px "Hiragino Sans", sans-serif';
 			ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-			ctx.fillText(
-				`${birthYear}年${birthMonth}月${birthDay}日生まれ`,
-				canvas.width / 2,
-				180,
-			);
+			ctx.fillText(`${birthYear}年${birthMonth}月${birthDay}日生まれ`, canvas.width / 2, 180);
 
 			// 早生まれバッジ
 			const isEarlyBorn = events[0]?.isEarlyBorn;
@@ -132,11 +123,7 @@ export function InfographicGenerator({
 				// 和暦
 				ctx.font = '24px "Hiragino Sans", sans-serif';
 				ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-				ctx.fillText(
-					`(${toWareki(event.year, event.month)}年)`,
-					cardX + 220,
-					y - 10,
-				);
+				ctx.fillText(`(${toWareki(event.year, event.month)}年)`, cardX + 220, y - 10);
 
 				// イベント名
 				ctx.font = 'bold 28px "Hiragino Sans", sans-serif';
@@ -154,18 +141,14 @@ export function InfographicGenerator({
 			ctx.textAlign = 'center';
 			ctx.font = '28px "Hiragino Sans", sans-serif';
 			ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-			ctx.fillText(
-				'sotsugyoutoshihayamihyou.vercel.app',
-				canvas.width / 2,
-				canvas.height - 80,
-			);
+			ctx.fillText('sotsugyoutoshihayamihyou.vercel.app', canvas.width / 2, canvas.height - 80);
 
 			// 生成日
 			ctx.font = '24px "Hiragino Sans", sans-serif';
 			ctx.fillText(
 				`Generated: ${new Date().toLocaleDateString('ja-JP')}`,
 				canvas.width / 2,
-				canvas.height - 40,
+				canvas.height - 40
 			);
 
 			// プレビューURL生成
@@ -190,15 +173,10 @@ export function InfographicGenerator({
 
 	const shareToTwitter = () => {
 		const text = encodeURIComponent(
-			`📚 ${birthYear}年${birthMonth}月${birthDay}日生まれの学歴タイムライン\n\n#学歴早見表 #卒業年`,
+			`📚 ${birthYear}年${birthMonth}月${birthDay}日生まれの学歴タイムライン\n\n#学歴早見表 #卒業年`
 		);
-		const url = encodeURIComponent(
-			'https://sotsugyoutoshihayamihyou.vercel.app',
-		);
-		window.open(
-			`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
-			'_blank',
-		);
+		const url = encodeURIComponent('https://sotsugyoutoshihayamihyou.vercel.app');
+		window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
 	};
 
 	return (
@@ -214,18 +192,12 @@ export function InfographicGenerator({
 						: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
 					color: 'white',
 					cursor: isGenerating ? 'not-allowed' : 'pointer',
-					boxShadow: isGenerating
-						? 'none'
-						: '0 4px 14px var(--color-shadow-accent)',
+					boxShadow: isGenerating ? 'none' : '0 4px 14px var(--color-shadow-accent)',
 				}}
 			>
 				{isGenerating ? (
 					<>
-						<svg
-							className="animate-spin w-5 h-5"
-							fill="none"
-							viewBox="0 0 24 24"
-						>
+						<svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
 							<circle
 								className="opacity-25"
 								cx="12"
@@ -244,12 +216,7 @@ export function InfographicGenerator({
 					</>
 				) : (
 					<>
-						<svg
-							className="w-5 h-5"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
+						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
@@ -292,12 +259,7 @@ export function InfographicGenerator({
 								border: '1px solid var(--color-border)',
 							}}
 						>
-							<svg
-								className="w-5 h-5"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-							>
+							<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									strokeLinecap="round"
 									strokeLinejoin="round"

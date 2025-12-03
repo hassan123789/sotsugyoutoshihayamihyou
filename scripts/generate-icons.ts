@@ -7,8 +7,7 @@ const outputDir = path.join(process.cwd(), 'public', 'icons');
 
 // アイコンのSVG（学歴をイメージした卒業帽デザイン）
 function generateIconSVG(size: number, maskable: boolean = false): string {
-	const padding = maskable ? size * 0.1 : 0;
-	const _iconSize = size - padding * 2;
+	const rx = maskable ? 0 : size * 0.15;
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
   <defs>
@@ -19,7 +18,7 @@ function generateIconSVG(size: number, maskable: boolean = false): string {
   </defs>
   
   <!-- 背景 -->
-  <rect width="${size}" height="${size}" fill="url(#bg)" rx="${maskable ? 0 : size * 0.15}"/>
+  <rect width="${size}" height="${size}" fill="url(#bg)" rx="${rx}"/>
   
   <!-- 卒業帽アイコン -->
   <g transform="translate(${size * 0.2}, ${size * 0.15}) scale(${size / 160})">
@@ -59,10 +58,7 @@ async function generateIcons() {
 
 		// Maskableアイコン
 		const maskableSvg = generateIconSVG(size, true);
-		const maskablePngPath = path.join(
-			outputDir,
-			`icon-maskable-${size}x${size}.png`,
-		);
+		const maskablePngPath = path.join(outputDir, `icon-maskable-${size}x${size}.png`);
 		await sharp(Buffer.from(maskableSvg)).png().toFile(maskablePngPath);
 		console.log(`Generated: icon-maskable-${size}x${size}.png`);
 	}

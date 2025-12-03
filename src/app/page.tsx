@@ -80,9 +80,23 @@ export default function HomePage() {
 						📚 学歴早見表
 					</a>
 					<nav className="hidden sm:flex items-center gap-6 mr-24">
-						<a href="#calculator" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>計算する</a>
-						<a href="#features" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>機能</a>
-						<a href="/quiz" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>クイズ</a>
+						<a
+							href="#calculator"
+							className="text-sm"
+							style={{ color: 'var(--color-text-secondary)' }}
+						>
+							計算する
+						</a>
+						<a
+							href="#features"
+							className="text-sm"
+							style={{ color: 'var(--color-text-secondary)' }}
+						>
+							機能
+						</a>
+						<a href="/quiz" className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+							クイズ
+						</a>
 					</nav>
 				</div>
 			</header>
@@ -97,7 +111,7 @@ export default function HomePage() {
 						<span className="hidden sm:inline"> ・ </span>
 						<span>{t.title.split('・')[1]}</span>
 					</h1>
-					
+
 					{/* サブタイトル */}
 					<p className="hero-subtitle mt-6 max-w-2xl mx-auto animate-fade-up delay-100">
 						{t.subtitle}
@@ -125,18 +139,19 @@ export default function HomePage() {
 				</div>
 
 				{/* 装飾グラデーション */}
-				<div 
+				<div
 					className="absolute inset-0 pointer-events-none"
 					style={{
-						background: 'radial-gradient(ellipse 80% 50% at 50% -20%, var(--color-accent-pale), transparent)',
+						background:
+							'radial-gradient(ellipse 80% 50% at 50% -20%, var(--color-accent-pale), transparent)',
 						opacity: 0.6,
 					}}
 				/>
 			</section>
 
 			{/* メイン計算セクション */}
-			<section 
-				id="calculator" 
+			<section
+				id="calculator"
 				className="py-16 sm:py-24"
 				style={{ background: 'var(--color-bg-secondary)' }}
 			>
@@ -233,9 +248,7 @@ export default function HomePage() {
 										</svg>
 									</div>
 									<p className="text-lg" style={{ color: 'var(--color-text-secondary)' }}>
-										{formState.calcMode === 'forward'
-											? t.resultPlaceholder
-											: t.reversePlaceholder}
+										{formState.calcMode === 'forward' ? t.resultPlaceholder : t.reversePlaceholder}
 									</p>
 								</div>
 							)}
@@ -265,8 +278,8 @@ export default function HomePage() {
 			)}
 
 			{/* 機能紹介セクション（Apple風フィーチャーグリッド） */}
-			<section 
-				id="features" 
+			<section
+				id="features"
 				className="py-20 sm:py-28"
 				style={{ background: 'var(--color-bg-secondary)' }}
 			>
@@ -301,17 +314,12 @@ export default function HomePage() {
 								desc: '令和・平成・昭和の和暦と西暦を相互に変換',
 							},
 						].map((feature, i) => (
-							<div
-								key={feature.title}
-								className={`feature-card reveal reveal-delay-${i + 1}`}
-							>
+							<div key={feature.title} className={`feature-card reveal reveal-delay-${i + 1}`}>
 								<div className="feature-icon">{feature.icon}</div>
 								<h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--color-text)' }}>
 									{feature.title}
 								</h3>
-								<p style={{ color: 'var(--color-text-secondary)' }}>
-									{feature.desc}
-								</p>
+								<p style={{ color: 'var(--color-text-secondary)' }}>{feature.desc}</p>
 							</div>
 						))}
 					</div>
@@ -329,7 +337,12 @@ export default function HomePage() {
 						{[
 							{ href: '/quiz', icon: '🎯', title: t.quiz, desc: t.quizDescription },
 							{ href: '/birth', icon: '📆', title: t.yearlyTable, desc: t.yearlyTableDesc },
-							{ href: '/wareki', icon: '📅', title: t.warekiConverter, desc: t.warekiConverterDesc },
+							{
+								href: '/wareki',
+								icon: '📅',
+								title: t.warekiConverter,
+								desc: t.warekiConverterDesc,
+							},
 							{ href: '/age', icon: '🎂', title: t.ageTable, desc: t.ageTableDesc },
 							{ href: '/recruiter', icon: '💼', title: t.recruiter, desc: t.recruiterDesc },
 						].map((tool, i) => (
@@ -374,9 +387,9 @@ export default function HomePage() {
 			/>
 
 			{/* フッター */}
-			<footer 
+			<footer
 				className="py-12"
-				style={{ 
+				style={{
 					background: 'var(--color-bg)',
 					borderTop: '1px solid var(--color-border)',
 				}}
@@ -413,10 +426,7 @@ export default function HomePage() {
 					</div>
 
 					{/* コピーライト */}
-					<p 
-						className="text-center text-xs"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<p className="text-center text-xs" style={{ color: 'var(--color-text-muted)' }}>
 						© {new Date().getFullYear()} 学歴早見表 - 入学・卒業年度自動計算ツール
 					</p>
 				</div>

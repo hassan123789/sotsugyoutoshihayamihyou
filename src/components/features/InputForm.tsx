@@ -3,20 +3,12 @@
 import { useEffect } from 'react';
 import type { CalculationResult, FormState } from '@/hooks/useAcademicHistory';
 import { useLocale } from '@/lib/i18n';
-import type {
-	CalcMode,
-	ResumeFormat,
-	ReverseSchoolType,
-	UniversityDuration,
-} from '@/lib/types';
+import type { CalcMode, ResumeFormat, ReverseSchoolType, UniversityDuration } from '@/lib/types';
 
 interface InputFormProps {
 	formState: FormState;
 	result: CalculationResult | null;
-	updateField: <K extends keyof FormState>(
-		field: K,
-		value: FormState[K],
-	) => void;
+	updateField: <K extends keyof FormState>(field: K, value: FormState[K]) => void;
 	setCalcMode: (mode: CalcMode) => void;
 	autoCalculate: () => void;
 	showUniversityFields: boolean;
@@ -50,10 +42,7 @@ export function InputForm({
 
 	return (
 		<div className="card p-6">
-			<h2
-				className="text-xl font-bold mb-6"
-				style={{ color: 'var(--color-text)' }}
-			>
+			<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 				{t.calcSettings}
 			</h2>
 
@@ -75,18 +64,10 @@ export function InputForm({
 								formState.calcMode === 'forward'
 									? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
 									: 'var(--color-card)',
-							color:
-								formState.calcMode === 'forward'
-									? 'white'
-									: 'var(--color-text-secondary)',
-							border:
-								formState.calcMode === 'forward'
-									? 'none'
-									: '1px solid var(--color-border)',
+							color: formState.calcMode === 'forward' ? 'white' : 'var(--color-text-secondary)',
+							border: formState.calcMode === 'forward' ? 'none' : '1px solid var(--color-border)',
 							boxShadow:
-								formState.calcMode === 'forward'
-									? '0 2px 8px var(--color-shadow)'
-									: 'none',
+								formState.calcMode === 'forward' ? '0 2px 8px var(--color-shadow)' : 'none',
 						}}
 					>
 						{t.forwardMode}
@@ -100,18 +81,10 @@ export function InputForm({
 								formState.calcMode === 'reverse'
 									? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
 									: 'var(--color-card)',
-							color:
-								formState.calcMode === 'reverse'
-									? 'white'
-									: 'var(--color-text-secondary)',
-							border:
-								formState.calcMode === 'reverse'
-									? 'none'
-									: '1px solid var(--color-border)',
+							color: formState.calcMode === 'reverse' ? 'white' : 'var(--color-text-secondary)',
+							border: formState.calcMode === 'reverse' ? 'none' : '1px solid var(--color-border)',
 							boxShadow:
-								formState.calcMode === 'reverse'
-									? '0 2px 8px var(--color-shadow)'
-									: 'none',
+								formState.calcMode === 'reverse' ? '0 2px 8px var(--color-shadow)' : 'none',
 						}}
 					>
 						{t.reverseMode}
@@ -198,10 +171,7 @@ export function InputForm({
 						<select
 							value={formState.reverseSchoolType}
 							onChange={(e) =>
-								updateField(
-									'reverseSchoolType',
-									e.target.value as ReverseSchoolType,
-								)
+								updateField('reverseSchoolType', e.target.value as ReverseSchoolType)
 							}
 							className="input-field"
 						>
@@ -225,10 +195,7 @@ export function InputForm({
 					<select
 						value={formState.universityDuration}
 						onChange={(e) =>
-							updateField(
-								'universityDuration',
-								e.target.value as UniversityDuration,
-							)
+							updateField('universityDuration', e.target.value as UniversityDuration)
 						}
 						className="input-field"
 					>
@@ -254,9 +221,7 @@ export function InputForm({
 					</label>
 					<select
 						value={formState.delayYears}
-						onChange={(e) =>
-							updateField('delayYears', parseInt(e.target.value, 10))
-						}
+						onChange={(e) => updateField('delayYears', parseInt(e.target.value, 10))}
 						className="input-field"
 					>
 						<option value="0">{t.delay0}</option>
@@ -278,87 +243,54 @@ export function InputForm({
 				<div className="grid grid-cols-1 gap-3">
 					{showHighschoolFields && (
 						<div className="flex items-center gap-3">
-							<span
-								className="text-sm w-24"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>
 								{t.highschoolExtra}
 							</span>
 							<input
 								type="number"
 								value={formState.highschoolExtra}
-								onChange={(e) =>
-									updateField(
-										'highschoolExtra',
-										parseInt(e.target.value, 10) || 0,
-									)
-								}
+								onChange={(e) => updateField('highschoolExtra', parseInt(e.target.value, 10) || 0)}
 								min={0}
 								max={5}
 								className="input-field w-16"
 							/>
-							<span
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 								{t.years}
 							</span>
 						</div>
 					)}
 					{showUniversityFields && (
 						<div className="flex items-center gap-3">
-							<span
-								className="text-sm w-24"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>
 								{t.universityExtra}
 							</span>
 							<input
 								type="number"
 								value={formState.universityExtra}
-								onChange={(e) =>
-									updateField(
-										'universityExtra',
-										parseInt(e.target.value, 10) || 0,
-									)
-								}
+								onChange={(e) => updateField('universityExtra', parseInt(e.target.value, 10) || 0)}
 								min={0}
 								max={5}
 								className="input-field w-16"
 							/>
-							<span
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 								{t.years}
 							</span>
 						</div>
 					)}
 					{showGraduateFields && (
 						<div className="flex items-center gap-3">
-							<span
-								className="text-sm w-24"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm w-24" style={{ color: 'var(--color-text-muted)' }}>
 								{t.graduateExtra}
 							</span>
 							<input
 								type="number"
 								value={formState.graduateExtra}
-								onChange={(e) =>
-									updateField(
-										'graduateExtra',
-										parseInt(e.target.value, 10) || 0,
-									)
-								}
+								onChange={(e) => updateField('graduateExtra', parseInt(e.target.value, 10) || 0)}
 								min={0}
 								max={5}
 								className="input-field w-16"
 							/>
-							<span
-								className="text-sm"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 								{t.years}
 							</span>
 						</div>
@@ -377,9 +309,7 @@ export function InputForm({
 					</label>
 					<select
 						value={formState.resumeFormat}
-						onChange={(e) =>
-							updateField('resumeFormat', e.target.value as ResumeFormat)
-						}
+						onChange={(e) => updateField('resumeFormat', e.target.value as ResumeFormat)}
 						className="input-field"
 					>
 						<option value="both">和暦と西暦</option>

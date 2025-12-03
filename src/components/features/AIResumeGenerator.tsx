@@ -16,7 +16,7 @@ function generateResumeText(
 	events: AcademicEvent[],
 	_birthYear: number,
 	_birthMonth: number,
-	_birthDay: number,
+	_birthDay: number
 ): string {
 	const lines: string[] = [];
 
@@ -40,7 +40,7 @@ function generateDetailedResume(
 	events: AcademicEvent[],
 	birthYear: number,
 	birthMonth: number,
-	birthDay: number,
+	birthDay: number
 ): string {
 	const lines: string[] = [];
 	const wareki = toWareki(birthYear, birthMonth);
@@ -49,9 +49,7 @@ function generateDetailedResume(
 	lines.push('【履歴書 - 学歴欄】');
 	lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 	lines.push('');
-	lines.push(
-		`生年月日：${birthYear}年${birthMonth}月${birthDay}日（${wareki}）`,
-	);
+	lines.push(`生年月日：${birthYear}年${birthMonth}月${birthDay}日（${wareki}）`);
 	lines.push('');
 	lines.push('─────────────────────────────');
 	lines.push('');
@@ -114,10 +112,7 @@ export function AIResumeGenerator({
 
 			{!resume ? (
 				<div>
-					<p
-						className="text-sm mb-4"
-						style={{ color: 'var(--color-text-secondary)' }}
-					>
+					<p className="text-sm mb-4" style={{ color: 'var(--color-text-secondary)' }}>
 						学歴データを履歴書に適した形式で自動生成します。
 					</p>
 
@@ -127,12 +122,8 @@ export function AIResumeGenerator({
 							onClick={() => setFormat('simple')}
 							className="flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all"
 							style={{
-								background:
-									format === 'simple'
-										? 'var(--color-primary)'
-										: 'var(--color-card)',
-								color:
-									format === 'simple' ? 'white' : 'var(--color-text-secondary)',
+								background: format === 'simple' ? 'var(--color-primary)' : 'var(--color-card)',
+								color: format === 'simple' ? 'white' : 'var(--color-text-secondary)',
 								border: '1px solid var(--color-border)',
 							}}
 						>
@@ -142,14 +133,8 @@ export function AIResumeGenerator({
 							onClick={() => setFormat('detailed')}
 							className="flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all"
 							style={{
-								background:
-									format === 'detailed'
-										? 'var(--color-primary)'
-										: 'var(--color-card)',
-								color:
-									format === 'detailed'
-										? 'white'
-										: 'var(--color-text-secondary)',
+								background: format === 'detailed' ? 'var(--color-primary)' : 'var(--color-card)',
+								color: format === 'detailed' ? 'white' : 'var(--color-text-secondary)',
 								border: '1px solid var(--color-border)',
 							}}
 						>
@@ -166,12 +151,7 @@ export function AIResumeGenerator({
 							color: 'white',
 						}}
 					>
-						<svg
-							className="w-5 h-5"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
+						<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
@@ -201,20 +181,13 @@ export function AIResumeGenerator({
 							onClick={copyToClipboard}
 							className="flex-1 px-4 py-2 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
 							style={{
-								background: copied
-									? 'var(--color-success, #38a169)'
-									: 'var(--color-primary)',
+								background: copied ? 'var(--color-success, #38a169)' : 'var(--color-primary)',
 								color: 'white',
 							}}
 						>
 							{copied ? (
 								<>
-									<svg
-										className="w-4 h-4"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
+									<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
 											strokeLinecap="round"
 											strokeLinejoin="round"
@@ -226,12 +199,7 @@ export function AIResumeGenerator({
 								</>
 							) : (
 								<>
-									<svg
-										className="w-4 h-4"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
+									<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path
 											strokeLinecap="round"
 											strokeLinejoin="round"

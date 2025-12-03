@@ -159,6 +159,9 @@ function generatePhoneScreenshotSVG(variant: number): string {
 	];
 
 	const v = variants[variant];
+	if (!v) {
+		throw new Error(`Invalid variant: ${variant}`);
+	}
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
   <defs>
@@ -281,9 +284,7 @@ async function generateAssets() {
 	// 1. フィーチャーグラフィック（1024x500）
 	console.log('📸 Generating feature graphic (1024x500)...');
 	const featureSvg = generateFeatureGraphicSVG();
-	await sharp(Buffer.from(featureSvg))
-		.png()
-		.toFile(path.join(outputDir, 'feature-graphic.png'));
+	await sharp(Buffer.from(featureSvg)).png().toFile(path.join(outputDir, 'feature-graphic.png'));
 	console.log('   ✅ feature-graphic.png');
 
 	// 2. 電話スクリーンショット（1080x1920）
@@ -316,24 +317,12 @@ async function generateAssets() {
 	console.log(`\n📂 Output directory: ${outputDir}`);
 	console.log('\n📋 Generated files:');
 	console.log('   • feature-graphic.png (1024x500) - フィーチャーグラフィック');
-	console.log(
-		'   • phone-screenshot-1.png (1080x1920) - 電話スクリーンショット1',
-	);
-	console.log(
-		'   • phone-screenshot-2.png (1080x1920) - 電話スクリーンショット2',
-	);
-	console.log(
-		'   • phone-screenshot-3.png (1080x1920) - 電話スクリーンショット3',
-	);
-	console.log(
-		'   • phone-screenshot-4.png (1080x1920) - 電話スクリーンショット4',
-	);
-	console.log(
-		'   • tablet-7inch-screenshot.png (1920x1200) - 7インチタブレット',
-	);
-	console.log(
-		'   • tablet-10inch-screenshot.png (2560x1600) - 10インチタブレット',
-	);
+	console.log('   • phone-screenshot-1.png (1080x1920) - 電話スクリーンショット1');
+	console.log('   • phone-screenshot-2.png (1080x1920) - 電話スクリーンショット2');
+	console.log('   • phone-screenshot-3.png (1080x1920) - 電話スクリーンショット3');
+	console.log('   • phone-screenshot-4.png (1080x1920) - 電話スクリーンショット4');
+	console.log('   • tablet-7inch-screenshot.png (1920x1200) - 7インチタブレット');
+	console.log('   • tablet-10inch-screenshot.png (2560x1600) - 10インチタブレット');
 }
 
 generateAssets().catch(console.error);

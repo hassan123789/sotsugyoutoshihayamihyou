@@ -107,9 +107,7 @@ function generateEraTable() {
 
 export default function WarekiPage() {
 	const { t } = useLocale();
-	const [conversionMode, setConversionMode] = useState<
-		'toWareki' | 'toSeireki'
-	>('toWareki');
+	const [conversionMode, setConversionMode] = useState<'toWareki' | 'toSeireki'>('toWareki');
 	const [seirekiInput, setSeirekiInput] = useState('');
 	const [selectedEra, setSelectedEra] = useState('令和');
 	const [eraYearInput, setEraYearInput] = useState('');
@@ -145,15 +143,8 @@ export default function WarekiPage() {
 	return (
 		<main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 			{/* パンくずリスト */}
-			<nav
-				className="mb-6 text-sm"
-				style={{ color: 'var(--color-text-muted)' }}
-			>
-				<Link
-					href="/"
-					className="hover:underline"
-					style={{ color: 'var(--color-primary)' }}
-				>
+			<nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+				<Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
 					{t.home}
 				</Link>
 				<span className="mx-2">›</span>
@@ -168,9 +159,7 @@ export default function WarekiPage() {
 				>
 					{t.warekiTitle}
 				</h1>
-				<p style={{ color: 'var(--color-text-secondary)' }}>
-					{t.warekiSubtitle}
-				</p>
+				<p style={{ color: 'var(--color-text-secondary)' }}>{t.warekiSubtitle}</p>
 			</header>
 
 			{/* 変換ツール */}
@@ -185,14 +174,8 @@ export default function WarekiPage() {
 								conversionMode === 'toWareki'
 									? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
 									: 'var(--color-card)',
-							color:
-								conversionMode === 'toWareki'
-									? 'white'
-									: 'var(--color-text-secondary)',
-							border:
-								conversionMode === 'toWareki'
-									? 'none'
-									: '1px solid var(--color-border)',
+							color: conversionMode === 'toWareki' ? 'white' : 'var(--color-text-secondary)',
+							border: conversionMode === 'toWareki' ? 'none' : '1px solid var(--color-border)',
 						}}
 					>
 						{t.toWareki}
@@ -205,14 +188,8 @@ export default function WarekiPage() {
 								conversionMode === 'toSeireki'
 									? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)'
 									: 'var(--color-card)',
-							color:
-								conversionMode === 'toSeireki'
-									? 'white'
-									: 'var(--color-text-secondary)',
-							border:
-								conversionMode === 'toSeireki'
-									? 'none'
-									: '1px solid var(--color-border)',
+							color: conversionMode === 'toSeireki' ? 'white' : 'var(--color-text-secondary)',
+							border: conversionMode === 'toSeireki' ? 'none' : '1px solid var(--color-border)',
 						}}
 					>
 						{t.toSeireki}
@@ -238,26 +215,15 @@ export default function WarekiPage() {
 								max={2100}
 								className="input-field w-32"
 							/>
-							<span style={{ color: 'var(--color-text-muted)' }}>
-								{t.yearUnit}
-							</span>
+							<span style={{ color: 'var(--color-text-muted)' }}>{t.yearUnit}</span>
 						</div>
 
 						{warekiResult && warekiResult.length > 0 && (
-							<div
-								className="p-4 rounded-xl"
-								style={{ background: 'var(--color-accent-pale)' }}
-							>
-								<div
-									className="text-sm mb-2"
-									style={{ color: 'var(--color-text-muted)' }}
-								>
+							<div className="p-4 rounded-xl" style={{ background: 'var(--color-accent-pale)' }}>
+								<div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
 									{t.convertResult}
 								</div>
-								<div
-									className="text-2xl font-bold"
-									style={{ color: 'var(--color-primary)' }}
-								>
+								<div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 									{warekiResult.join(' / ')}
 								</div>
 							</div>
@@ -294,26 +260,15 @@ export default function WarekiPage() {
 								min={1}
 								className="input-field w-20"
 							/>
-							<span style={{ color: 'var(--color-text-muted)' }}>
-								{t.yearUnit}
-							</span>
+							<span style={{ color: 'var(--color-text-muted)' }}>{t.yearUnit}</span>
 						</div>
 
 						{seirekiResult && (
-							<div
-								className="p-4 rounded-xl"
-								style={{ background: 'var(--color-accent-pale)' }}
-							>
-								<div
-									className="text-sm mb-2"
-									style={{ color: 'var(--color-text-muted)' }}
-								>
+							<div className="p-4 rounded-xl" style={{ background: 'var(--color-accent-pale)' }}>
+								<div className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
 									{t.convertResult}
 								</div>
-								<div
-									className="text-2xl font-bold"
-									style={{ color: 'var(--color-primary)' }}
-								>
+								<div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 									{seirekiResult}
 									{t.yearUnit}
 								</div>
@@ -325,52 +280,34 @@ export default function WarekiPage() {
 
 			{/* 元号一覧 */}
 			<section className="mb-8">
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					{t.eraTable}
 				</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 					{ERA_DATA.map((era) => (
 						<div key={era.name} className="card p-4">
 							<div className="flex items-center gap-3 mb-2">
-								<span
-									className="text-2xl font-bold"
-									style={{ color: 'var(--color-primary)' }}
-								>
+								<span className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 									{getEraName(era.key)}
 								</span>
-								<span
-									className="text-sm"
-									style={{ color: 'var(--color-text-muted)' }}
-								>
+								<span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 									{era.romaji}
 								</span>
 							</div>
-							<div
-								className="text-sm"
-								style={{ color: 'var(--color-text-secondary)' }}
-							>
+							<div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 								{era.startDate}
 							</div>
 						</div>
 					))}
 				</div>
-				<p
-					className="text-xs mt-2"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<p className="text-xs mt-2" style={{ color: 'var(--color-text-muted)' }}>
 					{t.eraTableNote}
 				</p>
 			</section>
 
 			{/* 年号対照表 */}
 			<section>
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					西暦・和暦 対照表
 				</h2>
 				<div className="card overflow-hidden">
@@ -411,28 +348,16 @@ export default function WarekiPage() {
 										className="border-t"
 										style={{ borderColor: 'var(--color-border)' }}
 									>
-										<td
-											className="px-4 py-2 font-medium"
-											style={{ color: 'var(--color-text)' }}
-										>
+										<td className="px-4 py-2 font-medium" style={{ color: 'var(--color-text)' }}>
 											{row.seireki}年
 										</td>
-										<td
-											className="px-4 py-2"
-											style={{ color: 'var(--color-text-secondary)' }}
-										>
+										<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 											{row.reiwa ? `令和${row.reiwa}年` : '-'}
 										</td>
-										<td
-											className="px-4 py-2"
-											style={{ color: 'var(--color-text-secondary)' }}
-										>
+										<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 											{row.heisei ? `平成${row.heisei}年` : '-'}
 										</td>
-										<td
-											className="px-4 py-2"
-											style={{ color: 'var(--color-text-secondary)' }}
-										>
+										<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 											{row.showa ? `昭和${row.showa}年` : '-'}
 										</td>
 									</tr>

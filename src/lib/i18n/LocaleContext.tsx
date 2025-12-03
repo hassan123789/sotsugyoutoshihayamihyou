@@ -1,12 +1,6 @@
 'use client';
 
-import {
-	createContext,
-	type ReactNode,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import {
 	defaultLocale,
 	type Locale,
@@ -33,8 +27,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 			setLocaleState(savedLocale);
 		} else {
 			const browserLang = navigator.language.slice(0, 2);
-			const detectedLocale =
-				locales.find((l) => l === browserLang) || defaultLocale;
+			const detectedLocale = locales.find((l) => l === browserLang) || defaultLocale;
 			setLocaleState(detectedLocale);
 		}
 	}, []);
@@ -47,9 +40,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 	const t = translations[locale];
 
 	return (
-		<LocaleContext.Provider value={{ locale, setLocale, t }}>
-			{children}
-		</LocaleContext.Provider>
+		<LocaleContext.Provider value={{ locale, setLocale, t }}>{children}</LocaleContext.Provider>
 	);
 }
 

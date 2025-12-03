@@ -7,10 +7,7 @@ const CHANNEL_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN || '';
 
 // 署名検証
 function verifySignature(body: string, signature: string): boolean {
-	const hash = crypto
-		.createHmac('sha256', CHANNEL_SECRET)
-		.update(body)
-		.digest('base64');
+	const hash = crypto.createHmac('sha256', CHANNEL_SECRET).update(body).digest('base64');
 	return hash === signature;
 }
 
@@ -21,9 +18,9 @@ function calculateAcademicHistory(birthDate: string): string {
 		return '生年月日の形式が正しくありません。\n\n例: 1990年4月1日、1990/4/1、1990-04-01';
 	}
 
-	const year = parseInt(match[1], 10);
-	const month = parseInt(match[2], 10);
-	const day = parseInt(match[3], 10);
+	const year = parseInt(match[1] ?? '0', 10);
+	const month = parseInt(match[2] ?? '0', 10);
+	const day = parseInt(match[3] ?? '0', 10);
 
 	if (year < 1900 || year > new Date().getFullYear()) {
 		return '年は1900〜現在の範囲で入力してください。';
@@ -119,11 +116,7 @@ export async function POST(request: NextRequest) {
 				const replyToken = event.replyToken;
 
 				// ヘルプメッセージ
-				if (
-					userMessage === 'ヘルプ' ||
-					userMessage === 'help' ||
-					userMessage === '使い方'
-				) {
+				if (userMessage === 'ヘルプ' || userMessage === 'help' || userMessage === '使い方') {
 					await replyMessage(
 						replyToken,
 						`📚 学歴早見表Bot 使い方\n\n` +
@@ -132,7 +125,7 @@ export async function POST(request: NextRequest) {
 							`・1990年4月1日\n` +
 							`・1990/4/1\n` +
 							`・1990-04-01\n\n` +
-							`💡 日本の学校制度に基づいて計算します。`,
+							`💡 日本の学校制度に基づいて計算します。`
 					);
 					continue;
 				}
@@ -146,10 +139,7 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ success: true });
 	} catch (error) {
 		console.error('LINE Bot error:', error);
-		return NextResponse.json(
-			{ error: 'Internal server error' },
-			{ status: 500 },
-		);
+		return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
 	}
 }
 

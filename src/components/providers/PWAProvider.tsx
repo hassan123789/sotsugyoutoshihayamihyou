@@ -8,8 +8,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export function PWAProvider({ children }: { children: React.ReactNode }) {
-	const [deferredPrompt, setDeferredPrompt] =
-		useState<BeforeInstallPromptEvent | null>(null);
+	const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 	const [showInstallBanner, setShowInstallBanner] = useState(false);
 
 	useEffect(() => {
@@ -38,10 +37,7 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
 		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
 		return () => {
-			window.removeEventListener(
-				'beforeinstallprompt',
-				handleBeforeInstallPrompt,
-			);
+			window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 		};
 	}, []);
 
@@ -66,10 +62,7 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
 	// 24時間以内に閉じていたら表示しない
 	useEffect(() => {
 		const dismissed = localStorage.getItem('pwa-banner-dismissed');
-		if (
-			dismissed &&
-			Date.now() - parseInt(dismissed, 10) < 24 * 60 * 60 * 1000
-		) {
+		if (dismissed && Date.now() - parseInt(dismissed, 10) < 24 * 60 * 60 * 1000) {
 			setShowInstallBanner(false);
 		}
 	}, []);
@@ -116,16 +109,10 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
 							</svg>
 						</div>
 						<div className="flex-1 min-w-0">
-							<p
-								className="font-medium text-sm"
-								style={{ color: 'var(--color-text)' }}
-							>
+							<p className="font-medium text-sm" style={{ color: 'var(--color-text)' }}>
 								ホーム画面に追加
 							</p>
-							<p
-								className="text-xs mt-0.5"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
 								アプリのように素早くアクセスできます
 							</p>
 						</div>

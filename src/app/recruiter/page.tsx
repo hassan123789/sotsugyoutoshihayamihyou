@@ -56,19 +56,12 @@ export default function RecruiterPage() {
 	}, [graduationYear, schoolType]);
 
 	// 現在の年齢を計算
-	const calculateAge = (
-		birthYear: number,
-		birthMonth: number,
-		birthDay: number,
-	): number => {
+	const calculateAge = (birthYear: number, birthMonth: number, birthDay: number): number => {
 		const today = new Date();
 		const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
 		let age = today.getFullYear() - birthDate.getFullYear();
 		const monthDiff = today.getMonth() - birthDate.getMonth();
-		if (
-			monthDiff < 0 ||
-			(monthDiff === 0 && today.getDate() < birthDate.getDate())
-		) {
+		if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
 			age--;
 		}
 		return age;
@@ -104,12 +97,7 @@ export default function RecruiterPage() {
 						boxShadow: '0 4px 14px var(--color-shadow)',
 					}}
 				>
-					<svg
-						className="w-8 h-8 text-white"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
+					<svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
@@ -124,18 +112,13 @@ export default function RecruiterPage() {
 				>
 					{t.recruiterTitle}
 				</h1>
-				<p style={{ color: 'var(--color-text-secondary)' }}>
-					{t.recruiterDescription}
-				</p>
+				<p style={{ color: 'var(--color-text-secondary)' }}>{t.recruiterDescription}</p>
 			</header>
 
 			<div className="grid gap-8 lg:grid-cols-2">
 				{/* 逆算ツール */}
 				<div className="card p-6">
-					<h2
-						className="text-xl font-bold mb-6"
-						style={{ color: 'var(--color-text)' }}
-					>
+					<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 						🔍 {t.reverseCalc}
 					</h2>
 
@@ -152,11 +135,7 @@ export default function RecruiterPage() {
 								<input
 									type="number"
 									value={graduationYear}
-									onChange={(e) =>
-										setGraduationYear(
-											parseInt(e.target.value, 10) || currentYear,
-										)
-									}
+									onChange={(e) => setGraduationYear(parseInt(e.target.value, 10) || currentYear)}
 									className="input-field flex-1"
 									min={1950}
 									max={2100}
@@ -169,9 +148,7 @@ export default function RecruiterPage() {
 								</span>
 								<select
 									value={graduationMonth}
-									onChange={(e) =>
-										setGraduationMonth(parseInt(e.target.value, 10))
-									}
+									onChange={(e) => setGraduationMonth(parseInt(e.target.value, 10))}
 									className="input-field w-24"
 								>
 									<option value={3}>3月</option>
@@ -190,9 +167,7 @@ export default function RecruiterPage() {
 							</label>
 							<select
 								value={schoolType}
-								onChange={(e) =>
-									setSchoolType(e.target.value as typeof schoolType)
-								}
+								onChange={(e) => setSchoolType(e.target.value as typeof schoolType)}
 								className="input-field w-full"
 							>
 								<option value="university4">大学卒（4年制）</option>
@@ -213,79 +188,44 @@ export default function RecruiterPage() {
 								border: '1px solid var(--color-border)',
 							}}
 						>
-							<h3
-								className="font-bold mb-3"
-								style={{ color: 'var(--color-text)' }}
-							>
+							<h3 className="font-bold mb-3" style={{ color: 'var(--color-text)' }}>
 								📅 {t.estimatedBirthYear}
 							</h3>
 							<div className="space-y-2">
 								<div className="flex justify-between">
-									<span style={{ color: 'var(--color-text-secondary)' }}>
-										{t.earlyBornCase}:
-									</span>
-									<span
-										className="font-medium"
-										style={{ color: 'var(--color-text)' }}
-									>
+									<span style={{ color: 'var(--color-text-secondary)' }}>{t.earlyBornCase}:</span>
+									<span className="font-medium" style={{ color: 'var(--color-text)' }}>
 										{estimatedBirth.latest.year}
 										{t.years}
 										{estimatedBirth.latest.month}
 										{t.months}
 										{estimatedBirth.latest.day}
 										{t.days}まで
-										<span
-											className="ml-2 text-sm"
-											style={{ color: 'var(--color-text-muted)' }}
-										>
-											(
-											{toWareki(
-												estimatedBirth.latest.year,
-												estimatedBirth.latest.month,
-											)}
+										<span className="ml-2 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+											({toWareki(estimatedBirth.latest.year, estimatedBirth.latest.month)}
 											年)
 										</span>
 									</span>
 								</div>
 								<div className="flex justify-between">
-									<span style={{ color: 'var(--color-text-secondary)' }}>
-										{t.normalCase}:
-									</span>
-									<span
-										className="font-medium"
-										style={{ color: 'var(--color-text)' }}
-									>
+									<span style={{ color: 'var(--color-text-secondary)' }}>{t.normalCase}:</span>
+									<span className="font-medium" style={{ color: 'var(--color-text)' }}>
 										{estimatedBirth.earliest.year}
 										{t.years}
 										{estimatedBirth.earliest.month}
 										{t.months}
 										{estimatedBirth.earliest.day}
 										{t.days}以降
-										<span
-											className="ml-2 text-sm"
-											style={{ color: 'var(--color-text-muted)' }}
-										>
-											(
-											{toWareki(
-												estimatedBirth.earliest.year,
-												estimatedBirth.earliest.month,
-											)}
+										<span className="ml-2 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+											({toWareki(estimatedBirth.earliest.year, estimatedBirth.earliest.month)}
 											年)
 										</span>
 									</span>
 								</div>
-								<hr
-									className="my-3"
-									style={{ borderColor: 'var(--color-border)' }}
-								/>
+								<hr className="my-3" style={{ borderColor: 'var(--color-border)' }} />
 								<div className="flex justify-between">
-									<span style={{ color: 'var(--color-text-secondary)' }}>
-										{t.currentAge}:
-									</span>
-									<span
-										className="font-bold text-lg"
-										style={{ color: 'var(--color-primary)' }}
-									>
+									<span style={{ color: 'var(--color-text-secondary)' }}>{t.currentAge}:</span>
+									<span className="font-bold text-lg" style={{ color: 'var(--color-primary)' }}>
 										{calculateAge(estimatedBirth.earliest.year, 4, 2)}〜
 										{calculateAge(estimatedBirth.latest.year, 4, 1)}
 										{t.ageUnit}
@@ -298,10 +238,7 @@ export default function RecruiterPage() {
 
 				{/* 便利機能 */}
 				<div className="card p-6">
-					<h2
-						className="text-xl font-bold mb-6"
-						style={{ color: 'var(--color-text)' }}
-					>
+					<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 						💼 {t.usefulFeatures}
 					</h2>
 
@@ -314,16 +251,10 @@ export default function RecruiterPage() {
 								border: '1px solid var(--color-border)',
 							}}
 						>
-							<h3
-								className="font-bold mb-2"
-								style={{ color: 'var(--color-text)' }}
-							>
+							<h3 className="font-bold mb-2" style={{ color: 'var(--color-text)' }}>
 								⚠️ {t.ageRestrictionNote}
 							</h3>
-							<ul
-								className="space-y-2 text-sm"
-								style={{ color: 'var(--color-text-secondary)' }}
-							>
+							<ul className="space-y-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 								<li>• {t.ageRestrictionNote}</li>
 							</ul>
 						</div>
@@ -336,16 +267,10 @@ export default function RecruiterPage() {
 								border: '1px solid var(--color-border)',
 							}}
 						>
-							<h3
-								className="font-bold mb-2"
-								style={{ color: 'var(--color-text)' }}
-							>
+							<h3 className="font-bold mb-2" style={{ color: 'var(--color-text)' }}>
 								🎂 {t.earlyBornExplanation}
 							</h3>
-							<p
-								className="text-sm"
-								style={{ color: 'var(--color-text-secondary)' }}
-							>
+							<p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 								{t.earlyBornExplanationDetail}
 							</p>
 						</div>
@@ -367,10 +292,7 @@ export default function RecruiterPage() {
 
 			{/* 卒業年度早見表 */}
 			<div className="card p-6 mt-8">
-				<h2
-					className="text-xl font-bold mb-6"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 					📋 {t.graduationTable}
 				</h2>
 
@@ -412,10 +334,7 @@ export default function RecruiterPage() {
 													: 'var(--color-card)',
 									}}
 								>
-									<td
-										className="py-3 px-4 font-medium"
-										style={{ color: 'var(--color-text)' }}
-									>
+									<td className="py-3 px-4 font-medium" style={{ color: 'var(--color-text)' }}>
 										{row.fiscalYear}
 										{row.graduationYear === currentYear && (
 											<span
@@ -440,10 +359,7 @@ export default function RecruiterPage() {
 											</span>
 										)}
 									</td>
-									<td
-										className="py-3 px-4"
-										style={{ color: 'var(--color-text-secondary)' }}
-									>
+									<td className="py-3 px-4" style={{ color: 'var(--color-text-secondary)' }}>
 										{row.birthYearRange}
 									</td>
 									<td
@@ -459,20 +375,14 @@ export default function RecruiterPage() {
 					</table>
 				</div>
 
-				<p
-					className="mt-4 text-sm"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<p className="mt-4 text-sm" style={{ color: 'var(--color-text-muted)' }}>
 					{t.ageNote}
 				</p>
 			</div>
 
 			{/* FAQ */}
 			<div className="card p-6 mt-8">
-				<h2
-					className="text-xl font-bold mb-6"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 					❓ よくある質問
 				</h2>
 
@@ -483,14 +393,9 @@ export default function RecruiterPage() {
 							style={{ color: 'var(--color-text)' }}
 						>
 							卒業年と入社年が違う場合は？
-							<span className="ml-2 transition-transform group-open:rotate-180">
-								▼
-							</span>
+							<span className="ml-2 transition-transform group-open:rotate-180">▼</span>
 						</summary>
-						<p
-							className="pb-4 text-sm"
-							style={{ color: 'var(--color-text-secondary)' }}
-						>
+						<p className="pb-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 							浪人・留年・ギャップイヤーなどにより、標準的な卒業年と異なる場合があります。
 							正確な生年月日は履歴書や本人確認書類でご確認ください。
 						</p>
@@ -502,14 +407,9 @@ export default function RecruiterPage() {
 							style={{ color: 'var(--color-text)' }}
 						>
 							秋入学・秋卒業の場合は？
-							<span className="ml-2 transition-transform group-open:rotate-180">
-								▼
-							</span>
+							<span className="ml-2 transition-transform group-open:rotate-180">▼</span>
 						</summary>
-						<p
-							className="pb-4 text-sm"
-							style={{ color: 'var(--color-text-secondary)' }}
-						>
+						<p className="pb-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 							一部の大学や海外留学者は9月入学・卒業の場合があります。
 							その場合は半年ずれるため、卒業月を「9月」に変更して計算してください。
 						</p>
@@ -521,14 +421,9 @@ export default function RecruiterPage() {
 							style={{ color: 'var(--color-text)' }}
 						>
 							中途採用の年齢確認で使えますか？
-							<span className="ml-2 transition-transform group-open:rotate-180">
-								▼
-							</span>
+							<span className="ml-2 transition-transform group-open:rotate-180">▼</span>
 						</summary>
-						<p
-							className="pb-4 text-sm"
-							style={{ color: 'var(--color-text-secondary)' }}
-						>
+						<p className="pb-4 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
 							はい、中途採用でも卒業年がわかれば年齢の目安を確認できます。
 							ただし、転職回数や職歴によって経験年数は変わりますのでご注意ください。
 						</p>
@@ -543,12 +438,7 @@ export default function RecruiterPage() {
 					className="inline-flex items-center gap-2 text-sm font-medium transition-colors"
 					style={{ color: 'var(--color-primary)' }}
 				>
-					<svg
-						className="w-4 h-4"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
+					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"

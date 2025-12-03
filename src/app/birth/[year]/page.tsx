@@ -33,14 +33,7 @@ export async function generateMetadata({
 	return {
 		title: `${year}年（${wareki}）生まれの学歴早見表｜入学・卒業年度一覧`,
 		description: `${year}年（${wareki}）生まれの方の小学校から大学までの入学・卒業年度を一覧表示。履歴書作成に便利。同い年の有名人も紹介。`,
-		keywords: [
-			`${year}年生まれ`,
-			`${wareki}生まれ`,
-			'卒業年度',
-			'入学年度',
-			'学歴',
-			'履歴書',
-		],
+		keywords: [`${year}年生まれ`, `${wareki}生まれ`, '卒業年度', '入学年度', '学歴', '履歴書'],
 		openGraph: {
 			title: `${year}年（${wareki}）生まれの学歴早見表`,
 			description: `${year}年生まれの入学・卒業年度一覧。履歴書作成に便利。`,
@@ -119,20 +112,7 @@ function calculateAcademicHistory(birthYear: number, isEarlyBorn: boolean) {
 }
 
 // 干支計算
-const ETOS = [
-	'子',
-	'丑',
-	'寅',
-	'卯',
-	'辰',
-	'巳',
-	'午',
-	'未',
-	'申',
-	'酉',
-	'戌',
-	'亥',
-];
+const ETOS = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 const ETO_ANIMALS = [
 	'ねずみ',
 	'うし',
@@ -153,11 +133,7 @@ function getEto(year: number) {
 	return { kanji: ETOS[index], reading: ETO_ANIMALS[index] };
 }
 
-export default function BirthYearPage({
-	params,
-}: {
-	params: { year: string };
-}) {
+export default function BirthYearPage({ params }: { params: { year: string } }) {
 	const year = parseInt(params.year, 10);
 
 	if (Number.isNaN(year) || year < START_YEAR || year > END_YEAR) {
@@ -256,23 +232,12 @@ export default function BirthYearPage({
 			/>
 
 			{/* パンくずリスト */}
-			<nav
-				className="mb-6 text-sm"
-				style={{ color: 'var(--color-text-muted)' }}
-			>
-				<Link
-					href="/"
-					className="hover:underline"
-					style={{ color: 'var(--color-primary)' }}
-				>
+			<nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+				<Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
 					ホーム
 				</Link>
 				<span className="mx-2">›</span>
-				<Link
-					href="/birth"
-					className="hover:underline"
-					style={{ color: 'var(--color-primary)' }}
-				>
+				<Link href="/birth" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
 					年別早見表
 				</Link>
 				<span className="mx-2">›</span>
@@ -287,24 +252,16 @@ export default function BirthYearPage({
 				>
 					{year}年（{wareki}）生まれの学歴早見表
 				</h1>
-				<p style={{ color: 'var(--color-text-secondary)' }}>
-					入学・卒業年度を一覧表示
-				</p>
+				<p style={{ color: 'var(--color-text-secondary)' }}>入学・卒業年度を一覧表示</p>
 			</header>
 
 			{/* 基本情報 */}
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
 				<div className="card p-4 text-center">
-					<div
-						className="text-xs mb-1"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 						生まれ年
 					</div>
-					<div
-						className="text-xl font-bold"
-						style={{ color: 'var(--color-primary)' }}
-					>
+					<div className="text-xl font-bold" style={{ color: 'var(--color-primary)' }}>
 						{year}年
 					</div>
 					<div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
@@ -312,30 +269,18 @@ export default function BirthYearPage({
 					</div>
 				</div>
 				<div className="card p-4 text-center">
-					<div
-						className="text-xs mb-1"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 						現在の年齢
 					</div>
-					<div
-						className="text-xl font-bold"
-						style={{ color: 'var(--color-accent)' }}
-					>
+					<div className="text-xl font-bold" style={{ color: 'var(--color-accent)' }}>
 						{age}〜{age + 1}歳
 					</div>
 				</div>
 				<div className="card p-4 text-center">
-					<div
-						className="text-xs mb-1"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 						干支
 					</div>
-					<div
-						className="text-xl font-bold"
-						style={{ color: 'var(--color-primary)' }}
-					>
+					<div className="text-xl font-bold" style={{ color: 'var(--color-primary)' }}>
 						{eto.kanji}年
 					</div>
 					<div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
@@ -343,16 +288,10 @@ export default function BirthYearPage({
 					</div>
 				</div>
 				<div className="card p-4 text-center">
-					<div
-						className="text-xs mb-1"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 						学年
 					</div>
-					<div
-						className="text-lg font-bold"
-						style={{ color: 'var(--color-accent)' }}
-					>
+					<div className="text-lg font-bold" style={{ color: 'var(--color-accent)' }}>
 						{year + 7}年度入学
 					</div>
 				</div>
@@ -360,10 +299,7 @@ export default function BirthYearPage({
 
 			{/* 学歴一覧（遅生まれ） */}
 			<section className="mb-8">
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					📅 {year}年4月2日〜12月31日生まれ（遅生まれ）
 				</h2>
 				<div className="card overflow-hidden">
@@ -398,33 +334,17 @@ export default function BirthYearPage({
 						</thead>
 						<tbody>
 							{lateHistory.map((item, index) => (
-								<tr
-									key={index}
-									className="border-t"
-									style={{ borderColor: 'var(--color-border)' }}
-								>
-									<td
-										className="px-4 py-2 font-medium"
-										style={{ color: 'var(--color-text)' }}
-									>
+								<tr key={index} className="border-t" style={{ borderColor: 'var(--color-border)' }}>
+									<td className="px-4 py-2 font-medium" style={{ color: 'var(--color-text)' }}>
 										{item.event}
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-text-secondary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 										{item.year}年{item.month}月
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-text-secondary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 										{toWareki(item.year, item.month)}
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-primary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-primary)' }}>
 										{item.age}歳
 									</td>
 								</tr>
@@ -436,10 +356,7 @@ export default function BirthYearPage({
 
 			{/* 学歴一覧（早生まれ） */}
 			<section className="mb-8">
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					📅 {year}年1月1日〜4月1日生まれ（早生まれ）
 				</h2>
 				<div className="card overflow-hidden">
@@ -474,33 +391,17 @@ export default function BirthYearPage({
 						</thead>
 						<tbody>
 							{earlyHistory.map((item, index) => (
-								<tr
-									key={index}
-									className="border-t"
-									style={{ borderColor: 'var(--color-border)' }}
-								>
-									<td
-										className="px-4 py-2 font-medium"
-										style={{ color: 'var(--color-text)' }}
-									>
+								<tr key={index} className="border-t" style={{ borderColor: 'var(--color-border)' }}>
+									<td className="px-4 py-2 font-medium" style={{ color: 'var(--color-text)' }}>
 										{item.event}
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-text-secondary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 										{item.year}年{item.month}月
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-text-secondary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 										{toWareki(item.year, item.month)}
 									</td>
-									<td
-										className="px-4 py-2"
-										style={{ color: 'var(--color-primary)' }}
-									>
+									<td className="px-4 py-2" style={{ color: 'var(--color-primary)' }}>
 										{item.age}歳
 									</td>
 								</tr>
@@ -508,10 +409,7 @@ export default function BirthYearPage({
 						</tbody>
 					</table>
 				</div>
-				<p
-					className="text-xs mt-2"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<p className="text-xs mt-2" style={{ color: 'var(--color-text-muted)' }}>
 					※ 早生まれの方は前年度生まれの方と同じ学年になります
 				</p>
 			</section>
@@ -519,10 +417,7 @@ export default function BirthYearPage({
 			{/* 同い年の有名人 */}
 			{celebrities.length > 0 && (
 				<section className="mb-8">
-					<h2
-						className="text-xl font-bold mb-4"
-						style={{ color: 'var(--color-text)' }}
-					>
+					<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 						🎭 {year}年生まれの有名人
 					</h2>
 					<div className="card p-4">
@@ -544,16 +439,10 @@ export default function BirthYearPage({
 										{celeb.name.charAt(0)}
 									</div>
 									<div>
-										<div
-											className="font-medium"
-											style={{ color: 'var(--color-text)' }}
-										>
+										<div className="font-medium" style={{ color: 'var(--color-text)' }}>
 											{celeb.name}
 										</div>
-										<div
-											className="text-xs"
-											style={{ color: 'var(--color-text-muted)' }}
-										>
+										<div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
 											{celeb.profession}
 										</div>
 									</div>

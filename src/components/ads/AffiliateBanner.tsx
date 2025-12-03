@@ -55,11 +55,7 @@ const AFFILIATE_LINKS: AffiliateItem[] = [
 /**
  * おすすめサービスセクション
  */
-export function RecommendedServices({
-	className = '',
-}: {
-	className?: string;
-}) {
+export function RecommendedServices({ className = '' }: { className?: string }) {
 	const { locale } = useLocale();
 
 	// 日本語以外では表示しない
@@ -98,10 +94,7 @@ export function RecommendedServices({
 							</div>
 							<div className="flex-1 min-w-0">
 								<div className="flex items-center gap-2">
-									<span
-										className="font-medium text-sm"
-										style={{ color: 'var(--color-text)' }}
-									>
+									<span className="font-medium text-sm" style={{ color: 'var(--color-text)' }}>
 										{item.name}
 									</span>
 									{item.tag && (
@@ -116,10 +109,7 @@ export function RecommendedServices({
 										</span>
 									)}
 								</div>
-								<p
-									className="text-xs truncate"
-									style={{ color: 'var(--color-text-muted)' }}
-								>
+								<p className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>
 									{item.description}
 								</p>
 							</div>
@@ -141,10 +131,7 @@ export function RecommendedServices({
 					))}
 				</div>
 
-				<p
-					className="text-[10px] mt-3 text-center"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<p className="text-[10px] mt-3 text-center" style={{ color: 'var(--color-text-muted)' }}>
 					※ PR・広告を含みます
 				</p>
 			</div>
@@ -211,8 +198,7 @@ export function AffiliateBanner({
 				rel="noopener noreferrer sponsored"
 				className="block w-full h-full rounded-xl flex items-center justify-center transition-all hover:opacity-90"
 				style={{
-					background:
-						'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
+					background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
 					color: 'white',
 				}}
 			>

@@ -80,9 +80,7 @@ async function generateMainOGP(): Promise<void> {
   <text x="600" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#718096">sotsugyoutoshihayamihyou.vercel.app</text>
 </svg>`;
 
-	await sharp(Buffer.from(svg))
-		.png()
-		.toFile(path.join(publicDir, 'og-image.png'));
+	await sharp(Buffer.from(svg)).png().toFile(path.join(publicDir, 'og-image.png'));
 
 	console.log('✅ Generated: og-image.png (1200x630)');
 }
@@ -128,9 +126,7 @@ async function generateTwitterOGP(): Promise<void> {
   <text x="400" y="520" font-family="Arial, sans-serif" font-size="24" fill="#A0AEC0">sotsugyoutoshihayamihyou.vercel.app</text>
 </svg>`;
 
-	await sharp(Buffer.from(svg))
-		.png()
-		.toFile(path.join(publicDir, 'twitter-image.png'));
+	await sharp(Buffer.from(svg)).png().toFile(path.join(publicDir, 'twitter-image.png'));
 
 	console.log('✅ Generated: twitter-image.png (1200x600)');
 }
@@ -165,9 +161,7 @@ async function generateLineOGP(): Promise<void> {
   <text x="260" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.7)">西暦・和暦対応 ｜ 完全無料</text>
 </svg>`;
 
-	await sharp(Buffer.from(svg))
-		.png()
-		.toFile(path.join(publicDir, 'line-image.png'));
+	await sharp(Buffer.from(svg)).png().toFile(path.join(publicDir, 'line-image.png'));
 
 	console.log('✅ Generated: line-image.png (520x520)');
 }

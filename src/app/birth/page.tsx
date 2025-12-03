@@ -51,15 +51,8 @@ export default function BirthIndexPage() {
 			/>
 
 			{/* パンくずリスト */}
-			<nav
-				className="mb-6 text-sm"
-				style={{ color: 'var(--color-text-muted)' }}
-			>
-				<Link
-					href="/"
-					className="hover:underline"
-					style={{ color: 'var(--color-primary)' }}
-				>
+			<nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+				<Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
 					{t.home}
 				</Link>
 				<span className="mx-2">›</span>
@@ -74,18 +67,13 @@ export default function BirthIndexPage() {
 				>
 					{t.birthTitle}
 				</h1>
-				<p style={{ color: 'var(--color-text-secondary)' }}>
-					{t.birthSubtitle}
-				</p>
+				<p style={{ color: 'var(--color-text-secondary)' }}>{t.birthSubtitle}</p>
 			</header>
 
 			{/* 年代別リスト */}
 			{Object.entries(decades).map(([decade, years]) => (
 				<section key={decade} className="mb-8">
-					<h2
-						className="text-xl font-bold mb-4"
-						style={{ color: 'var(--color-text)' }}
-					>
+					<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 						{decade}s
 					</h2>
 					<div className="grid grid-cols-5 sm:grid-cols-10 gap-2">

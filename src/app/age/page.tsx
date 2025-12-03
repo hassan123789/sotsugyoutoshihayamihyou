@@ -5,20 +5,7 @@ import { useMemo, useState } from 'react';
 import { useLocale } from '@/lib/i18n/LocaleContext';
 
 // 干支データ
-const ETOS = [
-	'子',
-	'丑',
-	'寅',
-	'卯',
-	'辰',
-	'巳',
-	'午',
-	'未',
-	'申',
-	'酉',
-	'戌',
-	'亥',
-];
+const ETOS = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 const ETO_ANIMALS = [
 	'ねずみ',
 	'うし',
@@ -137,21 +124,15 @@ const ZODIAC_SIGNS = [
 // 干支計算
 function getEto(year: number): { kanji: string; reading: string } {
 	const index = (year - 4) % 12;
-	return { kanji: ETOS[index], reading: ETO_ANIMALS[index] };
+	return { kanji: ETOS[index] ?? '子', reading: ETO_ANIMALS[index] ?? 'ねずみ' };
 }
 
 // 星座計算
-function getZodiac(
-	month: number,
-	day: number,
-): { name: string; emoji: string } {
+function getZodiac(month: number, day: number): { name: string; emoji: string } {
 	for (const sign of ZODIAC_SIGNS) {
 		if (sign.startMonth === 12) {
 			// 山羊座の特殊処理（年をまたぐ）
-			if (
-				(month === 12 && day >= sign.startDay) ||
-				(month === 1 && day <= sign.endDay)
-			) {
+			if ((month === 12 && day >= sign.startDay) || (month === 1 && day <= sign.endDay)) {
 				return { name: sign.name, emoji: sign.emoji };
 			}
 		} else if (
@@ -165,21 +146,14 @@ function getZodiac(
 }
 
 // 年齢計算
-function calculateAge(
-	birthYear: number,
-	birthMonth: number,
-	birthDay: number,
-): number {
+function calculateAge(birthYear: number, birthMonth: number, birthDay: number): number {
 	const today = new Date();
 	const thisYear = today.getFullYear();
 	const thisMonth = today.getMonth() + 1;
 	const thisDay = today.getDate();
 
 	let age = thisYear - birthYear;
-	if (
-		thisMonth < birthMonth ||
-		(thisMonth === birthMonth && thisDay < birthDay)
-	) {
+	if (thisMonth < birthMonth || (thisMonth === birthMonth && thisDay < birthDay)) {
 		age--;
 	}
 	return age;
@@ -228,8 +202,7 @@ export default function AgePage() {
 		const month = parseInt(birthMonth, 10);
 		const day = parseInt(birthDay, 10);
 
-		if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day))
-			return null;
+		if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) return null;
 		if (year < 1900 || year > new Date().getFullYear()) return null;
 		if (month < 1 || month > 12 || day < 1 || day > 31) return null;
 
@@ -244,15 +217,8 @@ export default function AgePage() {
 	return (
 		<main className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 			{/* パンくずリスト */}
-			<nav
-				className="mb-6 text-sm"
-				style={{ color: 'var(--color-text-muted)' }}
-			>
-				<Link
-					href="/"
-					className="hover:underline"
-					style={{ color: 'var(--color-primary)' }}
-				>
+			<nav className="mb-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+				<Link href="/" className="hover:underline" style={{ color: 'var(--color-primary)' }}>
 					{t.home}
 				</Link>
 				<span className="mx-2">›</span>
@@ -272,10 +238,7 @@ export default function AgePage() {
 
 			{/* 年齢計算ツール */}
 			<div className="card p-6 mb-8">
-				<h2
-					className="text-lg font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-lg font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					{t.calculateAge}
 				</h2>
 
@@ -296,9 +259,7 @@ export default function AgePage() {
 							max={new Date().getFullYear()}
 							className="input-field w-24"
 						/>
-						<span style={{ color: 'var(--color-text-muted)' }}>
-							{t.yearUnit}
-						</span>
+						<span style={{ color: 'var(--color-text-muted)' }}>{t.yearUnit}</span>
 						<input
 							type="number"
 							value={birthMonth}
@@ -308,9 +269,7 @@ export default function AgePage() {
 							max={12}
 							className="input-field w-16"
 						/>
-						<span style={{ color: 'var(--color-text-muted)' }}>
-							{t.monthUnit}
-						</span>
+						<span style={{ color: 'var(--color-text-muted)' }}>{t.monthUnit}</span>
 						<input
 							type="number"
 							value={birthDay}
@@ -320,9 +279,7 @@ export default function AgePage() {
 							max={31}
 							className="input-field w-16"
 						/>
-						<span style={{ color: 'var(--color-text-muted)' }}>
-							{t.dayUnit}
-						</span>
+						<span style={{ color: 'var(--color-text-muted)' }}>{t.dayUnit}</span>
 					</div>
 				</div>
 
@@ -332,16 +289,10 @@ export default function AgePage() {
 							className="p-4 rounded-xl text-center"
 							style={{ background: 'var(--color-highlight-primary)' }}
 						>
-							<div
-								className="text-xs mb-1"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 								{t.currentAgeLabel}
 							</div>
-							<div
-								className="text-2xl font-bold"
-								style={{ color: 'var(--color-primary)' }}
-							>
+							<div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 								{result.age}
 								{t.ageUnit}
 							</div>
@@ -350,22 +301,13 @@ export default function AgePage() {
 							className="p-4 rounded-xl text-center"
 							style={{ background: 'var(--color-highlight-primary)' }}
 						>
-							<div
-								className="text-xs mb-1"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 								{t.eto}
 							</div>
-							<div
-								className="text-2xl font-bold"
-								style={{ color: 'var(--color-accent)' }}
-							>
+							<div className="text-2xl font-bold" style={{ color: 'var(--color-accent)' }}>
 								{result.eto.kanji}年
 							</div>
-							<div
-								className="text-xs"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
 								{result.eto.reading}
 							</div>
 						</div>
@@ -373,22 +315,13 @@ export default function AgePage() {
 							className="p-4 rounded-xl text-center"
 							style={{ background: 'var(--color-highlight-primary)' }}
 						>
-							<div
-								className="text-xs mb-1"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 								{t.zodiac}
 							</div>
-							<div
-								className="text-2xl font-bold"
-								style={{ color: 'var(--color-primary)' }}
-							>
+							<div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 								{result.zodiac.emoji}
 							</div>
-							<div
-								className="text-xs"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
 								{result.zodiac.name}
 							</div>
 						</div>
@@ -396,16 +329,10 @@ export default function AgePage() {
 							className="p-4 rounded-xl text-center"
 							style={{ background: 'var(--color-highlight-primary)' }}
 						>
-							<div
-								className="text-xs mb-1"
-								style={{ color: 'var(--color-text-muted)' }}
-							>
+							<div className="text-xs mb-1" style={{ color: 'var(--color-text-muted)' }}>
 								{t.warekiTitle}
 							</div>
-							<div
-								className="text-lg font-bold"
-								style={{ color: 'var(--color-accent)' }}
-							>
+							<div className="text-lg font-bold" style={{ color: 'var(--color-accent)' }}>
 								{result.wareki}
 							</div>
 						</div>
@@ -415,16 +342,10 @@ export default function AgePage() {
 
 			{/* 年齢早見表 */}
 			<section>
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<h2 className="text-xl font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 					{t.ageTitle}（{new Date().getFullYear()}）
 				</h2>
-				<p
-					className="text-xs mb-2"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<p className="text-xs mb-2" style={{ color: 'var(--color-text-muted)' }}>
 					{t.ageTableNote}
 				</p>
 				<div className="card overflow-hidden">
@@ -465,30 +386,18 @@ export default function AgePage() {
 										className="border-t"
 										style={{ borderColor: 'var(--color-border)' }}
 									>
-										<td
-											className="px-4 py-2 font-medium"
-											style={{ color: 'var(--color-text)' }}
-										>
+										<td className="px-4 py-2 font-medium" style={{ color: 'var(--color-text)' }}>
 											{row.year}
 											{t.yearUnit}
 										</td>
-										<td
-											className="px-4 py-2"
-											style={{ color: 'var(--color-text-secondary)' }}
-										>
+										<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 											{row.wareki}
 										</td>
-										<td
-											className="px-4 py-2 font-medium"
-											style={{ color: 'var(--color-primary)' }}
-										>
+										<td className="px-4 py-2 font-medium" style={{ color: 'var(--color-primary)' }}>
 											{row.age}
 											{t.ageUnit}
 										</td>
-										<td
-											className="px-4 py-2"
-											style={{ color: 'var(--color-text-secondary)' }}
-										>
+										<td className="px-4 py-2" style={{ color: 'var(--color-text-secondary)' }}>
 											{row.eto}
 										</td>
 									</tr>

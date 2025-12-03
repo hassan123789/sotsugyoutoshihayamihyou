@@ -1,10 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import {
-	type Celebrity,
-	getCelebritiesByAcademicYear,
-} from '@/data/celebrities';
+import { type Celebrity, getCelebritiesByAcademicYear } from '@/data/celebrities';
 import { useLocale } from '@/lib/i18n';
 
 interface CelebritiesProps {
@@ -13,20 +10,12 @@ interface CelebritiesProps {
 	birthDay: number;
 }
 
-export function Celebrities({
-	birthYear,
-	birthMonth,
-	birthDay,
-}: CelebritiesProps) {
+export function Celebrities({ birthYear, birthMonth, birthDay }: CelebritiesProps) {
 	const { t } = useLocale();
 
 	const celebrities = useMemo(() => {
 		// NaNチェック
-		if (
-			Number.isNaN(birthYear) ||
-			Number.isNaN(birthMonth) ||
-			Number.isNaN(birthDay)
-		) {
+		if (Number.isNaN(birthYear) || Number.isNaN(birthMonth) || Number.isNaN(birthDay)) {
 			return [];
 		}
 		return getCelebritiesByAcademicYear(birthYear, birthMonth, birthDay, 6);
@@ -38,10 +27,7 @@ export function Celebrities({
 
 	return (
 		<div className="card p-6">
-			<h2
-				className="text-lg font-bold mb-4"
-				style={{ color: 'var(--color-text)' }}
-			>
+			<h2 className="text-lg font-bold mb-4" style={{ color: 'var(--color-text)' }}>
 				🎭 {t.celebritiesTitle}
 			</h2>
 
@@ -51,10 +37,7 @@ export function Celebrities({
 				))}
 			</div>
 
-			<p
-				className="text-xs mt-4 text-center"
-				style={{ color: 'var(--color-text-muted)' }}
-			>
+			<p className="text-xs mt-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
 				※ {t.celebritiesSubtitle}
 			</p>
 		</div>
@@ -78,24 +61,17 @@ function CelebrityCard({ celebrity }: { celebrity: Celebrity }) {
 			<div
 				className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg"
 				style={{
-					background:
-						'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
+					background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)',
 					color: 'white',
 				}}
 			>
 				{celebrity.name.charAt(0)}
 			</div>
 			<div className="min-w-0 flex-1">
-				<div
-					className="font-medium truncate"
-					style={{ color: 'var(--color-text)' }}
-				>
+				<div className="font-medium truncate" style={{ color: 'var(--color-text)' }}>
 					{celebrity.name}
 				</div>
-				<div
-					className="text-xs truncate"
-					style={{ color: 'var(--color-text-muted)' }}
-				>
+				<div className="text-xs truncate" style={{ color: 'var(--color-text-muted)' }}>
 					{celebrity.profession}
 				</div>
 				<div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>

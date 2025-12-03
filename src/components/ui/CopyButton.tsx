@@ -9,11 +9,7 @@ interface CopyButtonProps {
 	className?: string;
 }
 
-export function CopyButton({
-	getText,
-	label,
-	className = '',
-}: CopyButtonProps) {
+export function CopyButton({ getText, label, className = '' }: CopyButtonProps) {
 	const { t } = useLocale();
 	const [showToast, setShowToast] = useState(false);
 	const [toastMessage, setToastMessage] = useState('');
@@ -68,28 +64,20 @@ export function CopyButton({
           ${className}
         `}
 				style={{
-					background:
-						'linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%)',
+					background: 'linear-gradient(135deg, var(--color-success) 0%, var(--color-primary) 100%)',
 					color: 'white',
 					boxShadow: '0 2px 8px var(--color-shadow-success)',
 				}}
 				onMouseEnter={(e) => {
 					e.currentTarget.style.transform = 'translateY(-1px)';
-					e.currentTarget.style.boxShadow =
-						'0 4px 16px var(--color-shadow-success)';
+					e.currentTarget.style.boxShadow = '0 4px 16px var(--color-shadow-success)';
 				}}
 				onMouseLeave={(e) => {
 					e.currentTarget.style.transform = 'translateY(0)';
-					e.currentTarget.style.boxShadow =
-						'0 2px 8px var(--color-shadow-success)';
+					e.currentTarget.style.boxShadow = '0 2px 8px var(--color-shadow-success)';
 				}}
 			>
-				<svg
-					className="w-5 h-5"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
+				<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path
 						strokeLinecap="round"
 						strokeLinejoin="round"

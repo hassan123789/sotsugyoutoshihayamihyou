@@ -18,10 +18,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 
 	return (
 		<div className="card p-6">
-			<h2
-				className="text-xl font-bold mb-6"
-				style={{ color: 'var(--color-text)' }}
-			>
+			<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 				{t.timeline}
 			</h2>
 
@@ -50,12 +47,8 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 								<div
 									className="absolute left-1.5 w-4 h-4 rounded-full border-2"
 									style={{
-										borderColor: isLast
-											? 'var(--color-accent)'
-											: 'var(--color-primary)',
-										background: isLast
-											? 'var(--color-accent)'
-											: 'var(--color-card)',
+										borderColor: isLast ? 'var(--color-accent)' : 'var(--color-primary)',
+										background: isLast ? 'var(--color-accent)' : 'var(--color-card)',
 									}}
 								/>
 
@@ -63,9 +56,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 								<div
 									className="rounded-xl p-4 transition-all hover:translate-x-1"
 									style={{
-										background: isLast
-											? 'var(--color-accent-pale)'
-											: 'var(--color-card)',
+										background: isLast ? 'var(--color-accent-pale)' : 'var(--color-card)',
 										border: isLast
 											? '1px solid var(--color-accent)'
 											: '1px solid var(--color-border)',
@@ -74,12 +65,8 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 									{/* 年度ヘッダー */}
 									<div className="flex items-center justify-between mb-2">
 										<div>
-											<div
-												className="font-bold"
-												style={{ color: 'var(--color-text)' }}
-											>
-												{item.year}年（{toWareki(item.year, item.month)}）
-												{item.month}月
+											<div className="font-bold" style={{ color: 'var(--color-text)' }}>
+												{item.year}年（{toWareki(item.year, item.month)}）{item.month}月
 											</div>
 										</div>
 										{isLast && (
@@ -104,10 +91,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 									</div>
 
 									{/* 年齢 */}
-									<div
-										className="text-sm mb-3"
-										style={{ color: 'var(--color-text-muted)' }}
-									>
+									<div className="text-sm mb-3" style={{ color: 'var(--color-text-muted)' }}>
 										{item.age}
 										{t.ageUnit}
 										{item.isEarlyBorn && (
@@ -138,9 +122,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 											<div className="space-y-1.5 text-xs">
 												{nostalgia.hit && (
 													<div className="flex items-start gap-2">
-														<span style={{ color: 'var(--color-accent)' }}>
-															♪
-														</span>
+														<span style={{ color: 'var(--color-accent)' }}>♪</span>
 														<span style={{ color: 'var(--color-text-muted)' }}>
 															{nostalgia.hit}
 														</span>
@@ -148,9 +130,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 												)}
 												{nostalgia.culture && (
 													<div className="flex items-start gap-2">
-														<span style={{ color: 'var(--color-primary)' }}>
-															◆
-														</span>
+														<span style={{ color: 'var(--color-primary)' }}>◆</span>
 														<span style={{ color: 'var(--color-text-muted)' }}>
 															{nostalgia.culture}
 														</span>
@@ -158,9 +138,7 @@ export function HistoryTimeline({ events }: HistoryTimelineProps) {
 												)}
 												{nostalgia.news && (
 													<div className="flex items-start gap-2">
-														<span style={{ color: 'var(--color-info)' }}>
-															●
-														</span>
+														<span style={{ color: 'var(--color-info)' }}>●</span>
 														<span style={{ color: 'var(--color-text-muted)' }}>
 															{nostalgia.news}
 														</span>
@@ -202,10 +180,7 @@ export function ReverseResult({
 }: ReverseResultProps) {
 	return (
 		<div className="card p-6">
-			<h2
-				className="text-xl font-bold mb-6"
-				style={{ color: 'var(--color-text)' }}
-			>
+			<h2 className="text-xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
 				逆算結果
 			</h2>
 
@@ -224,50 +199,29 @@ export function ReverseResult({
 
 				<div className="flex justify-center items-center gap-6 flex-wrap">
 					<div className="text-center">
-						<div
-							className="text-sm mb-1"
-							style={{ color: 'var(--color-text-muted)' }}
-						>
+						<div className="text-sm mb-1" style={{ color: 'var(--color-text-muted)' }}>
 							遅生まれ（4/2〜12/31）
 						</div>
-						<div
-							className="text-2xl font-bold"
-							style={{ color: 'var(--color-primary)' }}
-						>
+						<div className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
 							{earliest}年
 						</div>
-						<div
-							className="text-sm"
-							style={{ color: 'var(--color-text-muted)' }}
-						>
+						<div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 							（{earliestWareki}）
 						</div>
 					</div>
 
-					<div
-						className="text-2xl"
-						style={{ color: 'var(--color-text-muted)' }}
-					>
+					<div className="text-2xl" style={{ color: 'var(--color-text-muted)' }}>
 						〜
 					</div>
 
 					<div className="text-center">
-						<div
-							className="text-sm mb-1"
-							style={{ color: 'var(--color-text-muted)' }}
-						>
+						<div className="text-sm mb-1" style={{ color: 'var(--color-text-muted)' }}>
 							早生まれ（1/1〜4/1）
 						</div>
-						<div
-							className="text-2xl font-bold"
-							style={{ color: 'var(--color-accent)' }}
-						>
+						<div className="text-2xl font-bold" style={{ color: 'var(--color-accent)' }}>
 							{latest}年
 						</div>
-						<div
-							className="text-sm"
-							style={{ color: 'var(--color-text-muted)' }}
-						>
+						<div className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
 							（{latestWareki}）
 						</div>
 					</div>

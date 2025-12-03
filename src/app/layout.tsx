@@ -68,8 +68,7 @@ export const metadata: Metadata = {
 	twitter: {
 		card: 'summary_large_image',
 		title: '入学・卒業年度自動計算｜学歴早見表【西暦・和暦対応】',
-		description:
-			'生年月日を入力するだけで入学・卒業年度を自動計算。履歴書作成に便利な無料ツール。',
+		description: '生年月日を入力するだけで入学・卒業年度を自動計算。履歴書作成に便利な無料ツール。',
 		images: ['/twitter-image.png'],
 		creator: '@gakureki_hayami',
 		site: '@gakureki_hayami',
@@ -166,8 +165,7 @@ const howToJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'HowTo',
 	name: '生年月日から卒業年度を調べる方法',
-	description:
-		'生年月日を入力するだけで、小学校から大学院までの入学・卒業年度を自動計算できます。',
+	description: '生年月日を入力するだけで、小学校から大学院までの入学・卒業年度を自動計算できます。',
 	step: [
 		{
 			'@type': 'HowToStep',
@@ -197,11 +195,7 @@ const howToJsonLd = {
 	totalTime: 'PT1M',
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="ja" suppressHydrationWarning>
 			<head>
@@ -210,24 +204,12 @@ export default function RootLayout({
 				<link rel="icon" href="/icon.svg" type="image/svg+xml" />
 				<link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 				<link rel="manifest" href="/manifest.json" />
-				<meta
-					name="theme-color"
-					content="#2C5282"
-					media="(prefers-color-scheme: light)"
-				/>
-				<meta
-					name="theme-color"
-					content="#0F1419"
-					media="(prefers-color-scheme: dark)"
-				/>
+				<meta name="theme-color" content="#2C5282" media="(prefers-color-scheme: light)" />
+				<meta name="theme-color" content="#0F1419" media="(prefers-color-scheme: dark)" />
 
 				{/* フォントプリロード */}
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link
-					rel="preconnect"
-					href="https://fonts.gstatic.com"
-					crossOrigin="anonymous"
-				/>
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
 				{/* DNS プリフェッチ */}
 				<link rel="dns-prefetch" href="https://www.googletagmanager.com" />

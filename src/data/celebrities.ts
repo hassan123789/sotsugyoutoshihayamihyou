@@ -475,10 +475,7 @@ export const CELEBRITIES: Celebrity[] = [
  * @param birthYear 生年
  * @param limit 最大取得数
  */
-export function getCelebritiesByBirthYear(
-	birthYear: number,
-	limit: number = 5,
-): Celebrity[] {
+export function getCelebritiesByBirthYear(birthYear: number, limit: number = 5): Celebrity[] {
 	return CELEBRITIES.filter((c) => c.birthYear === birthYear).slice(0, limit);
 }
 
@@ -490,7 +487,7 @@ export function getCelebritiesByAcademicYear(
 	birthYear: number,
 	birthMonth: number,
 	birthDay: number,
-	limit: number = 5,
+	limit: number = 5
 ): Celebrity[] {
 	// 早生まれ判定
 	const isEarlyBorn = birthMonth < 4 || (birthMonth === 4 && birthDay === 1);
@@ -501,8 +498,7 @@ export function getCelebritiesByAcademicYear(
 			// 月日が不明の場合は年だけで判定
 			return c.birthYear === birthYear;
 		}
-		const cIsEarlyBorn =
-			c.birthMonth < 4 || (c.birthMonth === 4 && c.birthDay === 1);
+		const cIsEarlyBorn = c.birthMonth < 4 || (c.birthMonth === 4 && c.birthDay === 1);
 		const cAcademicStartYear = cIsEarlyBorn ? c.birthYear - 1 : c.birthYear;
 		return cAcademicStartYear === academicStartYear;
 	}).slice(0, limit);

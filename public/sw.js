@@ -8,7 +8,7 @@ self.addEventListener('install', (event) => {
 		caches
 			.open(CACHE_NAME)
 			.then((cache) => cache.addAll(urlsToCache))
-			.then(() => self.skipWaiting()),
+			.then(() => self.skipWaiting())
 	);
 });
 
@@ -23,10 +23,10 @@ self.addEventListener('activate', (event) => {
 						if (cacheName !== CACHE_NAME) {
 							return caches.delete(cacheName);
 						}
-					}),
+					})
 				);
 			})
-			.then(() => self.clients.claim()),
+			.then(() => self.clients.claim())
 	);
 });
 
@@ -52,6 +52,6 @@ self.addEventListener('fetch', (event) => {
 			.catch(() => {
 				// オフライン時はキャッシュから取得
 				return caches.match(event.request);
-			}),
+			})
 	);
 });

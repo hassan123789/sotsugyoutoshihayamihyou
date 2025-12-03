@@ -192,9 +192,7 @@ export default function QuizPage() {
 		});
 
 		// 最も多い世代を取得
-		const maxGen = Object.entries(counts).reduce((a, b) =>
-			b[1] > a[1] ? b : a,
-		);
+		const maxGen = Object.entries(counts).reduce((a, b) => (b[1] > a[1] ? b : a));
 		return GENERATIONS[maxGen[0]];
 	}, [answers, showResult]);
 
@@ -256,9 +254,7 @@ export default function QuizPage() {
 					>
 						← {t.backToTop}
 					</Link>
-					<h1 className="text-3xl sm:text-4xl font-bold gradient-text">
-						🎯 {t.quizTitle}
-					</h1>
+					<h1 className="text-3xl sm:text-4xl font-bold gradient-text">🎯 {t.quizTitle}</h1>
 					<p className="mt-2" style={{ color: 'var(--color-text-muted)' }}>
 						{t.quizSubtitle}
 					</p>
@@ -268,45 +264,60 @@ export default function QuizPage() {
 					<>
 						{/* プログレスバー */}
 						<div className="mb-6">
-							<div className="flex justify-between text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
+							<div
+								className="flex justify-between text-sm mb-2"
+								style={{ color: 'var(--color-text-muted)' }}
+							>
 								<span>
 									{t.quizQuestion}
 									{currentQuestion + 1} / {QUESTIONS.length}
 								</span>
 								<span>{Math.round(progress)}%</span>
 							</div>
-							<div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--color-bg-secondary)' }}>
+							<div
+								className="h-3 rounded-full overflow-hidden"
+								style={{ background: 'var(--color-bg-secondary)' }}
+							>
 								<div
 									className="h-full transition-all duration-500 ease-out"
-									style={{ width: `${progress}%`, background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))' }}
+									style={{
+										width: `${progress}%`,
+										background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))',
+									}}
 								/>
 							</div>
 						</div>
 
 						{/* 質問 */}
-						<div className="rounded-2xl shadow-xl p-6 sm:p-8" style={{ background: 'var(--color-card)' }}>
-							<h2 className="text-xl sm:text-2xl font-bold mb-6" style={{ color: 'var(--color-text)' }}>
-								{QUESTIONS[currentQuestion].question}
+						<div
+							className="rounded-2xl shadow-xl p-6 sm:p-8"
+							style={{ background: 'var(--color-card)' }}
+						>
+							<h2
+								className="text-xl sm:text-2xl font-bold mb-6"
+								style={{ color: 'var(--color-text)' }}
+							>
+								{QUESTIONS[currentQuestion]?.question}
 							</h2>
 
 							<div className="space-y-3">
-								{QUESTIONS[currentQuestion].options.map((option, index) => (
+								{QUESTIONS[currentQuestion]?.options.map((option, index) => (
 									<button
 										type="button"
 										key={index}
 										onClick={() => handleAnswer(option.generation, index)}
 										disabled={selectedOption !== null}
 										className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 ${
-												selectedOption === index
-													? 'scale-[1.02]'
-													: ''
-											} ${selectedOption !== null && selectedOption !== index ? 'opacity-50' : ''}`}
-											style={{ 
-												borderColor: selectedOption === index ? 'var(--color-accent)' : 'var(--color-border)',
-												background: selectedOption === index ? 'var(--color-accent-pale)' : 'var(--color-card)'
-											}}
-										>
-											<span className="font-medium" style={{ color: 'var(--color-text)' }}>
+											selectedOption === index ? 'scale-[1.02]' : ''
+										} ${selectedOption !== null && selectedOption !== index ? 'opacity-50' : ''}`}
+										style={{
+											borderColor:
+												selectedOption === index ? 'var(--color-accent)' : 'var(--color-border)',
+											background:
+												selectedOption === index ? 'var(--color-accent-pale)' : 'var(--color-card)',
+										}}
+									>
+										<span className="font-medium" style={{ color: 'var(--color-text)' }}>
 											{option.text}
 										</span>
 									</button>
@@ -315,17 +326,16 @@ export default function QuizPage() {
 						</div>
 					</>
 				) : (
-						result && (
-							/* 結果表示 */
-							<div className="rounded-2xl shadow-xl overflow-hidden" style={{ background: 'var(--color-card)' }}>
+					result && (
+						/* 結果表示 */
+						<div
+							className="rounded-2xl shadow-xl overflow-hidden"
+							style={{ background: 'var(--color-card)' }}
+						>
 							{/* 結果ヘッダー */}
-							<div
-								className={`bg-gradient-to-r ${result.color} p-8 text-white text-center`}
-							>
+							<div className={`bg-gradient-to-r ${result.color} p-8 text-white text-center`}>
 								<div className="text-6xl mb-4">{result.emoji}</div>
-								<h2 className="text-3xl font-bold mb-2">
-									{t.quizYourGeneration}...
-								</h2>
+								<h2 className="text-3xl font-bold mb-2">{t.quizYourGeneration}...</h2>
 								<div className="text-4xl font-black">{result.name}</div>
 								<div className="text-lg opacity-90 mt-2">{result.years}</div>
 							</div>
@@ -354,7 +364,10 @@ export default function QuizPage() {
 
 								{/* シェアボタン */}
 								<div className="space-y-3">
-									<p className="text-center text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>
+									<p
+										className="text-center text-sm mb-2"
+										style={{ color: 'var(--color-text-muted)' }}
+									>
 										{t.quizShare}
 									</p>
 									<div className="grid grid-cols-2 gap-3">
@@ -381,10 +394,10 @@ export default function QuizPage() {
 										type="button"
 										onClick={resetQuiz}
 										className="w-full py-3 px-4 font-medium rounded-xl transition-colors"
-										style={{ 
+										style={{
 											border: '2px solid var(--color-accent)',
 											color: 'var(--color-accent)',
-											background: 'transparent'
+											background: 'transparent',
 										}}
 									>
 										🔄 {t.quizRetry}
@@ -406,11 +419,7 @@ export default function QuizPage() {
 				<footer className="mt-10 text-center text-sm" style={{ color: 'var(--color-text-muted)' }}>
 					<p>※ この診断はエンターテインメント目的です</p>
 					<p className="mt-1">
-						<Link
-							href="/"
-							className="hover:underline"
-							style={{ color: 'var(--color-accent)' }}
-						>
+						<Link href="/" className="hover:underline" style={{ color: 'var(--color-accent)' }}>
 							学歴早見表
 						</Link>{' '}
 						|{' '}

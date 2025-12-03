@@ -16,10 +16,7 @@ export function FAQ() {
 
 	return (
 		<section className="mt-12">
-			<h2
-				className="text-xl font-bold mb-6 text-center"
-				style={{ color: 'var(--color-text)' }}
-			>
+			<h2 className="text-xl font-bold mb-6 text-center" style={{ color: 'var(--color-text)' }}>
 				{t.faqTitle}
 			</h2>
 
@@ -67,8 +64,7 @@ export function FAQ() {
 const faqDataForSEO = [
 	{
 		question: '早生まれとは何ですか？',
-		answer:
-			'1月1日〜4月1日に生まれた人のことです。学年では前年度生まれの人と同じ扱いになります。',
+		answer: '1月1日〜4月1日に生まれた人のことです。学年では前年度生まれの人と同じ扱いになります。',
 	},
 	{
 		question: '浪人した場合はどうすればいいですか？',
@@ -77,8 +73,7 @@ const faqDataForSEO = [
 	},
 	{
 		question: '留年した場合はどうすればいいですか？',
-		answer:
-			'「詳細オプション」を開いて、該当する学校の留年年数を選択してください。',
+		answer: '「詳細オプション」を開いて、該当する学校の留年年数を選択してください。',
 	},
 	{
 		question: '海外の学校や通信制の場合は？',

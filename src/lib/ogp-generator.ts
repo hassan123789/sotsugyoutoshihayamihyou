@@ -1,20 +1,6 @@
 // OGP画像生成用のスクリプト
 // 静的エクスポート向けに、SVGベースのOGP画像を生成します
 
-interface OGPImageData {
-	year: number;
-	academicYear: string;
-	description: string;
-}
-
-// 学年度を計算
-function calculateAcademicYear(year: number): string {
-	// 4月2日生まれの場合の学年
-	const entryYear = year + 6;
-	const graduationYear = year + 18;
-	return `${entryYear}年入学〜${graduationYear}年卒業`;
-}
-
 // 和暦変換
 function toWareki(year: number): string {
 	if (year >= 2019) {
@@ -30,7 +16,6 @@ function toWareki(year: number): string {
 
 // OGP用SVG生成
 export function generateOGPSVG(year: number): string {
-	const _academicInfo = calculateAcademicYear(year);
 	const wareki = toWareki(year);
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">

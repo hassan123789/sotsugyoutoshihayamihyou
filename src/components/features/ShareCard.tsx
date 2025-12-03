@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { getCelebritiesByAcademicYear } from '@/data/celebrities';
 import { toWareki } from '@/lib/academic';
 import { useLocale } from '@/lib/i18n/LocaleContext';
@@ -12,52 +12,20 @@ interface ShareCardProps {
 }
 
 // 干支計算
-const ETOS = [
-	'子',
-	'丑',
-	'寅',
-	'卯',
-	'辰',
-	'巳',
-	'午',
-	'未',
-	'申',
-	'酉',
-	'戌',
-	'亥',
-];
-const ETO_ANIMALS = [
-	'🐭',
-	'🐮',
-	'🐯',
-	'🐰',
-	'🐲',
-	'🐍',
-	'🐴',
-	'🐏',
-	'🐵',
-	'🐔',
-	'🐶',
-	'🐗',
-];
+const ETOS = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+const ETO_ANIMALS = ['🐭', '🐮', '🐯', '🐰', '🐲', '🐍', '🐴', '🐏', '🐵', '🐔', '🐶', '🐗'];
 
 function getEto(year: number) {
 	const index = (year - 4) % 12;
-	return { kanji: ETOS[index], emoji: ETO_ANIMALS[index] };
+	return { kanji: ETOS[index] ?? '子', emoji: ETO_ANIMALS[index] ?? '🐭' };
 }
 
 export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 	const { t } = useLocale();
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [cardImage, setCardImage] = useState<string | null>(null);
-	const _cardRef = useRef<HTMLDivElement>(null);
 
-	const celebrities = getCelebritiesByAcademicYear(
-		birthYear,
-		birthMonth,
-		birthDay,
-		3,
-	);
+	const celebrities = getCelebritiesByAcademicYear(birthYear, birthMonth, birthDay, 3);
 	const eto = getEto(birthYear);
 	const wareki = toWareki(birthYear, birthMonth);
 
@@ -118,7 +86,7 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 
 			// 干支
 			ctx.font = '80px sans-serif';
-			ctx.fillText(eto.emoji, width / 2, 520);
+			ctx.fillText(eto.emoji ?? '🐭', width / 2, 520);
 			ctx.fillStyle = '#4A5568';
 			ctx.font = 'bold 36px "Noto Sans JP", sans-serif';
 			ctx.fillText(`${eto.kanji}年`, width / 2, 580);
@@ -141,11 +109,7 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 			ctx.fillRect(0, height - 100, width, 100);
 			ctx.fillStyle = 'white';
 			ctx.font = '28px "Noto Sans JP", sans-serif';
-			ctx.fillText(
-				'🎓 学歴早見表 sotsugyoutoshihayamihyou.vercel.app',
-				width / 2,
-				height - 45,
-			);
+			ctx.fillText('🎓 学歴早見表 sotsugyoutoshihayamihyou.vercel.app', width / 2, height - 45);
 
 			// 画像として保存
 			const dataUrl = canvas.toDataURL('image/png');
@@ -184,17 +148,19 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 	}, [birthYear, celebrities]);
 
 	// NaN チェック
-	if (
-		Number.isNaN(birthYear) ||
-		Number.isNaN(birthMonth) ||
-		Number.isNaN(birthDay)
-	) {
+	if (Number.isNaN(birthYear) || Number.isNaN(birthMonth) || Number.isNaN(birthDay)) {
 		return null;
 	}
 
 	return (
-		<div className="mt-8 p-6 rounded-2xl shadow-lg" style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}>
-			<h2 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+		<div
+			className="mt-8 p-6 rounded-2xl shadow-lg"
+			style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}
+		>
+			<h2
+				className="text-xl font-bold mb-4 flex items-center gap-2"
+				style={{ color: 'var(--color-text)' }}
+			>
 				<span className="text-2xl">🎴</span>
 				{t.shareCardTitle}
 			</h2>
@@ -278,10 +244,10 @@ export function ShareCard({ birthYear, birthMonth, birthDay }: ShareCardProps) {
 						onClick={generateCard}
 						disabled={isGenerating}
 						className="w-full py-2 px-4 font-medium rounded-xl transition-colors"
-						style={{ 
-							color: 'var(--color-accent)', 
+						style={{
+							color: 'var(--color-accent)',
 							border: '1px solid var(--color-accent)',
-							background: 'transparent'
+							background: 'transparent',
 						}}
 					>
 						🔄 {t.shareCardGenerate}

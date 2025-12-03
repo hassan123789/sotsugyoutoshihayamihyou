@@ -98,9 +98,7 @@ function main() {
 		console.log(`Generated: ${filename}`);
 	}
 
-	console.log(
-		`\nTotal: ${2020 - 1950 + 1} OGP images generated in ${outputDir}`,
-	);
+	console.log(`\nTotal: ${2020 - 1950 + 1} OGP images generated in ${outputDir}`);
 }
 
 main();

@@ -33,11 +33,7 @@ function getGenerationData(birthYear: number): GenerationData | null {
 				'カセットテープで音楽ダビング',
 				'ワープロで論文作成',
 			],
-			schoolMemory: [
-				'受験戦争のピーク世代',
-				'校内暴力が社会問題に',
-				'ブルマは当たり前だった',
-			],
+			schoolMemory: ['受験戦争のピーク世代', '校内暴力が社会問題に', 'ブルマは当たり前だった'],
 		};
 	}
 
@@ -52,11 +48,7 @@ function getGenerationData(birthYear: number): GenerationData | null {
 				'エヴァンゲリオンの衝撃',
 				'ポケベル→PHS→携帯の進化を体験',
 			],
-			techMemory: [
-				'テレホーダイでネット三昧',
-				'iモードに感動した',
-				'MDプレーヤーを持ち歩いた',
-			],
+			techMemory: ['テレホーダイでネット三昧', 'iモードに感動した', 'MDプレーヤーを持ち歩いた'],
 			schoolMemory: [
 				'「ゆとり教育」直前世代',
 				'土曜日は半ドン（午前授業）',
@@ -81,11 +73,7 @@ function getGenerationData(birthYear: number): GenerationData | null {
 				'ガラケーのデコメに命をかけた',
 				'iPodで音楽スタイルが変わった',
 			],
-			schoolMemory: [
-				'ゆとり教育初期世代',
-				'プリクラ手帳を交換',
-				'ルーズソックス世代',
-			],
+			schoolMemory: ['ゆとり教育初期世代', 'プリクラ手帳を交換', 'ルーズソックス世代'],
 		};
 	}
 
@@ -100,11 +88,7 @@ function getGenerationData(birthYear: number): GenerationData | null {
 				'AKB48全盛期を経験',
 				'LINEで「既読」に悩まされた',
 			],
-			techMemory: [
-				'ガラケー→スマホの転換期',
-				'Twitterで情報収集',
-				'YouTuberという職業の誕生',
-			],
+			techMemory: ['ガラケー→スマホの転換期', 'Twitterで情報収集', 'YouTuberという職業の誕生'],
 			schoolMemory: [
 				'土曜授業がなくなった',
 				'「円周率は3」と言われた（実際は違う）',
@@ -124,11 +108,7 @@ function getGenerationData(birthYear: number): GenerationData | null {
 				'「推し活」が当たり前',
 				'オンライン授業経験者',
 			],
-			techMemory: [
-				'生まれた時からインターネット',
-				'YouTubeで勉強',
-				'InstagramでQOL向上',
-			],
+			techMemory: ['生まれた時からインターネット', 'YouTubeで勉強', 'InstagramでQOL向上'],
 			schoolMemory: [
 				'コロナ禍で卒業式が縮小',
 				'GIGAスクール構想でタブレット配布',
@@ -218,26 +198,24 @@ function getSchoolMemories(birthYear: number): {
 }
 
 export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
-	const generationData = useMemo(
-		() => getGenerationData(birthYear),
-		[birthYear],
-	);
-	const schoolMemories = useMemo(
-		() => getSchoolMemories(birthYear),
-		[birthYear],
-	);
+	const generationData = useMemo(() => getGenerationData(birthYear), [birthYear]);
+	const schoolMemories = useMemo(() => getSchoolMemories(birthYear), [birthYear]);
 
 	if (!generationData) {
 		return null;
 	}
 
 	return (
-		<div className="mt-8 p-6 rounded-2xl shadow-lg" style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}>
-			<h2 className="text-2xl font-bold mb-6 flex items-center gap-3" style={{ color: 'var(--color-text)' }}>
+		<div
+			className="mt-8 p-6 rounded-2xl shadow-lg"
+			style={{ background: 'var(--color-card)', border: '1px solid var(--color-border)' }}
+		>
+			<h2
+				className="text-2xl font-bold mb-6 flex items-center gap-3"
+				style={{ color: 'var(--color-text)' }}
+			>
 				<span className="text-3xl">🎓</span>
-				<span
-					className={`bg-gradient-to-r ${generationData.color} bg-clip-text text-transparent`}
-				>
+				<span className={`bg-gradient-to-r ${generationData.color} bg-clip-text text-transparent`}>
 					{generationData.generation}
 				</span>
 				<span>あるある</span>
@@ -246,7 +224,10 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 			{/* 世代あるある */}
 			<div className="grid md:grid-cols-3 gap-4 mb-6">
 				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
-					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
+					<h3
+						className="font-bold mb-3 flex items-center gap-2"
+						style={{ color: 'var(--color-primary)' }}
+					>
 						<span>💭</span> 世代あるある
 					</h3>
 					<ul className="space-y-2">
@@ -264,7 +245,10 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 				</div>
 
 				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
-					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
+					<h3
+						className="font-bold mb-3 flex items-center gap-2"
+						style={{ color: 'var(--color-primary)' }}
+					>
 						<span>📱</span> テクノロジーの思い出
 					</h3>
 					<ul className="space-y-2">
@@ -282,7 +266,10 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 				</div>
 
 				<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
-					<h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--color-primary)' }}>
+					<h3
+						className="font-bold mb-3 flex items-center gap-2"
+						style={{ color: 'var(--color-primary)' }}
+					>
 						<span>🏫</span> 学校の思い出
 					</h3>
 					<ul className="space-y-2">
@@ -302,7 +289,10 @@ export function GenerationAruaru({ birthYear }: GenerationAruaruProps) {
 
 			{/* 学生時代のヒット */}
 			<div className="p-4 rounded-xl" style={{ background: 'var(--color-bg-secondary)' }}>
-				<h3 className="font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+				<h3
+					className="font-bold mb-4 flex items-center gap-2"
+					style={{ color: 'var(--color-text)' }}
+				>
 					<span>🎵</span> あなたの学生時代に流行っていたもの
 				</h3>
 

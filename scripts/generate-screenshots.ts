@@ -4,11 +4,7 @@ import * as path from 'path';
 const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
 
 // SVGでプレースホルダースクリーンショットを生成
-function generatePlaceholderScreenshot(
-	filename: string,
-	title: string,
-	subtitle: string,
-) {
+function generatePlaceholderScreenshot(filename: string, title: string, subtitle: string) {
 	const svg = `<svg width="1080" height="1920" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -52,14 +48,6 @@ if (!fs.existsSync(screenshotsDir)) {
 }
 
 console.log('Generating screenshots...');
-generatePlaceholderScreenshot(
-	'screenshot-1.svg',
-	'卒業年度早見表',
-	'生年月日から学歴を自動計算',
-);
-generatePlaceholderScreenshot(
-	'screenshot-2.svg',
-	'計算結果',
-	'入学・卒業年度がすぐわかる',
-);
+generatePlaceholderScreenshot('screenshot-1.svg', '卒業年度早見表', '生年月日から学歴を自動計算');
+generatePlaceholderScreenshot('screenshot-2.svg', '計算結果', '入学・卒業年度がすぐわかる');
 console.log('Done!');

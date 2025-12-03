@@ -28,8 +28,7 @@ export default function PrivacyPolicyPage() {
 				},
 				{
 					title: '4. 第三者へのデータ共有',
-					content:
-						'本アプリは、ユーザーの情報を第三者と共有することはありません。',
+					content: '本アプリは、ユーザーの情報を第三者と共有することはありません。',
 				},
 				{
 					title: '5. 分析ツール',
@@ -80,8 +79,7 @@ export default function PrivacyPolicyPage() {
 				},
 				{
 					title: '4. Data Sharing with Third Parties',
-					content:
-						'This App does not share user information with third parties.',
+					content: 'This App does not share user information with third parties.',
 				},
 				{
 					title: '5. Analytics',
@@ -146,18 +144,15 @@ export default function PrivacyPolicyPage() {
 				},
 				{
 					title: '7. 儿童隐私',
-					content:
-						'本应用不面向13岁以下的儿童。我们不会故意收集13岁以下儿童的个人信息。',
+					content: '本应用不面向13岁以下的儿童。我们不会故意收集13岁以下儿童的个人信息。',
 				},
 				{
 					title: '8. 隐私政策的变更',
-					content:
-						'本隐私政策可能会根据需要进行更新。任何变更将在本页面上通知。',
+					content: '本隐私政策可能会根据需要进行更新。任何变更将在本页面上通知。',
 				},
 				{
 					title: '9. 联系我们',
-					content:
-						'如果您对本隐私政策有任何疑问，请通过应用的支持页面与我们联系。',
+					content: '如果您对本隐私政策有任何疑问，请通过应用的支持页面与我们联系。',
 				},
 			],
 			backToHome: '返回首页',

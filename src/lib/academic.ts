@@ -34,24 +34,18 @@ export function isEarlyBorn(birthMonth: number, birthDay: number): boolean {
 export function getElementaryEntranceYear(
 	birthYear: number,
 	birthMonth: number,
-	birthDay: number,
+	birthDay: number
 ): number {
 	return birthYear + (isEarlyBorn(birthMonth, birthDay) ? 6 : 7);
 }
 
 /** 学校リスト取得 */
 export function getSchoolList(universityDuration: string): SchoolInfo[] {
-	return [
-		...BASE_SCHOOLS,
-		...(UNIVERSITY_MAP[universityDuration] || UNIVERSITY_MAP['4']),
-	];
+	return [...BASE_SCHOOLS, ...(UNIVERSITY_MAP[universityDuration] ?? UNIVERSITY_MAP['4'] ?? [])];
 }
 
 /** カテゴリ別の追加年数取得 */
-function getExtraYearsForCategory(
-	category: SchoolCategory,
-	extra: ExtraYears,
-): number {
+function getExtraYearsForCategory(category: SchoolCategory, extra: ExtraYears): number {
 	const map: Record<string, number> = {
 		highschool: extra.highschool,
 		university: extra.university,
@@ -74,7 +68,7 @@ export function calculateHistory(
 	birthMonth: number,
 	birthDay: number,
 	universityDuration: string,
-	extra: ExtraYears,
+	extra: ExtraYears
 ): CalculatedResult {
 	const schools = getSchoolList(universityDuration);
 	let currentYear = getElementaryEntranceYear(birthYear, birthMonth, birthDay);
@@ -86,10 +80,7 @@ export function calculateHistory(
 
 	schools.forEach((school) => {
 		// 大学入学時に浪人年数を加算
-		if (
-			!delayApplied &&
-			(school.category === 'university' || school.category === 'graduate')
-		) {
+		if (!delayApplied && (school.category === 'university' || school.category === 'graduate')) {
 			currentYear += extra.delay;
 			delayApplied = true;
 		}
@@ -140,7 +131,7 @@ export function estimateBirthYear(
 	graduationYear: number,
 	schoolType: ReverseSchoolType,
 	universityDuration: string,
-	extra: ExtraYears,
+	extra: ExtraYears
 ): { earliest: number; latest: number } {
 	let years = 9; // 小学校6年 + 中学校3年
 
@@ -149,10 +140,8 @@ export function estimateBirthYear(
 	} else if (schoolType === 'university') {
 		years += 3 + extra.highschool + extra.delay;
 		for (const school of getSchoolList(universityDuration)) {
-			if (school.category === 'university')
-				years += school.duration + extra.university;
-			if (school.category === 'graduate')
-				years += school.duration + extra.graduate;
+			if (school.category === 'university') years += school.duration + extra.university;
+			if (school.category === 'graduate') years += school.duration + extra.graduate;
 		}
 	}
 
@@ -167,7 +156,7 @@ function formatResumeDate(
 	year: number,
 	month: number,
 	wareki: string,
-	format: ResumeFormat,
+	format: ResumeFormat
 ): string {
 	const monthStr = `${String(month).padStart(2, ' ')}月`;
 	switch (format) {
@@ -181,28 +170,12 @@ function formatResumeDate(
 }
 
 /** 履歴書形式でテキストを生成 */
-export function formatForResume(
-	history: AcademicHistory[],
-	format: ResumeFormat = 'both',
-): string {
+export function formatForResume(history: AcademicHistory[], format: ResumeFormat = 'both'): string {
 	return history
 		.flatMap((h) => {
-			const entranceDate = formatResumeDate(
-				h.entranceYear,
-				4,
-				h.entranceWareki,
-				format,
-			);
-			const graduationDate = formatResumeDate(
-				h.graduationYear,
-				3,
-				h.graduationWareki,
-				format,
-			);
-			return [
-				`${entranceDate}  ${h.schoolName} 入学`,
-				`${graduationDate}  ${h.schoolName} 卒業`,
-			];
+			const entranceDate = formatResumeDate(h.entranceYear, 4, h.entranceWareki, format);
+			const graduationDate = formatResumeDate(h.graduationYear, 3, h.graduationWareki, format);
+			return [`${entranceDate}  ${h.schoolName} 入学`, `${graduationDate}  ${h.schoolName} 卒業`];
 		})
 		.join('\n');
 }
@@ -214,11 +187,7 @@ export interface ValidationResult {
 	error?: string;
 }
 
-export function validateBirthDate(
-	year: number,
-	month: number,
-	day: number,
-): ValidationResult {
+export function validateBirthDate(year: number, month: number, day: number): ValidationResult {
 	const currentYear = new Date().getFullYear();
 
 	if (Number.isNaN(year)) {

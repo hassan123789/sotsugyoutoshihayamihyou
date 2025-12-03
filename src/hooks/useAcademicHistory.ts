@@ -85,16 +85,13 @@ export function useAcademicHistory() {
 			formState.highschoolExtra,
 			formState.universityExtra,
 			formState.graduateExtra,
-		],
+		]
 	);
 
 	// フォーム値の更新
-	const updateField = useCallback(
-		<K extends keyof FormState>(field: K, value: FormState[K]) => {
-			setFormState((prev: FormState) => ({ ...prev, [field]: value }));
-		},
-		[],
-	);
+	const updateField = useCallback(<K extends keyof FormState>(field: K, value: FormState[K]) => {
+		setFormState((prev: FormState) => ({ ...prev, [field]: value }));
+	}, []);
 
 	// 複数フィールドの一括更新
 	const updateFields = useCallback((updates: Partial<FormState>) => {
@@ -107,7 +104,7 @@ export function useAcademicHistory() {
 			updateField('calcMode', mode);
 			setResult(null);
 		},
-		[updateField],
+		[updateField]
 	);
 
 	// 順方向計算
@@ -122,13 +119,7 @@ export function useAcademicHistory() {
 			return null;
 		}
 
-		const data = calculateHistory(
-			year,
-			month,
-			day,
-			formState.universityDuration,
-			extraYears,
-		);
+		const data = calculateHistory(year, month, day, formState.universityDuration, extraYears);
 		setResult({ type: 'forward', data });
 		return data;
 	}, [
@@ -153,7 +144,7 @@ export function useAcademicHistory() {
 			year,
 			formState.reverseSchoolType,
 			formState.universityDuration,
-			extraYears,
+			extraYears
 		);
 		setResult({ type: 'reverse', birthRange });
 		return birthRange;
@@ -215,8 +206,7 @@ export function useAcademicHistory() {
 			earliestWareki: toWareki(earliest, 4),
 			latestWareki: toWareki(latest, 4),
 			delayYears: extraYears.delay,
-			hasExtraYears:
-				extraYears.highschool + extraYears.university + extraYears.graduate > 0,
+			hasExtraYears: extraYears.highschool + extraYears.university + extraYears.graduate > 0,
 		};
 	}, [result, formState.reverseYear, formState.reverseSchoolType, extraYears]);
 
@@ -243,15 +233,17 @@ export function useAcademicHistory() {
 			const match = birthParam.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
 			if (match) {
 				const [, year, month, day] = match;
-				setFormState((prev: FormState) => ({
-					...prev,
-					calcMode: 'forward',
-					birthYear: year,
-					birthMonth: month,
-					birthDay: day,
-				}));
-				setIsInitialized(true);
-				return;
+				if (year && month && day) {
+					setFormState((prev: FormState) => ({
+						...prev,
+						calcMode: 'forward',
+						birthYear: year,
+						birthMonth: month,
+						birthDay: day,
+					}));
+					setIsInitialized(true);
+					return;
+				}
 			}
 		}
 
@@ -272,19 +264,13 @@ export function useAcademicHistory() {
 	const getShareUrl = useCallback(() => {
 		if (typeof window === 'undefined') return null;
 		if (formState.calcMode !== 'forward') return null;
-		if (!formState.birthYear || !formState.birthMonth || !formState.birthDay)
-			return null;
+		if (!formState.birthYear || !formState.birthMonth || !formState.birthDay) return null;
 
 		const baseUrl = window.location.origin + window.location.pathname;
 		const month = formState.birthMonth.padStart(2, '0');
 		const day = formState.birthDay.padStart(2, '0');
 		return `${baseUrl}?birth=${formState.birthYear}-${month}-${day}`;
-	}, [
-		formState.calcMode,
-		formState.birthYear,
-		formState.birthMonth,
-		formState.birthDay,
-	]);
+	}, [formState.calcMode, formState.birthYear, formState.birthMonth, formState.birthDay]);
 
 	// シェアデータ生成
 	const getShareData = useCallback(() => {
@@ -299,12 +285,7 @@ export function useAcademicHistory() {
 			url,
 			text: `${year}年${month}月${day}日生まれの学歴早見表を作成しました！`,
 		};
-	}, [
-		getShareUrl,
-		formState.birthYear,
-		formState.birthMonth,
-		formState.birthDay,
-	]);
+	}, [getShareUrl, formState.birthYear, formState.birthMonth, formState.birthDay]);
 
 	// UI表示制御用のフラグ
 	const showUniversityFields = useMemo(() => {
@@ -312,11 +293,7 @@ export function useAcademicHistory() {
 			return formState.reverseSchoolType === 'university';
 		}
 		return formState.universityDuration !== '0';
-	}, [
-		formState.calcMode,
-		formState.reverseSchoolType,
-		formState.universityDuration,
-	]);
+	}, [formState.calcMode, formState.reverseSchoolType, formState.universityDuration]);
 
 	const showGraduateFields = useMemo(() => {
 		return (
@@ -330,11 +307,7 @@ export function useAcademicHistory() {
 			return formState.reverseSchoolType === 'university';
 		}
 		return formState.universityDuration !== '0';
-	}, [
-		formState.calcMode,
-		formState.reverseSchoolType,
-		formState.universityDuration,
-	]);
+	}, [formState.calcMode, formState.reverseSchoolType, formState.universityDuration]);
 
 	const showHighschoolFields = useMemo(() => {
 		if (formState.calcMode === 'reverse') {

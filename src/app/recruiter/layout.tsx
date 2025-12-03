@@ -22,10 +22,6 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RecruiterLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RecruiterLayout({ children }: { children: React.ReactNode }) {
 	return children;
 }

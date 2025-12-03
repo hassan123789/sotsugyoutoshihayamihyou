@@ -302,8 +302,7 @@ export const translations: Record<Locale, Translations> = {
 		nextYear: '来年度',
 		earlyBornCase: '早生まれの場合',
 		normalCase: '通常の場合',
-		ageNote:
-			'※ 浪人・留年がない場合の目安です。実際の年齢は履歴書等でご確認ください。',
+		ageNote: '※ 浪人・留年がない場合の目安です。実際の年齢は履歴書等でご確認ください。',
 		ageRestrictionNote: '募集・採用における年齢制限は原則禁止（雇用対策法）',
 		earlyBornExplanation: '早生まれとは？',
 		earlyBornExplanationDetail:
@@ -331,14 +330,12 @@ export const translations: Record<Locale, Translations> = {
 
 		faqTitle: 'よくある質問',
 		faq1Q: '早生まれとは何ですか？',
-		faq1A:
-			'1月1日〜4月1日に生まれた人のことです。学年では前年度生まれの人と同じ扱いになります。',
+		faq1A: '1月1日〜4月1日に生まれた人のことです。学年では前年度生まれの人と同じ扱いになります。',
 		faq2Q: '浪人した場合はどうすればいいですか？',
 		faq2A:
 			'「浪人年数」の項目で該当する年数を選択してください。大学入学年度が自動的に調整されます。',
 		faq3Q: '留年した場合はどうすればいいですか？',
-		faq3A:
-			'「詳細オプション」を開いて、該当する学校の留年年数を選択してください。',
+		faq3A: '「詳細オプション」を開いて、該当する学校の留年年数を選択してください。',
 		faq4Q: '海外の学校や通信制の場合は？',
 		faq4A:
 			'このツールは日本の一般的な学制（6-3-3-4制）に基づいています。特殊なケースは個別にご確認ください。',
@@ -354,14 +351,12 @@ export const translations: Record<Locale, Translations> = {
 		schoolTimeline: '学校時代の出来事',
 
 		shareCardTitle: '同い年診断シェアカード',
-		shareCardSubtitle:
-			'あなたの生まれ年と同い年の有名人をカード画像にして、SNSでシェアしよう！',
+		shareCardSubtitle: 'あなたの生まれ年と同い年の有名人をカード画像にして、SNSでシェアしよう！',
 		shareCardGenerate: 'シェアカード生成',
 
 		pdfGenerating: 'PDF生成中...',
 		pdfDownload: 'PDFでダウンロード',
-		pdfFailed:
-			'PDF生成に失敗しました。ブラウザを更新してもう一度お試しください。',
+		pdfFailed: 'PDF生成に失敗しました。ブラウザを更新してもう一度お試しください。',
 
 		footerNote1: '※ 日本の一般的な学制に基づいて計算しています。',
 		footerNote2: '※ 早生まれ（1月1日〜4月1日生まれ）を正しく考慮しています。',
@@ -503,10 +498,8 @@ export const translations: Record<Locale, Translations> = {
 		nextYear: 'Next Year',
 		earlyBornCase: 'If early-born',
 		normalCase: 'If normal',
-		ageNote:
-			'※ This is an estimate without gap years. Please verify with actual documents.',
-		ageRestrictionNote:
-			'Age restrictions in recruitment are generally prohibited',
+		ageNote: '※ This is an estimate without gap years. Please verify with actual documents.',
+		ageRestrictionNote: 'Age restrictions in recruitment are generally prohibited',
 		earlyBornExplanation: 'What is "Early-born"?',
 		earlyBornExplanationDetail:
 			'People born between Jan 1 - Apr 1. They are in the same grade as those born in the previous fiscal year.',
@@ -556,8 +549,7 @@ export const translations: Record<Locale, Translations> = {
 		schoolTimeline: 'Events During School Years',
 
 		shareCardTitle: 'Same-Age Share Card',
-		shareCardSubtitle:
-			'Create a card image with celebrities born in your year and share on SNS!',
+		shareCardSubtitle: 'Create a card image with celebrities born in your year and share on SNS!',
 		shareCardGenerate: 'Generate Share Card',
 
 		pdfGenerating: 'Generating PDF...',
@@ -708,8 +700,7 @@ export const translations: Record<Locale, Translations> = {
 		ageNote: '※ 这是没有复读的估算。请以实际材料为准。',
 		ageRestrictionNote: '招聘中的年龄限制原则上被禁止',
 		earlyBornExplanation: '什么是"早产"？',
-		earlyBornExplanationDetail:
-			'指1月1日至4月1日出生的人。他们与上一学年出生的人在同一年级。',
+		earlyBornExplanationDetail: '指1月1日至4月1日出生的人。他们与上一学年出生的人在同一年级。',
 		usefulFeatures: '招聘活动便捷功能',
 
 		years: '年',
@@ -752,8 +743,7 @@ export const translations: Record<Locale, Translations> = {
 		schoolTimeline: '学校时期的大事',
 
 		shareCardTitle: '同龄分享卡',
-		shareCardSubtitle:
-			'将您的出生年份和同龄名人制作成卡片图像，分享到社交媒体！',
+		shareCardSubtitle: '将您的出生年份和同龄名人制作成卡片图像，分享到社交媒体！',
 		shareCardGenerate: '生成分享卡',
 
 		pdfGenerating: '正在生成PDF...',
@@ -900,8 +890,7 @@ export const translations: Record<Locale, Translations> = {
 		nextYear: '내년',
 		earlyBornCase: '빠른 생일의 경우',
 		normalCase: '일반적인 경우',
-		ageNote:
-			'※ 재수나 유급이 없는 경우의 추정입니다. 실제 서류로 확인해 주세요.',
+		ageNote: '※ 재수나 유급이 없는 경우의 추정입니다. 실제 서류로 확인해 주세요.',
 		ageRestrictionNote: '채용 시 나이 제한은 원칙적으로 금지됩니다',
 		earlyBornExplanation: '"빠른 생일"이란?',
 		earlyBornExplanationDetail:
@@ -929,11 +918,9 @@ export const translations: Record<Locale, Translations> = {
 
 		faqTitle: '자주 묻는 질문',
 		faq1Q: '"빠른 생일"이란 무엇인가요?',
-		faq1A:
-			'1월 1일부터 4월 1일 사이에 태어난 사람입니다. 전년도 출생자와 같은 학년에 배치됩니다.',
+		faq1A: '1월 1일부터 4월 1일 사이에 태어난 사람입니다. 전년도 출생자와 같은 학년에 배치됩니다.',
 		faq2Q: '재수했을 경우 어떻게 하나요?',
-		faq2A:
-			'"재수 년수"에서 해당 년수를 선택하세요. 대학 입학 연도가 자동으로 조정됩니다.',
+		faq2A: '"재수 년수"에서 해당 년수를 선택하세요. 대학 입학 연도가 자동으로 조정됩니다.',
 		faq3Q: '유급했을 경우 어떻게 하나요?',
 		faq3A: '"상세 옵션"을 열고 해당 학교의 유급 년수를 선택하세요.',
 		faq4Q: '해외 학교나 통신 학교는요?',
@@ -951,8 +938,7 @@ export const translations: Record<Locale, Translations> = {
 		schoolTimeline: '학창 시절의 일',
 
 		shareCardTitle: '동갑 공유 카드',
-		shareCardSubtitle:
-			'같은 해에 태어난 유명인과 함께 카드 이미지를 만들어 SNS에 공유하세요!',
+		shareCardSubtitle: '같은 해에 태어난 유명인과 함께 카드 이미지를 만들어 SNS에 공유하세요!',
 		shareCardGenerate: '공유 카드 생성',
 
 		pdfGenerating: 'PDF 생성 중...',
@@ -994,8 +980,7 @@ export const translations: Record<Locale, Translations> = {
 		// Additional pages
 		home: '홈',
 		warekiTitle: '일본 연호 변환기',
-		warekiSubtitle:
-			'서력과 일본 연호(레이와, 헤이세이, 쇼와, 다이쇼, 메이지) 상호 변환',
+		warekiSubtitle: '서력과 일본 연호(레이와, 헤이세이, 쇼와, 다이쇼, 메이지) 상호 변환',
 		toWareki: '서력 → 연호',
 		toSeireki: '연호 → 서력',
 		inputSeireki: '서력 연도 입력',

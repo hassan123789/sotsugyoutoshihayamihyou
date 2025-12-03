@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { toWareki } from '@/lib/academic';
 import { useLocale } from '@/lib/i18n';
 import type { AcademicEvent } from '@/lib/types';
@@ -12,14 +12,8 @@ interface PDFButtonProps {
 	birthDay: number;
 }
 
-export function PDFButton({
-	events,
-	birthYear,
-	birthMonth,
-	birthDay,
-}: PDFButtonProps) {
+export function PDFButton({ events, birthYear, birthMonth, birthDay }: PDFButtonProps) {
 	const [isGenerating, setIsGenerating] = useState(false);
-	const _containerRef = useRef<HTMLDivElement>(null);
 	const { t } = useLocale();
 
 	const generatePDF = async () => {
@@ -84,7 +78,7 @@ export function PDFButton({
                   ${event.age}歳
                 </td>
               </tr>
-            `,
+            `
 							)
 							.join('')}
           </tbody>
@@ -133,9 +127,7 @@ export function PDFButton({
 			}
 
 			// ダウンロード
-			doc.save(
-				`学歴早見表_${birthYear}年${birthMonth}月${birthDay}日生まれ.pdf`,
-			);
+			doc.save(`学歴早見表_${birthYear}年${birthMonth}月${birthDay}日生まれ.pdf`);
 		} catch (error) {
 			console.error('PDF generation failed:', error);
 			alert(t.pdfFailed);
@@ -151,9 +143,7 @@ export function PDFButton({
 			className="w-full px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2"
 			style={{
 				background: isGenerating ? 'var(--color-border)' : 'var(--color-card)',
-				color: isGenerating
-					? 'var(--color-text-muted)'
-					: 'var(--color-primary)',
+				color: isGenerating ? 'var(--color-text-muted)' : 'var(--color-primary)',
 				border: '1px solid var(--color-border)',
 				cursor: isGenerating ? 'not-allowed' : 'pointer',
 			}}
@@ -179,12 +169,7 @@ export function PDFButton({
 				</>
 			) : (
 				<>
-					<svg
-						className="w-5 h-5"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
+					<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							strokeLinecap="round"
 							strokeLinejoin="round"
