@@ -9,9 +9,14 @@
   --color-accent: #0071e3;
   --color-accent-hover: #0077ED;
   
-  --animate-fade-up: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Apple標準イージング（スプリング物理学ベース） */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+  
+  --animate-fade-up: fadeUp 0.6s var(--ease-spring) forwards;
   --animate-fade-in: fadeIn 0.5s ease-out forwards;
-  --animate-scale-in: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-in: scaleIn 0.4s var(--ease-spring) forwards;
   --animate-float: float 6s ease-in-out infinite;
   
   @keyframes fadeUp {
@@ -32,6 +37,13 @@
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
+  }
+  
+  /* ボタン押下時のスプリングバウンス */
+  @keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
   }
 }
 
@@ -140,11 +152,31 @@
   
   --gradient-hero: linear-gradient(180deg, #000000 0%, #1d1d1f 100%);
   --gradient-card: linear-gradient(180deg, rgba(29,29,31,0.8) 0%, rgba(29,29,31,0.95) 100%);
+  
+  /* ダークモードの明示的宣言（ブラウザネイティブUI対応） */
+  color-scheme: dark;
 }
 
 /* ベーススタイル */
 html {
   scroll-behavior: smooth;
+  /* ブラウザネイティブUIのカラースキーム */
+  color-scheme: light dark;
+  /* テキストサイズ調整（iOS Safari） */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* タッチ操作のハイライト無効化 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ライトモードのカラースキーム */
+:root {
+  color-scheme: light;
+}
+
+/* ダークモードのカラースキーム */
+.dark {
+  color-scheme: dark;
 }
 
 /* アクセシビリティ: モーション軽減設定を尊重 */
@@ -167,9 +199,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.01em;
-  /* テキスト選択時の色 */
-  --selection-bg: var(--color-accent);
-  --selection-color: white;
+  /* パフォーマンス最適化 */
+  text-rendering: optimizeLegibility;
+  /* オーバースクロール時の挙動（iOS Safari） */
+  overscroll-behavior-y: none;
 }
 
 ::selection {
@@ -395,6 +428,42 @@ select.input-field {
   outline-offset: 2px;
 }
 
+/* ========================
+   Apple Human Interface Guidelines
+   + Laws of UX 原則の実装
+   ======================== */
+
+/* Fitts's Law: タッチターゲットは最小44x44px */
+button, 
+[role="button"],
+a.btn-primary,
+a.btn-secondary,
+input[type="submit"],
+input[type="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Doherty Threshold: 即時フィードバック（<400ms） */
+button:active,
+[role="button"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* 高コントラストモード対応 */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: rgba(0, 0, 0, 0.2);
+    --color-text-secondary: #515154;
+  }
+  
+  .dark {
+    --color-border: rgba(255, 255, 255, 0.25);
+    --color-text-secondary: #b0b0b5;
+  }
+}
+
 /* グラデーションテキスト */
 .gradient-text {
   background: linear-gradient(90deg, var(--color-accent) 0%, #5856d6 100%);
@@ -427,6 +496,37 @@ select.input-field {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* CSS Scroll-driven Animations（Progressive Enhancement） */
+@supports (animation-timeline: scroll()) {
+  .scroll-fade-in {
+    animation: scrollFadeIn linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+  
+  @keyframes scrollFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* スクロール進捗インジケーター */
+  .scroll-progress {
+    animation: scrollProgress linear;
+    animation-timeline: scroll(root);
+  }
+  
+  @keyframes scrollProgress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
 }
 
 .reveal-delay-1 { transition-delay: 0.1s; }
